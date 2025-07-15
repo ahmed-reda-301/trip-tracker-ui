@@ -52,3 +52,35 @@
 
 - You can modify settings in configuration files like `next.config.ts` and `tsconfig.json`.
 - For more information, check the README.md file.
+
+## 7. Upload Project to GitHub
+
+Follow these steps to initialize a git repository and upload your project to GitHub:
+
+- **Repository Name:** `trip-tracker-ui`
+- **Suggested Description:** A modern web application for tracking trips, built with Next.js and React.
+
+1. Initialize git in your project folder:
+   ```bash
+   git init
+   ```
+2. Add all project files:
+   ```bash
+   git add .
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Initial commit"
+   ```
+4. Create a new repository on GitHub with the name `trip-tracker-ui` and the suggested description above.
+5. Link your local repo to GitHub (replace `<your-username>` with your GitHub username):
+   ```bash
+   git remote add origin git@github.com:ahmed-reda-301/trip-tracker-ui.git
+   ```
+6. Push your code to GitHub:
+   ```bash
+   git branch -M main
+   git push -u origin main
+   ```
+
+Now your project will be available on GitHub.
