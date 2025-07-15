@@ -84,3 +84,69 @@ Follow these steps to initialize a git repository and upload your project to Git
    ```
 
 Now your project will be available on GitHub.
+
+# Recent Project Steps Documentation
+
+## 1. Font Setup in layout.tsx
+
+- Imported Google fonts Roboto and Cairo using `next/font/google`.
+- Configured both fonts with weights 400, 500, 700 and enabled preload for performance.
+- Applied the Roboto font to the `<body>` element in the root layout.
+
+## 2. Cleaned Up Page Component
+
+- Simplified `page.tsx` to a minimal "Hello World" example for clarity and easier testing.
+
+## 3. Code Cleanup
+
+- Removed unused imports and template code from both `layout.tsx` and `page.tsx`.
+- Ensured the codebase is clean and easier to maintain.
+
+## 4. Version Control
+
+- Staged and committed all changes with a clear, descriptive commit message.
+- Pushed the updates to the GitHub repository.
+
+## 5. Add shadcn UI and Test Integration
+
+### Step 1: Install shadcn UI (Updated)
+
+- The `shadcn-ui` package is deprecated. Use the new CLI:
+  ```bash
+  npx shadcn@latest init
+  ```
+- Follow the CLI prompts to configure your project (choose your preferred settings).
+- During initialization, you will be prompted to select a base color for your UI components (e.g., Neutral, Gray, Zinc, Stone, Slate). Use the arrow keys to choose and press Enter to confirm.
+- For this project, the **Slate** color was selected. Slate provides a modern, professional look suitable for dashboards and business applications, with excellent contrast and readability in both light and dark modes.
+- For more information, visit: https://ui.shadcn.com/docs/cli
+
+### Step 2: Add a Sample Button Component
+
+- Run the following command to add a Button component:
+  ```bash
+  npx shadcn@latest add button
+  ```
+- This will generate a reusable Button component in your project (usually in `components/ui/button.tsx`).
+
+### Step 3: Test the Button Component
+
+- Import and use the Button in your page, for example in `src/app/page.tsx`:
+
+  ```tsx
+  import { Button } from "@/components/ui/button";
+
+  export default function Home() {
+    return (
+      <main>
+        <h1>Hello World</h1>
+        <Button>Test Shadcn Button</Button>
+      </main>
+    );
+  }
+  ```
+
+- Start your development server and verify the button appears and works as expected.
+
+---
+
+These steps improve project readability, maintainability, and ensure a clean start for further development.
