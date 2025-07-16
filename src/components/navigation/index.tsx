@@ -98,7 +98,8 @@ const Navigation: React.FC<NavigationProps> = ({
       {/* Sidebar Button for small screens */}
       {!sidebarOpen && (
         <button
-          className="md:hidden fixed top-20 left-3 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
+          className="md:hidden absolute top-20 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
+          style={{ position: 'absolute' }}
           onClick={() => setSidebarOpen(true)}
           aria-label="Open sidebar"
         >
@@ -108,11 +109,12 @@ const Navigation: React.FC<NavigationProps> = ({
 
       {/* Sidebar Drawer */}
       <div
-        className={`fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity duration-300 ${
+        className={`fixed inset-0 z-40 transition-opacity duration-300 ${
           sidebarOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
+        style={{ background: "transparent" }}
         onClick={() => setSidebarOpen(false)}
       >
         <nav
