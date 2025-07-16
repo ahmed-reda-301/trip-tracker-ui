@@ -150,3 +150,4 @@ Now your project will be available on GitHub.
 ---
 
 These steps improve project readability, maintainability, and ensure a clean start for further development.
+
