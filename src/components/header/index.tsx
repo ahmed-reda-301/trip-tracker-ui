@@ -75,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({
                   className="mb-1"
                 />
               </div>
-              <div className="text-center md:text-left">
+              <div className="text-center">
                 <h1 className="text-xl font-bold leading-tight">
                   هيئة الزكاة والضريبة والجمارك
                 </h1>

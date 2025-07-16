@@ -109,7 +109,9 @@ const Navigation: React.FC<NavigationProps> = ({
       {/* Sidebar Drawer */}
       <div
         className={`fixed inset-0 z-40 bg-black bg-opacity-40 transition-opacity duration-300 ${
-          sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          sidebarOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setSidebarOpen(false)}
       >
@@ -117,7 +119,7 @@ const Navigation: React.FC<NavigationProps> = ({
           className={`fixed top-0 left-0 h-full w-64 bg-slate-800 text-white shadow-lg transform transition-transform duration-300 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           <div className="p-4 flex flex-col gap-2">
             {navigationItems.map((item) => {
@@ -182,7 +184,10 @@ const Navigation: React.FC<NavigationProps> = ({
                           <button
                             key={dropdownItem.key}
                             onClick={() =>
-                              handleDropdownItemClick(item.key, dropdownItem.key)
+                              handleDropdownItemClick(
+                                item.key,
+                                dropdownItem.key
+                              )
                             }
                             className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3"
                           >

@@ -3,6 +3,7 @@ import { Cairo, Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Navigation from "@/components/navigation";
+import Breadcrumb from "@/components/breadcrumb";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -26,12 +27,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // مثال على عناصر breadcrumb
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Dashboard", href: "/dashboard" },
+    { label: "Current Page" },
+  ];
+
   return (
     <html lang="en">
       <body className={roboto.className}>
         <Header />
         <Navigation />
-
+        <Breadcrumb items={breadcrumbItems} />
         {children}
       </body>
     </html>
