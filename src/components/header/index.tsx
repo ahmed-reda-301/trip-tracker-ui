@@ -59,12 +59,12 @@ const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <header className="bg-slate-800 text-white shadow-lg relative">
-      <div className="px-4 py-3">
-        <div className="flex items-center justify-between">
+    <header className="bg-slate-800 text-white shadow-lg relative w-full">
+      <div className="px-4 py-3 w-full">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
           {/* Logo and Title */}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-3">
+          <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+            <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-md">
                 <div className="w-5 h-5 bg-white rounded-full opacity-90"></div>
                 <Image
@@ -75,17 +75,7 @@ const Header: React.FC<HeaderProps> = ({
                   className="mb-1"
                 />
               </div>
-              {/* <div>
-                <Image
-                  src="/assets/Saudi-Customs-Logo-new.png"
-                  alt="Saudi Customs Logo"
-                  width={120}
-                  height={40}
-                  className="mb-1 object-contain"
-                />
-              </div> */}
-
-              <div className="text-center">
+              <div className="text-center md:text-left">
                 <h1 className="text-xl font-bold leading-tight">
                   هيئة الزكاة والضريبة والجمارك
                 </h1>
@@ -97,7 +87,7 @@ const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Right side controls */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-2 md:gap-4 w-full md:w-auto justify-center md:justify-end flex-wrap">
             {/* Search Button */}
             {/* <button className="p-2 hover:bg-slate-700 rounded-lg transition-colors">
               <Search className="w-5 h-5" />
