@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header";
 import Navigation from "@/components/navigation";
 import Breadcrumb from "@/components/breadcrumb";
+import Footer from "@/components/footer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default function RootLayout({
         <Navigation />
         <Breadcrumb items={breadcrumbItems} />
         {children}
+        <Footer />
       </body>
     </html>
   );
