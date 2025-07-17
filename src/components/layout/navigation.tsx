@@ -99,7 +99,7 @@ const Navigation: React.FC<NavigationProps> = ({
       {!sidebarOpen && (
         <button
           className="md:hidden absolute top-20 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
-          style={{ position: 'absolute' }}
+          style={{ position: "absolute" }}
           onClick={() => setSidebarOpen(true)}
           aria-label="Open sidebar"
         >

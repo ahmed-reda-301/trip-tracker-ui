@@ -32,6 +32,23 @@ const Header: React.FC<HeaderProps> = ({
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
+  // Close dropdowns when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".dropdown-profile")) setIsProfileOpen(false);
+      if (!target.closest(".dropdown-notification"))
+        setIsNotificationOpen(false);
+      if (!target.closest(".dropdown-language")) setIsLanguageOpen(false);
+    };
+    if (isProfileOpen || isNotificationOpen || isLanguageOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isProfileOpen, isNotificationOpen, isLanguageOpen]);
+
   const languages = [
     { code: "en", name: "English", flag: "🇺🇸" },
     { code: "ar", name: "العربية", flag: "🇸🇦" },
@@ -94,7 +111,7 @@ const Header: React.FC<HeaderProps> = ({
             </button> */}
 
             {/* Notifications */}
-            <div className="relative">
+            <div className="relative dropdown-notification">
               <button
                 className="p-2 hover:bg-slate-700 rounded-lg transition-colors relative"
                 onClick={() => setIsNotificationOpen(!isNotificationOpen)}
@@ -155,7 +172,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Language Switcher */}
-            <div className="relative">
+            <div className="relative dropdown-language">
               <button
                 className="flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-colors"
                 onClick={() => setIsLanguageOpen(!isLanguageOpen)}
@@ -186,7 +203,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* User Profile */}
-            <div className="relative">
+            <div className="relative dropdown-profile">
               <button
                 className="flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-colors"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}

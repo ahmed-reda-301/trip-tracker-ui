@@ -2,11 +2,11 @@
 
 import { Cairo, Roboto } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
-import Navigation from "@/components/navigation";
-import Breadcrumb from "@/components/breadcrumb";
+import Header from "@/components/layout/header";
+import Navigation from "@/components/layout/navigation";
+import Breadcrumb from "@/components/layout/breadcrumb";
 import MainContent from "@/components/main-content";
-import Footer from "@/components/footer";
+import Footer from "@/components/layout/footer";
 import React, { useState } from "react";
 
 const roboto = Roboto({
@@ -24,7 +24,7 @@ const cairo = Cairo({
 export default function RootLayout() {
   const [activeTab, setActiveTab] = useState<string>("location-monitor");
 
-  // عناصر breadcrumb حسب التبويب الحالي
+  // Breadcrumb items based on current tab
   const breadcrumbMap: Record<
     string,
     Array<{ label: string; href?: string }>
@@ -47,9 +47,9 @@ export default function RootLayout() {
 
   const breadcrumbItems = breadcrumbMap[activeTab] || breadcrumbMap.default;
 
-  // دالة التنقل عند الضغط على رابط في breadcrumb
+  // Navigation handler for breadcrumb links
   const handleNavigate = (href: string) => {
-    // استخدم اسم التبويب من الرابط
+    // Use tab name from link
     if (href === "/") setActiveTab("dashboard");
     else if (href === "/dashboard") setActiveTab("dashboard");
     else if (href.toLowerCase().includes("location"))
@@ -58,17 +58,21 @@ export default function RootLayout() {
       setActiveTab("focused-trips");
     else if (href.toLowerCase().includes("assigned"))
       setActiveTab("assigned-ports");
-    // يمكنك إضافة المزيد حسب الحاجة
+    // Add more as needed
   };
 
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <Header />
-        <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
-        <Breadcrumb items={breadcrumbItems} onNavigate={handleNavigate} />
-        <MainContent activeTab={activeTab} onTabChange={setActiveTab} />
-        <Footer />
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+          <Breadcrumb items={breadcrumbItems} onNavigate={handleNavigate} />
+          <main className="flex-1">
+            <MainContent activeTab={activeTab} />
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

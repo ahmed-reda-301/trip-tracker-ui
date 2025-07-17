@@ -8,9 +8,9 @@ const Footer = () => {
         <p className="text-sm font-medium">
           Powered by Laplacesoftware | لابلاس سوفتوير
         </p>
-        <p className="text-xs mt-1 opacity-80">
+        {/* <p className="text-xs mt-1 opacity-80">
           © 2025 Zakat, Tax and Customs Authority - All rights reserved
-        </p>
+        </p> */}
       </div>
     </footer>
   );
