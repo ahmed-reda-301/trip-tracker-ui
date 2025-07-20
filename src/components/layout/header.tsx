@@ -13,6 +13,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   User,
   Globe,
@@ -49,6 +50,7 @@ const Header: React.FC<HeaderProps> = ({
   isSidebarOpen = false,
 }) => {
   const router = useRouter();
+  const { language, setLanguage, t, isRTL } = useLanguage();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
@@ -72,8 +74,9 @@ const Header: React.FC<HeaderProps> = ({
    * Toggle language between English and Arabic
    */
   const toggleLanguage = () => {
-    const newLanguage = currentLanguage === "EN" ? "AR" : "EN";
-    onLanguageChange(newLanguage);
+    const newLanguage = language === "en" ? "ar" : "en";
+    setLanguage(newLanguage);
+    onLanguageChange(newLanguage === "en" ? "EN" : "AR");
   };
 
   /**
@@ -128,14 +131,14 @@ const Header: React.FC<HeaderProps> = ({
           {/* Mobile Spacer */}
           <div className="flex-1"></div>
 
-          {/* Mobile Logo - Right Aligned */}
-          <div className="flex items-center">
+          {/* Mobile Logo - Right Aligned with Animation */}
+          <div className="flex items-center group">
             <Image
               src="/assets/Saudi-Customs-Logo-new.png"
               alt="Saudi Customs Logo"
               width={180}
               height={30}
-              className="object-contain h-12"
+              className="object-contain h-12 transition-all duration-500 ease-in-out transform group-hover:scale-110 group-hover:brightness-110 group-hover:drop-shadow-lg cursor-pointer"
               priority
             />
           </div>
@@ -201,12 +204,12 @@ const Header: React.FC<HeaderProps> = ({
                   <div className="px-4 py-2 border-t border-gray-100">
                     <button
                       onClick={() => {
-                        router.push('/notifications');
+                        router.push("/notifications");
                         setIsNotificationOpen(false);
                       }}
                       className="text-sm text-blue-600 hover:text-blue-800 font-medium"
                     >
-                      View all notifications
+                      {t("header.viewAllNotifications")}
                     </button>
                   </div>
                 </div>
@@ -215,15 +218,15 @@ const Header: React.FC<HeaderProps> = ({
 
             {/* Language Switcher - Direct Toggle */}
             <button
-              className="flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
-              onClick={toggleLanguage}
-              title={`Switch to ${
-                currentLanguage === "EN" ? "Arabic" : "English"
+              className={`flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 ${
+                isRTL ? "flex-row-reverse space-x-reverse" : ""
               }`}
+              onClick={toggleLanguage}
+              title={t("header.switchLanguage")}
             >
               <Globe className="w-5 h-5" />
               <span className="font-medium text-sm">
-                {currentLanguage === "EN" ? "🇺🇸 EN" : "🇸🇦 AR"}
+                {language === "en" ? "🇺🇸 EN" : "🇸🇦 AR"}
               </span>
             </button>
 
@@ -253,20 +256,38 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
 
                   <div className="py-1">
-                    <button className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3">
+                    <button
+                      className={`w-full px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3 ${
+                        isRTL
+                          ? "text-right flex-row-reverse space-x-reverse"
+                          : "text-left"
+                      }`}
+                    >
                       <UserCircle className="w-4 h-4" />
-                      <span>My Profile</span>
+                      <span>{t("header.profile")}</span>
                     </button>
-                    <button className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3">
+                    <button
+                      className={`w-full px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3 ${
+                        isRTL
+                          ? "text-right flex-row-reverse space-x-reverse"
+                          : "text-left"
+                      }`}
+                    >
                       <Settings className="w-4 h-4" />
-                      <span>Settings</span>
+                      <span>{t("header.settings")}</span>
                     </button>
                   </div>
 
                   <div className="border-t border-gray-100 py-1">
-                    <button className="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-3">
+                    <button
+                      className={`w-full px-4 py-2 text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-3 ${
+                        isRTL
+                          ? "text-right flex-row-reverse space-x-reverse"
+                          : "text-left"
+                      }`}
+                    >
                       <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
+                      <span>{t("header.signOut")}</span>
                     </button>
                   </div>
                 </div>

@@ -6,6 +6,7 @@ import Header from "@/components/layout/header";
 import Navigation from "@/components/layout/navigation";
 import Breadcrumb from "@/components/layout/breadcrumb";
 import Footer from "@/components/layout/footer";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
@@ -70,24 +71,26 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <div className="flex flex-col min-h-screen">
-          <Header
-            onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
-            isSidebarOpen={sidebarOpen}
-          />
-          <Navigation
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
-            onReportItemChange={setSelectedReportItem}
-            sidebarOpen={sidebarOpen}
-            onSidebarChange={setSidebarOpen}
-          />
-          <Breadcrumb onNavigate={handleNavigate} />
-          <div className="flex-1 bg-gray-50 p-8">
-            <div className="max-w-6xl mx-auto">{children}</div>
+        <LanguageProvider>
+          <div className="flex flex-col min-h-screen">
+            <Header
+              onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
+              isSidebarOpen={sidebarOpen}
+            />
+            <Navigation
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              onReportItemChange={setSelectedReportItem}
+              sidebarOpen={sidebarOpen}
+              onSidebarChange={setSidebarOpen}
+            />
+            <Breadcrumb onNavigate={handleNavigate} />
+            <div className="flex-1 bg-gray-50 p-8">
+              <div className="max-w-6xl mx-auto">{children}</div>
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
+        </LanguageProvider>
       </body>
     </html>
   );

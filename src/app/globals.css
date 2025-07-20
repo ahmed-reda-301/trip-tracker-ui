@@ -130,6 +130,10 @@
   --nav-hover: 97 179 79; /* #61B34F - Hover state */
   --nav-text: 0 0 0; /* #000000 - Default text color (black) */
   --nav-text-active: 255 255 255; /* #ffffff - Active/hover text color (white) */
+
+    /* New Gradient Colors */
+  --gradient-primary: #0895d3; /* Primary blue */
+  --gradient-secondary: #60b460; /* Secondary green */
 }
 
 @layer base {
@@ -162,3 +166,4 @@
   overflow-x: visible !important;
   overflow-y: visible !important;
 }
+
