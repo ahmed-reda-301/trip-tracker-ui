@@ -411,22 +411,28 @@ const Navigation: React.FC<NavigationProps> = ({
       >
         {/* Sidebar Navigation */}
         <nav
-          className={`fixed top-0 left-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ${
-            sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          className={`fixed top-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ${
+            isRTL
+              ? `right-0 ${sidebarOpen ? "translate-x-0" : "translate-x-full"}`
+              : `left-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`
           }`}
           aria-label="Main navigation"
         >
           {/* Mobile Sidebar Content */}
           <div className="flex flex-col h-full">
             {/* Sidebar Header with Close Button */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+            <div
+              className={`flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50 ${
+                isRTL ? "flex-row-reverse" : ""
+              }`}
+            >
               <h2 className="text-lg font-semibold text-gray-800">
-                Trip Tracker
+                {t("common.appName")}
               </h2>
               <button
                 onClick={() => setSidebarOpen(false)}
                 className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
-                aria-label="Close sidebar"
+                aria-label={t("common.closeSidebar")}
               >
                 <Menu className="w-5 h-5 text-gray-600" />
               </button>
@@ -435,11 +441,19 @@ const Navigation: React.FC<NavigationProps> = ({
             {/* User Profile Section */}
             <div className="p-4 border-b border-gray-200 bg-gray-50">
               {/* User Profile */}
-              <div className="flex items-center gap-3 mb-4">
+              <div
+                className={`flex items-center gap-3 mb-4 ${
+                  isRTL ? "flex-row-reverse" : ""
+                }`}
+              >
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
                   <User className="w-5 h-5 text-white" />
                 </div>
-                <div className="flex flex-col">
+                <div
+                  className={`flex flex-col ${
+                    isRTL ? "text-right" : "text-left"
+                  }`}
+                >
                   <span className="font-medium text-gray-800 text-sm">
                     {headerProps.user?.name}
                   </span>
@@ -450,7 +464,11 @@ const Navigation: React.FC<NavigationProps> = ({
               </div>
 
               {/* Language & Notifications */}
-              <div className="flex items-center justify-between">
+              <div
+                className={`flex items-center justify-between ${
+                  isRTL ? "flex-row-reverse" : ""
+                }`}
+              >
                 <LanguageToggle
                   variant="sidebar"
                   onLanguageChange={headerProps.onLanguageChange}
@@ -464,7 +482,11 @@ const Navigation: React.FC<NavigationProps> = ({
                   className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all relative"
                 >
                   <Bell className="w-4 h-4 text-gray-600" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
+                  <span
+                    className={`absolute -top-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center ${
+                      isRTL ? "-left-1" : "-right-1"
+                    }`}
+                  >
                     <span className="text-xs text-white font-bold">3</span>
                   </span>
                 </button>
@@ -484,11 +506,15 @@ const Navigation: React.FC<NavigationProps> = ({
                     // Reports section with expanded items
                     return (
                       <div key={item.key} className="space-y-1">
-                        <div className="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-gray-600 bg-gray-100 rounded-lg">
+                        <div
+                          className={`flex items-center gap-2 px-3 py-2 text-sm font-semibold text-gray-600 bg-gray-100 rounded-lg ${
+                            isRTL ? "flex-row-reverse text-right" : "text-left"
+                          }`}
+                        >
                           <Icon className="w-4 h-4" />
                           <span>{item.label}</span>
                         </div>
-                        <div className="ml-4 space-y-1">
+                        <div className={`space-y-1 ${isRTL ? "mr-4" : "ml-4"}`}>
                           {item.dropdownItems?.map((dropdownItem) => {
                             const DropdownIcon = dropdownItem.icon;
                             const isDropdownActive =
@@ -507,6 +533,10 @@ const Navigation: React.FC<NavigationProps> = ({
                                   isDropdownActive
                                     ? "bg-blue-100 text-blue-700 font-medium"
                                     : "text-gray-600 hover:bg-gray-100"
+                                } ${
+                                  isRTL
+                                    ? "flex-row-reverse text-right"
+                                    : "text-left"
                                 }`}
                               >
                                 <DropdownIcon className="w-4 h-4" />
@@ -530,6 +560,8 @@ const Navigation: React.FC<NavigationProps> = ({
                           isActive
                             ? "bg-blue-100 text-blue-700 font-medium"
                             : "text-gray-600 hover:bg-gray-100"
+                        } ${
+                          isRTL ? "flex-row-reverse text-right" : "text-left"
                         }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -544,17 +576,29 @@ const Navigation: React.FC<NavigationProps> = ({
             {/* Footer Actions */}
             <div className="p-4 border-t border-gray-200 bg-gray-50">
               <div className="space-y-2">
-                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
+                <button
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all ${
+                    isRTL ? "flex-row-reverse text-right" : "text-left"
+                  }`}
+                >
                   <UserCircle className="w-4 h-4" />
-                  <span>My Profile</span>
+                  <span>{t("header.profile")}</span>
                 </button>
-                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
+                <button
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all ${
+                    isRTL ? "flex-row-reverse text-right" : "text-left"
+                  }`}
+                >
                   <Settings className="w-4 h-4" />
-                  <span>Settings</span>
+                  <span>{t("header.settings")}</span>
                 </button>
-                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                <button
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-all ${
+                    isRTL ? "flex-row-reverse text-right" : "text-left"
+                  }`}
+                >
                   <LogOut className="w-4 h-4" />
-                  <span>Sign Out</span>
+                  <span>{t("header.signOut")}</span>
                 </button>
               </div>
             </div>

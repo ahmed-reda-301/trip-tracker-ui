@@ -49,7 +49,7 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
                 isRTL ? "ml-3" : "mr-3"
               }`}
             >
-              <span className="text-yellow-800 text-sm font-bold">!</span>
+              <span className={`text-yellow-800 text-sm font-bold ${isRTL ? "rtl" : "ltr"}`} >!</span>
             </div>
             <p className="text-yellow-800 font-medium">
               {isRTL ? "الصفحة قيد الإنشاء" : "Page Under Construction"}

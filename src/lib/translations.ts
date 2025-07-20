@@ -124,6 +124,8 @@ export interface TranslationDictionary {
     previous: string;
     submit: string;
     reset: string;
+    appName: string;
+    closeSidebar: string;
   };
 
   // Footer
@@ -426,6 +428,8 @@ export const translations: Record<Language, TranslationDictionary> = {
       previous: "Previous",
       submit: "Submit",
       reset: "Reset",
+      appName: "Trip Tracker",
+      closeSidebar: "Close sidebar",
     },
     footer: {
       poweredBy: "Powered by",
@@ -728,6 +732,8 @@ export const translations: Record<Language, TranslationDictionary> = {
       previous: "السابق",
       submit: "إرسال",
       reset: "إعادة تعيين",
+      appName: "متتبع الرحلات",
+      closeSidebar: "إغلاق الشريط الجانبي",
     },
     footer: {
       poweredBy: "مدعوم من",
@@ -923,6 +929,23 @@ export const translations: Record<Language, TranslationDictionary> = {
         exportData: "تصدير البيانات",
         viewReport: "عرض التقرير",
       },
+      focusedTrips: {
+        title: "الرحلات المركزة",
+        description: "تتبع وتتبع الرحلات عالية الأولوية التي تتطلب اهتمام خاص",
+        totalTrips: "إجمالي الرحلات",
+        activeTrips: "الرحلات النشطة",
+        highPriority: "أولوية عالية",
+        mediumPriority: "أولوية متوسطة",
+        lowPriority: "أولوية منخفضة",
+        tripDetails: "تفاصيل الرحلة",
+        assignedOfficer: "الضابط المكلف",
+        estimatedArrival: "الوصول المتوقع",
+        cargoType: "نوع البضائع",
+        origin: "المنشأ",
+        trackTrip: "تتبع الرحلة",
+        updateStatus: "تحديث الحالة",
+      }
+
     },
   },
 };

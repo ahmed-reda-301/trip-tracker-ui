@@ -31,22 +31,20 @@ interface BreadcrumbProps {
   onNavigate?: (href: string) => void;
 }
 
-// Report items mapping
-const reportItems: Record<string, { title: string; icon: LucideIcon }> = {
-  "trip-panel": { title: "Trip Panel", icon: Route },
-  "all-alerts": { title: "All Alerts", icon: AlertTriangle },
-  "alert-panel": { title: "Alert Panel", icon: AlertTriangle },
-  employees: { title: "Employees", icon: Users },
-  "assign-ports": { title: "Assign Ports", icon: Anchor },
-  "focused-trips": { title: "Focused Trips", icon: Route },
-  "completed-trips": { title: "Completed Trips", icon: Database },
-};
-
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
   const pathname = usePathname();
   const { t, isRTL } = useLanguage();
   const [currentItems, setCurrentItems] = useState<BreadcrumbItem[]>([]);
-
+  // Report items mapping
+  const reportItems: Record<string, { title: string; icon: LucideIcon }> = {
+    "trip-panel": { title: t("reports.tripPanel"), icon: Route },
+    "all-alerts": { title: t("reports.allAlerts"), icon: AlertTriangle },
+    "alert-panel": { title: t("reports.alertPanel"), icon: AlertTriangle },
+    "employees": { title: t("reports.employees"), icon: Users },
+    "assign-ports": { title: t("reports.assignPorts"), icon: Anchor },
+    "focused-trips": { title: t("reports.focusedTrips"), icon: Route },
+    "completed-trips": { title: t("reports.completedTrips"), icon: Database },
+  };
   useEffect(() => {
     if (pathname.startsWith("/reports/")) {
       // Extract report key from URL
