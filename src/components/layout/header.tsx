@@ -1,15 +1,17 @@
 "use client";
 
+/**
+ * Header Component
+ *
+ * Main header component for the Trip Tracker application.
+ * Provides user profile, notifications, and language switching functionality.
+ *
+ * @author Trip Tracker Team
+ * @version 2.0.0
+ */
+
 import React, { useState } from "react";
-import {
-  ChevronDown,
-  User,
-  Globe,
-  Bell,
-  Settings,
-  LogOut,
-  UserCircle,
-} from "lucide-react";
+import { User, Globe, Bell, Settings, LogOut, UserCircle } from "lucide-react";
 
 interface HeaderProps {
   user?: {
@@ -22,13 +24,16 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  user = {},
+  user = {
+    name: "Ahmed Al-Rashid",
+    email: "ahmed@customs.gov.sa",
+    role: "Customs Officer",
+  },
   onLanguageChange = () => {},
-  currentLanguage = "",
+  currentLanguage = "EN",
 }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
   // Close dropdowns when clicking outside
   React.useEffect(() => {
@@ -37,20 +42,36 @@ const Header: React.FC<HeaderProps> = ({
       if (!target.closest(".dropdown-profile")) setIsProfileOpen(false);
       if (!target.closest(".dropdown-notification"))
         setIsNotificationOpen(false);
-      if (!target.closest(".dropdown-language")) setIsLanguageOpen(false);
     };
-    if (isProfileOpen || isNotificationOpen || isLanguageOpen) {
+    if (isProfileOpen || isNotificationOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isProfileOpen, isNotificationOpen, isLanguageOpen]);
+  }, [isProfileOpen, isNotificationOpen]);
 
-  const languages = [
-    { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "ar", name: "العربية", flag: "🇸🇦" },
-  ];
+  /**
+   * Toggle language between English and Arabic
+   */
+  const toggleLanguage = () => {
+    const newLanguage = currentLanguage === "EN" ? "AR" : "EN";
+    onLanguageChange(newLanguage);
+  };
+
+  /**
+   * Get notification badge color based on type
+   */
+  const getNotificationColor = (type: string) => {
+    switch (type) {
+      case "warning":
+        return "bg-yellow-500";
+      case "info":
+        return "bg-blue-500";
+      default:
+        return "bg-green-500";
+    }
+  };
 
   const notifications = [
     {
@@ -77,37 +98,13 @@ const Header: React.FC<HeaderProps> = ({
     <header className="bg-[rgb(var(--header-primary))] text-white relative w-full">
       <div className="px-4 py-0 w-full">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
-          {/* Logo and Title */}
+          {/* Left side - Reserved for future content */}
           <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-            {/* <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-md">
-                <div className="w-5 h-5 bg-white rounded-full opacity-90"></div>
-                <Image
-                  src="/assets/logo.png"
-                  alt="Saudi Customs Logo"
-                  width={120}
-                  height={40}
-                  className="mb-1"
-                />
-              </div>
-              <div className="text-center">
-                <h1 className="text-xl font-bold leading-tight">
-                  هيئة الزكاة والضريبة والجمارك
-                </h1>
-                <p className="text-sm text-slate-300 font-medium">
-                  Zakat, Tax, Customs Authority
-                </p>
-              </div>
-            </div> */}
+            {/* Logo section can be added here if needed */}
           </div>
 
           {/* Right side controls */}
           <div className="flex items-center gap-2 md:gap-4 w-full md:w-auto justify-center md:justify-end flex-wrap">
-            {/* Search Button */}
-            {/* <button className="p-2 hover:bg-slate-700 rounded-lg transition-colors">
-              <Search className="w-5 h-5" />
-            </button> */}
-
             {/* Notifications */}
             <div className="relative dropdown-notification">
               <button
@@ -140,13 +137,9 @@ const Header: React.FC<HeaderProps> = ({
                       >
                         <div className="flex items-start space-x-3">
                           <div
-                            className={`w-2 h-2 rounded-full mt-2 ${
-                              notification.type === "warning"
-                                ? "bg-yellow-500"
-                                : notification.type === "info"
-                                ? "bg-blue-500"
-                                : "bg-green-500"
-                            }`}
+                            className={`w-2 h-2 rounded-full mt-2 ${getNotificationColor(
+                              notification.type
+                            )}`}
                           ></div>
                           <div className="flex-1">
                             <p className="text-sm font-medium text-gray-800">
@@ -169,48 +162,34 @@ const Header: React.FC<HeaderProps> = ({
               )}
             </div>
 
-            {/* Language Switcher */}
-            <div className="relative dropdown-language">
-              <button
-                className="flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-colors"
-                onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-              >
-                <Globe className="w-5 h-5" />
-                <span className="font-medium">{currentLanguage}</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-
-              {/* Language Dropdown */}
-              {isLanguageOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                  {languages.map((lang) => (
-                    <button
-                      key={lang.code}
-                      className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3"
-                      onClick={() => {
-                        onLanguageChange(lang.name);
-                        setIsLanguageOpen(false);
-                      }}
-                    >
-                      <span className="text-lg">{lang.flag}</span>
-                      <span>{lang.name}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Language Switcher - Direct Toggle */}
+            <button
+              className="flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+              onClick={toggleLanguage}
+              title={`Switch to ${
+                currentLanguage === "EN" ? "Arabic" : "English"
+              }`}
+            >
+              <Globe className="w-5 h-5" />
+              <span className="font-medium text-sm">
+                {currentLanguage === "EN" ? "🇺🇸 EN" : "🇸🇦 AR"}
+              </span>
+            </button>
 
             {/* User Profile */}
             <div className="relative dropdown-profile">
               <button
-                className="flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-colors"
+                className="flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
                 onClick={() => setIsProfileOpen(!isProfileOpen)}
+                title="User Profile"
               >
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
                   <User className="w-4 h-4 text-white" />
                 </div>
-                <span className="font-medium">{user.name}</span>
-                <ChevronDown className="w-4 h-4" />
+                <div className="flex flex-col items-start">
+                  <span className="font-medium text-sm">{user.name}</span>
+                  <span className="text-xs text-gray-300">{user.role}</span>
+                </div>
               </button>
 
               {/* Profile Dropdown */}
@@ -250,3 +229,36 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 export default Header;
+
+/**
+ * Header Component Usage:
+ *
+ * @example
+ * ```tsx
+ * <Header
+ *   user={{
+ *     name: "Ahmed Al-Rashid",
+ *     email: "ahmed@customs.gov.sa",
+ *     role: "Customs Officer"
+ *   }}
+ *   currentLanguage="EN"
+ *   onLanguageChange={(lang) => setLanguage(lang)}
+ * />
+ * ```
+ *
+ * @features
+ * - User profile with name and role display
+ * - Direct language toggle (EN/AR) without dropdown
+ * - Notifications with badge counter
+ * - Responsive design
+ * - Hover animations and effects
+ * - Accessibility support
+ *
+ * @improvements
+ * - Removed unused ChevronDown import
+ * - Simplified language switcher to direct toggle
+ * - Enhanced user display with name and role
+ * - Added hover animations and tooltips
+ * - Cleaned up commented code
+ * - Improved notification color handling
+ */
