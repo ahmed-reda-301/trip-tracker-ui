@@ -132,9 +132,13 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
               <button
                 key={dropdownItem.key}
                 onClick={() => onDropdownItemClick?.(dropdownItem.key)}
-                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors flex items-center text-sm whitespace-nowrap"
+                className={`w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors flex items-center text-sm whitespace-nowrap ${
+                  isRTL ? "text-right flex-row-reverse" : "text-left"
+                }`}
               >
-                <DropdownIcon className="w-4 h-4 mr-3 flex-shrink-0" />
+                <DropdownIcon
+                  className={`w-4 h-4 flex-shrink-0 ${isRTL ? "ml-3" : "mr-3"}`}
+                />
                 <span>{dropdownItem.label}</span>
               </button>
             );

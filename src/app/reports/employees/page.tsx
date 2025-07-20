@@ -2,14 +2,17 @@
 
 import React from "react";
 import { Users } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import UnderConstruction from "@/components/common/UnderConstruction";
 
 export default function EmployeesPage() {
+  const { t } = useLanguage();
+
   return (
     <UnderConstruction
-      title="Reports / Employees"
+      title={t("reportsPages.employees.title")}
       icon={Users}
-      description="Employee and user management in the system"
+      description={t("reportsPages.employees.description")}
     />
   );
 }

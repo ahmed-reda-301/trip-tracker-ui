@@ -252,6 +252,74 @@ export interface TranslationDictionary {
       archive: string;
     };
   };
+
+  // Reports Pages Content
+  reportsPages: {
+    tripPanel: {
+      title: string;
+      description: string;
+      totalTrips: string;
+      activeTrips: string;
+      completedTrips: string;
+      pendingTrips: string;
+      tripStatus: string;
+      viewTrip: string;
+      editTrip: string;
+      deleteTrip: string;
+    };
+    allAlerts: {
+      title: string;
+      description: string;
+      criticalAlerts: string;
+      warningAlerts: string;
+      infoAlerts: string;
+      resolvedAlerts: string;
+      alertType: string;
+      alertTime: string;
+      resolveAlert: string;
+    };
+    alertPanel: {
+      title: string;
+      description: string;
+      activeAlerts: string;
+      alertHistory: string;
+      alertSettings: string;
+      escalationRules: string;
+      responseTime: string;
+      acknowledgeAlert: string;
+    };
+    employees: {
+      title: string;
+      description: string;
+      totalEmployees: string;
+      activeEmployees: string;
+      employeeRoles: string;
+      assignments: string;
+      performance: string;
+      addEmployee: string;
+      editEmployee: string;
+    };
+    assignPorts: {
+      title: string;
+      description: string;
+      availablePorts: string;
+      assignedPorts: string;
+      portCapacity: string;
+      assignmentHistory: string;
+      assignPort: string;
+      unassignPort: string;
+    };
+    completedTrips: {
+      title: string;
+      description: string;
+      completionRate: string;
+      averageDuration: string;
+      successfulTrips: string;
+      tripAnalytics: string;
+      exportData: string;
+      viewReport: string;
+    };
+  };
 }
 
 export const translations: Record<Language, TranslationDictionary> = {
@@ -293,8 +361,8 @@ export const translations: Record<Language, TranslationDictionary> = {
       dashboard: "Dashboard",
       configuration: "Configuration",
       suspiciousTrips: "Suspicious Trips",
-      reports: "Reports",
       notifications: "Notifications",
+      reports: "Reports",
     },
     notifications: {
       title: "Notifications",
@@ -488,6 +556,74 @@ export const translations: Record<Language, TranslationDictionary> = {
         archive: "Archive",
       },
     },
+
+    // Reports Pages Content
+    reportsPages: {
+      tripPanel: {
+        title: "Trip Panel",
+        description: "Comprehensive trip management and monitoring dashboard",
+        totalTrips: "Total Trips",
+        activeTrips: "Active Trips",
+        completedTrips: "Completed Trips",
+        pendingTrips: "Pending Trips",
+        tripStatus: "Trip Status",
+        viewTrip: "View Trip",
+        editTrip: "Edit Trip",
+        deleteTrip: "Delete Trip",
+      },
+      allAlerts: {
+        title: "All Alerts",
+        description: "System-wide alerts and notifications management",
+        criticalAlerts: "Critical Alerts",
+        warningAlerts: "Warning Alerts",
+        infoAlerts: "Info Alerts",
+        resolvedAlerts: "Resolved Alerts",
+        alertType: "Alert Type",
+        alertTime: "Alert Time",
+        resolveAlert: "Resolve Alert",
+      },
+      alertPanel: {
+        title: "Alert Panel",
+        description: "Advanced alert monitoring and response system",
+        activeAlerts: "Active Alerts",
+        alertHistory: "Alert History",
+        alertSettings: "Alert Settings",
+        escalationRules: "Escalation Rules",
+        responseTime: "Response Time",
+        acknowledgeAlert: "Acknowledge Alert",
+      },
+      employees: {
+        title: "Employees",
+        description: "Employee management and assignment system",
+        totalEmployees: "Total Employees",
+        activeEmployees: "Active Employees",
+        employeeRoles: "Employee Roles",
+        assignments: "Assignments",
+        performance: "Performance",
+        addEmployee: "Add Employee",
+        editEmployee: "Edit Employee",
+      },
+      assignPorts: {
+        title: "Assign Ports",
+        description: "Port assignment and management system",
+        availablePorts: "Available Ports",
+        assignedPorts: "Assigned Ports",
+        portCapacity: "Port Capacity",
+        assignmentHistory: "Assignment History",
+        assignPort: "Assign Port",
+        unassignPort: "Unassign Port",
+      },
+      completedTrips: {
+        title: "Completed Trips",
+        description: "Archive and analysis of completed trips",
+        completionRate: "Completion Rate",
+        averageDuration: "Average Duration",
+        successfulTrips: "Successful Trips",
+        tripAnalytics: "Trip Analytics",
+        exportData: "Export Data",
+        viewReport: "View Report",
+      },
+    },
   },
   ar: {
     navigation: {
@@ -527,8 +663,8 @@ export const translations: Record<Language, TranslationDictionary> = {
       dashboard: "لوحة التحكم",
       configuration: "الإعدادات",
       suspiciousTrips: "الرحلات المشبوهة",
-      reports: "التقارير",
       notifications: "الإشعارات",
+      reports: "التقارير",
     },
     notifications: {
       title: "الإشعارات",
@@ -718,6 +854,74 @@ export const translations: Record<Language, TranslationDictionary> = {
         escalate: "تصعيد",
         resolve: "حل",
         archive: "أرشفة",
+      },
+    },
+
+    // Reports Pages Content
+    reportsPages: {
+      tripPanel: {
+        title: "لوحة الرحلات",
+        description: "لوحة تحكم شاملة لإدارة ومراقبة الرحلات",
+        totalTrips: "إجمالي الرحلات",
+        activeTrips: "الرحلات النشطة",
+        completedTrips: "الرحلات المكتملة",
+        pendingTrips: "الرحلات المعلقة",
+        tripStatus: "حالة الرحلة",
+        viewTrip: "عرض الرحلة",
+        editTrip: "تعديل الرحلة",
+        deleteTrip: "حذف الرحلة",
+      },
+      allAlerts: {
+        title: "جميع التنبيهات",
+        description: "إدارة التنبيهات والإشعارات على مستوى النظام",
+        criticalAlerts: "التنبيهات الحرجة",
+        warningAlerts: "تنبيهات التحذير",
+        infoAlerts: "التنبيهات الإعلامية",
+        resolvedAlerts: "التنبيهات المحلولة",
+        alertType: "نوع التنبيه",
+        alertTime: "وقت التنبيه",
+        resolveAlert: "حل التنبيه",
+      },
+      alertPanel: {
+        title: "لوحة التنبيهات",
+        description: "نظام متقدم لمراقبة التنبيهات والاستجابة",
+        activeAlerts: "التنبيهات النشطة",
+        alertHistory: "تاريخ التنبيهات",
+        alertSettings: "إعدادات التنبيهات",
+        escalationRules: "قواعد التصعيد",
+        responseTime: "وقت الاستجابة",
+        acknowledgeAlert: "إقرار التنبيه",
+      },
+      employees: {
+        title: "الموظفون",
+        description: "نظام إدارة الموظفين والتكليفات",
+        totalEmployees: "إجمالي الموظفين",
+        activeEmployees: "الموظفون النشطون",
+        employeeRoles: "أدوار الموظفين",
+        assignments: "التكليفات",
+        performance: "الأداء",
+        addEmployee: "إضافة موظف",
+        editEmployee: "تعديل الموظف",
+      },
+      assignPorts: {
+        title: "تخصيص الموانئ",
+        description: "نظام تخصيص وإدارة الموانئ",
+        availablePorts: "الموانئ المتاحة",
+        assignedPorts: "الموانئ المخصصة",
+        portCapacity: "سعة الميناء",
+        assignmentHistory: "تاريخ التخصيص",
+        assignPort: "تخصيص ميناء",
+        unassignPort: "إلغاء تخصيص الميناء",
+      },
+      completedTrips: {
+        title: "الرحلات المكتملة",
+        description: "أرشيف وتحليل الرحلات المكتملة",
+        completionRate: "معدل الإنجاز",
+        averageDuration: "متوسط المدة",
+        successfulTrips: "الرحلات الناجحة",
+        tripAnalytics: "تحليلات الرحلات",
+        exportData: "تصدير البيانات",
+        viewReport: "عرض التقرير",
       },
     },
   },

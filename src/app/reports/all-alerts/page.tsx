@@ -2,14 +2,17 @@
 
 import React from "react";
 import { AlertTriangle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import UnderConstruction from "@/components/common/UnderConstruction";
 
 export default function AllAlertsPage() {
+  const { t } = useLanguage();
+
   return (
     <UnderConstruction
-      title="Reports / All Alerts"
+      title={t("reportsPages.allAlerts.title")}
       icon={AlertTriangle}
-      description="All alerts and notifications in the system"
+      description={t("reportsPages.allAlerts.description")}
     />
   );
 }

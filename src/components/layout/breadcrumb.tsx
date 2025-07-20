@@ -56,12 +56,12 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
       if (reportInfo) {
         setCurrentItems([
           {
-            label: "Home",
+            label: t("breadcrumb.home"),
             href: "/",
             icon: Home,
           },
           {
-            label: "Reports",
+            label: t("breadcrumb.reports"),
             href: "#",
             icon: FileText,
           },
@@ -73,12 +73,12 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
       } else {
         setCurrentItems([
           {
-            label: "Home",
+            label: t("breadcrumb.home"),
             href: "/",
             icon: Home,
           },
           {
-            label: "Reports",
+            label: t("breadcrumb.reports"),
             icon: FileText,
           },
         ]);
@@ -86,84 +86,84 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
     } else if (pathname === "/" || pathname === "/location-monitor") {
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "Location Monitor",
+          label: t("breadcrumb.locationMonitor"),
           icon: MapPin,
         },
       ]);
     } else if (pathname === "/focused-trips") {
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "Focused Trips",
+          label: t("breadcrumb.focusedTrips"),
           icon: Route,
         },
       ]);
     } else if (pathname === "/assigned-ports") {
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "My Assigned Ports",
+          label: t("breadcrumb.assignedPorts"),
           icon: Anchor,
         },
       ]);
     } else if (pathname === "/dashboard") {
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "Dashboard",
+          label: t("breadcrumb.dashboard"),
           icon: BarChart3,
         },
       ]);
     } else if (pathname === "/configuration") {
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "Configuration",
+          label: t("breadcrumb.configuration"),
           icon: Settings,
         },
       ]);
     } else if (pathname === "/suspicious-trips") {
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "Suspicious Trips",
+          label: t("breadcrumb.suspiciousTrips"),
           icon: AlertTriangle,
         },
       ]);
     } else if (pathname === "/notifications") {
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "Notifications",
+          label: t("breadcrumb.notifications"),
           icon: Bell,
         },
       ]);
@@ -171,17 +171,17 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
       // Default to Location Monitor
       setCurrentItems([
         {
-          label: "Home",
+          label: t("breadcrumb.home"),
           href: "/",
           icon: Home,
         },
         {
-          label: "Location Monitor",
+          label: t("breadcrumb.locationMonitor"),
           icon: MapPin,
         },
       ]);
     }
-  }, [pathname]);
+  }, [pathname, t]);
 
   const finalItems = items.length > 0 ? items : currentItems;
 

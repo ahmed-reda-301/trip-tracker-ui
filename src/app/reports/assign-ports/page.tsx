@@ -2,14 +2,17 @@
 
 import React from "react";
 import { Anchor } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import UnderConstruction from "@/components/common/UnderConstruction";
 
 export default function AssignPortsPage() {
+  const { t } = useLanguage();
+
   return (
     <UnderConstruction
-      title="Reports / Assign Ports"
+      title={t("reportsPages.assignPorts.title")}
       icon={Anchor}
-      description="Port assignment for users and employees"
+      description={t("reportsPages.assignPorts.description")}
     />
   );
 }
