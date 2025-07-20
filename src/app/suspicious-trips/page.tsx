@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { AlertTriangle } from "lucide-react";
 import UnderConstruction from "@/components/common/UnderConstruction";
@@ -7,7 +9,7 @@ export default function SuspiciousTripsPage() {
     <UnderConstruction
       title="Suspicious Trips"
       icon={AlertTriangle}
-      description="الرحلات المشبوهة والتحليل الأمني للشحنات"
+      description="Suspicious trips and security analysis of shipments"
     />
   );
 }

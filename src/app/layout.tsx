@@ -5,9 +5,9 @@ import "./globals.css";
 import Header from "@/components/layout/header";
 import Navigation from "@/components/layout/navigation";
 import Breadcrumb from "@/components/layout/breadcrumb";
-import MainContent from "@/components/main-content";
 import Footer from "@/components/layout/footer";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -21,32 +21,42 @@ const cairo = Cairo({
   preload: true,
 });
 
-export default function RootLayout() {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = useState<string>("location-monitor");
   const [selectedReportItem, setSelectedReportItem] = useState<string>("");
 
-  // Breadcrumb items based on current tab
-  const breadcrumbMap: Record<
-    string,
-    Array<{ label: string; href?: string }>
-  > = {
-    "location-monitor": [
-      { label: "Home", href: "/" },
-      { label: "Location Monitor" },
-    ],
-    "focused-trips": [{ label: "Home", href: "/" }, { label: "Focused Trips" }],
-    "assigned-ports": [
-      { label: "Home", href: "/" },
-      { label: "Assigned Ports" },
-    ],
-    dashboard: [{ label: "Home", href: "/" }, { label: "Dashboard" }],
-    default: [
-      { label: "Home", href: "/" },
-      { label: "Page Under Development" },
-    ],
-  };
-
-  const breadcrumbItems = breadcrumbMap[activeTab] || breadcrumbMap.default;
+  // Update active tab based on current pathname
+  useEffect(() => {
+    if (pathname === "/" || pathname === "/location-monitor") {
+      setActiveTab("location-monitor");
+    } else if (pathname === "/focused-trips") {
+      setActiveTab("focused-trips");
+    } else if (pathname === "/assigned-ports") {
+      setActiveTab("assigned-ports");
+    } else if (pathname === "/dashboard") {
+      setActiveTab("dashboard");
+    } else if (pathname === "/configuration") {
+      setActiveTab("configuration");
+    } else if (pathname === "/suspicious-trips") {
+      setActiveTab("suspicious-trips");
+    } else if (pathname.startsWith("/reports/")) {
+      // Set active tab to reports when in reports section
+      setActiveTab("reports");
+      // Extract report key from URL
+      const reportKey = pathname.split("/").pop();
+      if (reportKey) {
+        setSelectedReportItem(reportKey);
+      }
+    } else {
+      // Default to location-monitor for unknown paths
+      setActiveTab("location-monitor");
+    }
+  }, [pathname]);
 
   // Navigation handler for breadcrumb links
   const handleNavigate = (href: string) => {
@@ -73,10 +83,10 @@ export default function RootLayout() {
             selectedReportItem={selectedReportItem}
             onReportItemChange={setSelectedReportItem}
           />
-          <Breadcrumb items={breadcrumbItems} onNavigate={handleNavigate} />
-          <main className="flex-1">
-            <MainContent activeTab={activeTab} />
-          </main>
+          <Breadcrumb onNavigate={handleNavigate} />
+          <div className="flex-1 bg-gray-50 p-8">
+            <div className="max-w-6xl mx-auto">{children}</div>
+          </div>
           <Footer />
         </div>
       </body>

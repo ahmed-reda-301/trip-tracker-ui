@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { AlertTriangle } from "lucide-react";
 import UnderConstruction from "@/components/common/UnderConstruction";
@@ -5,9 +7,9 @@ import UnderConstruction from "@/components/common/UnderConstruction";
 export default function AllAlertsPage() {
   return (
     <UnderConstruction
-      title="All Alerts"
+      title="Reports / All Alerts"
       icon={AlertTriangle}
-      description="جميع التنبيهات والإشعارات في النظام"
+      description="All alerts and notifications in the system"
     />
   );
 }

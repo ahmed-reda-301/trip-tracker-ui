@@ -12,7 +12,7 @@ interface UnderConstructionProps {
 const UnderConstruction: React.FC<UnderConstructionProps> = ({
   title,
   icon: Icon,
-  description = "هذه الصفحة قيد الإنشاء وستكون متاحة قريباً",
+  description = "This page is under construction and will be available soon",
 }) => {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-8">
@@ -36,13 +36,16 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({
             <div className="w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center mr-3">
               <span className="text-yellow-800 text-sm font-bold">!</span>
             </div>
-            <p className="text-yellow-800 font-medium">صفحة قيد الإنشاء</p>
+            <p className="text-yellow-800 font-medium">
+              Page Under Construction
+            </p>
           </div>
         </div>
 
         {/* Additional Info */}
         <p className="text-sm text-gray-500">
-          نعمل على تطوير هذه الصفحة لتوفير أفضل تجربة لك
+          We are working on developing this page to provide you with the best
+          experience
         </p>
       </div>
     </div>

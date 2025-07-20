@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { BarChart3 } from "lucide-react";
 import UnderConstruction from "@/components/common/UnderConstruction";
@@ -7,7 +9,7 @@ export default function DashboardPage() {
     <UnderConstruction
       title="Dashboard"
       icon={BarChart3}
-      description="لوحة التحكم الرئيسية والإحصائيات العامة"
+      description="Main dashboard and general statistics"
     />
   );
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { AlertTriangle } from "lucide-react";
 import UnderConstruction from "@/components/common/UnderConstruction";
@@ -5,9 +7,9 @@ import UnderConstruction from "@/components/common/UnderConstruction";
 export default function AlertPanelPage() {
   return (
     <UnderConstruction
-      title="Alert Panel"
+      title="Reports / Alert Panel"
       icon={AlertTriangle}
-      description="لوحة إدارة التنبيهات والتحكم في الإشعارات"
+      description="Alert management panel and notification control"
     />
   );
 }

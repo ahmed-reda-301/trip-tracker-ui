@@ -153,10 +153,15 @@ const Navigation: React.FC<NavigationProps> = ({
     );
 
     if (dropdownItem) {
+      // Update state first
       onTabChange(`${parentKey}-${itemKey}`);
       onReportItemChange(itemKey);
       setOpenDropdown(null);
-      router.push(dropdownItem.href);
+
+      // Navigate with a small delay to ensure state updates
+      setTimeout(() => {
+        router.push(dropdownItem.href);
+      }, 10);
     }
   };
 
@@ -229,25 +234,11 @@ const Navigation: React.FC<NavigationProps> = ({
                   activeTab === item.key ||
                   activeTab.startsWith(`${item.key}-`);
 
-                // تحديد العنوان والأيقونة للتقارير بناءً على العنصر المختار
-                let displayLabel = item.label;
-                let displayIcon = Icon;
-
-                if (item.key === "reports" && selectedReportItem) {
-                  const selectedItem = item.dropdownItems?.find(
-                    (dropItem) => dropItem.key === selectedReportItem
-                  );
-                  if (selectedItem) {
-                    displayLabel = selectedItem.label;
-                    displayIcon = selectedItem.icon;
-                  }
-                }
-
                 return (
                   <NavigationItem
                     key={item.key}
-                    label={displayLabel}
-                    icon={displayIcon}
+                    label={item.label}
+                    icon={Icon}
                     isActive={isActive}
                     hasDropdown={item.hasDropdown}
                     dropdownItems={item.dropdownItems || []}
