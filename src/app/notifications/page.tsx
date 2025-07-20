@@ -5,12 +5,23 @@
  *
  * Comprehensive notifications management page for the Trip Tracker application.
  * Displays all notifications with filtering, marking as read, and detailed views.
+ * Supports full multilingual content with RTL/LTR layouts.
  *
- * @author Trip Tracker Team
- * @version 1.0.0
+ * Features:
+ * - Complete multilingual support (Arabic/English)
+ * - Real-time notification filtering (all/read/unread)
+ * - Search functionality across titles and messages
+ * - Mark as read/unread functionality
+ * - Delete notifications capability
+ * - Priority and category display
+ * - Responsive design for all screen sizes
+ * - RTL/LTR layout support
+ *
+ * @author Ahmed Reda
+ * @version 2.0.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Bell,
@@ -45,63 +56,66 @@ const NotificationsPage: React.FC = () => {
     []
   );
 
-  // Sample notifications data
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: 1,
-      title: t("sampleNotifications.suspiciousTrip.title"),
-      message: t("sampleNotifications.suspiciousTrip.message"),
-      time: t("notifications.timeAgo.minutesAgo"),
-      type: "warning",
-      isRead: false,
-      priority: "high",
-      category: t("notifications.categories.security"),
-    },
-    {
-      id: 2,
-      title: "System maintenance scheduled",
-      message:
-        "Scheduled maintenance will occur tonight from 2:00 AM to 4:00 AM. Some services may be temporarily unavailable.",
-      time: "1 hour ago",
-      type: "info",
-      isRead: false,
-      priority: "medium",
-      category: "System",
-    },
-    {
-      id: 3,
-      title: "Monthly report ready",
-      message:
-        "Your monthly customs report for November 2024 is now available for download in the reports section.",
-      time: "3 hours ago",
-      type: "success",
-      isRead: true,
-      priority: "low",
-      category: "Reports",
-    },
-    {
-      id: 4,
-      title: "Port assignment updated",
-      message:
-        "Your port assignments have been updated. Please review the new assignments in your dashboard.",
-      time: "5 hours ago",
-      type: "info",
-      isRead: false,
-      priority: "medium",
-      category: "Assignments",
-    },
-    {
-      id: 5,
-      title: "Critical alert: Unauthorized access attempt",
-      message:
-        "Multiple failed login attempts detected from IP 192.168.1.100. Security protocols have been activated.",
-      time: "1 day ago",
-      type: "error",
-      isRead: true,
-      priority: "high",
-      category: "Security",
-    },
-  ]);
+  // Sample notifications data with full translation support
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+
+  // Update notifications when language changes
+  useEffect(() => {
+    const generateNotifications = (): Notification[] => [
+      {
+        id: 1,
+        title: t("sampleNotifications.suspiciousTrip.title"),
+        message: t("sampleNotifications.suspiciousTrip.message"),
+        time: `5 ${t("notifications.timeAgo.minutesAgo")}`,
+        type: "warning",
+        isRead: false,
+        priority: "high",
+        category: t("notifications.categories.security"),
+      },
+      {
+        id: 2,
+        title: t("sampleNotifications.systemMaintenance.title"),
+        message: t("sampleNotifications.systemMaintenance.message"),
+        time: `1 ${t("notifications.timeAgo.hourAgo")}`,
+        type: "info",
+        isRead: false,
+        priority: "medium",
+        category: t("notifications.categories.system"),
+      },
+      {
+        id: 3,
+        title: t("sampleNotifications.monthlyReport.title"),
+        message: t("sampleNotifications.monthlyReport.message"),
+        time: `3 ${t("notifications.timeAgo.hoursAgo")}`,
+        type: "success",
+        isRead: true,
+        priority: "low",
+        category: t("notifications.categories.reports"),
+      },
+      {
+        id: 4,
+        title: t("sampleNotifications.portAssignment.title"),
+        message: t("sampleNotifications.portAssignment.message"),
+        time: `5 ${t("notifications.timeAgo.hoursAgo")}`,
+        type: "info",
+        isRead: false,
+        priority: "medium",
+        category: t("notifications.categories.assignments"),
+      },
+      {
+        id: 5,
+        title: t("sampleNotifications.securityAlert.title"),
+        message: t("sampleNotifications.securityAlert.message"),
+        time: `1 ${t("notifications.timeAgo.dayAgo")}`,
+        type: "error",
+        isRead: true,
+        priority: "high",
+        category: t("notifications.categories.security"),
+      },
+    ];
+
+    setNotifications(generateNotifications());
+  }, [t]); // Re-run when translation function changes (language change)
 
   /**
    * Get notification icon based on type
@@ -230,7 +244,11 @@ const NotificationsPage: React.FC = () => {
           {/* Search and Filter */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search
+                className={`absolute top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 ${
+                  isRTL ? "right-3" : "left-3"
+                }`}
+              />
               <input
                 type="text"
                 placeholder={t("notifications.searchPlaceholder")}
@@ -339,7 +357,9 @@ const NotificationsPage: React.FC = () => {
                               notification.priority
                             )}`}
                           >
-                            {notification.priority}
+                            {t(
+                              `notifications.priority.${notification.priority}`
+                            )}
                           </span>
                           <span className="text-gray-400">•</span>
                           <span>{notification.category}</span>
