@@ -1,6 +1,6 @@
 "use client";
 
-import { Cairo, Roboto } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Navigation from "@/components/layout/navigation";
@@ -10,12 +10,6 @@ import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  preload: true,
-});
-
-const cairo = Cairo({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   preload: true,
@@ -80,7 +74,6 @@ export default function RootLayout({
           <Navigation
             activeTab={activeTab}
             onTabChange={setActiveTab}
-            selectedReportItem={selectedReportItem}
             onReportItemChange={setSelectedReportItem}
           />
           <Breadcrumb onNavigate={handleNavigate} />
