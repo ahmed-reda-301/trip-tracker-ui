@@ -79,6 +79,13 @@
 
   /* Custom header colors */
   --header-primary: 0 36 71; /* #002447 in RGB values */
+
+  /* Custom navigation colors */
+  --nav-bg: 255 255 255; /* #ffffff - Navigation background (white) */
+  --nav-active: 5 148 211; /* rgb(5, 148, 211) - Active tab background */
+  --nav-hover: 97 179 79; /* #61B34F - Hover state */
+  --nav-text: 0 0 0; /* #000000 - Default text color (black) */
+  --nav-text-active: 255 255 255; /* #ffffff - Active/hover text color (white) */
 }
 
 .dark {
@@ -116,6 +123,13 @@
 
   /* Custom header colors */
   --header-primary: 0 36 71; /* #002447 in RGB values */
+
+  /* Custom navigation colors */
+  --nav-bg: 255 255 255; /* #ffffff - Navigation background (white) */
+  --nav-active: 5 148 211; /* rgb(5, 148, 211) - Active tab background */
+  --nav-hover: 97 179 79; /* #61B34F - Hover state */
+  --nav-text: 0 0 0; /* #000000 - Default text color (black) */
+  --nav-text-active: 255 255 255; /* #ffffff - Active/hover text color (white) */
 }
 
 @layer base {
@@ -129,4 +143,22 @@
   .container {
     @apply mx-auto px-4 md:px-8 lg:px-16 xl:px-32;
   }
+}
+
+/* Custom styles for navigation dropdown */
+.dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  z-index: 9999 !important;
+  min-width: 150px !important;
+  max-width: none !important;
+  width: max-content !important;
+  overflow: visible !important;
+}
+
+/* Prevent horizontal scroll in navigation */
+.navigation-container {
+  overflow-x: visible !important;
+  overflow-y: visible !important;
 }

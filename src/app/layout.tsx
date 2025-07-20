@@ -23,6 +23,7 @@ const cairo = Cairo({
 
 export default function RootLayout() {
   const [activeTab, setActiveTab] = useState<string>("location-monitor");
+  const [selectedReportItem, setSelectedReportItem] = useState<string>("");
 
   // Breadcrumb items based on current tab
   const breadcrumbMap: Record<
@@ -66,7 +67,12 @@ export default function RootLayout() {
       <body className={roboto.className}>
         <div className="flex flex-col min-h-screen">
           <Header />
-          <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+          <Navigation
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            selectedReportItem={selectedReportItem}
+            onReportItemChange={setSelectedReportItem}
+          />
           <Breadcrumb items={breadcrumbItems} onNavigate={handleNavigate} />
           <main className="flex-1">
             <MainContent activeTab={activeTab} />

@@ -2,6 +2,7 @@
 
 // components/Navigation.jsx
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ChevronDown,
   MapPin,
@@ -16,16 +17,22 @@ import {
   Database,
   Menu,
 } from "lucide-react";
+import NavigationItem from "@/components/navigation/NavigationItem";
 
 interface NavigationProps {
   activeTab?: string;
   onTabChange?: (key: string) => void;
+  selectedReportItem?: string;
+  onReportItemChange?: (key: string) => void;
 }
 
 const Navigation: React.FC<NavigationProps> = ({
   activeTab = "",
   onTabChange = () => {},
+  selectedReportItem = "",
+  onReportItemChange = () => {},
 }) => {
+  const router = useRouter();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -34,43 +41,93 @@ const Navigation: React.FC<NavigationProps> = ({
       key: "location-monitor",
       label: "Location Monitor",
       icon: MapPin,
-      active: true,
+      href: "/location-monitor",
+      hasDropdown: false,
     },
     {
       key: "focused-trips",
       label: "Focused Trips",
       icon: Route,
+      href: "/focused-trips",
+      hasDropdown: false,
     },
     {
       key: "assigned-ports",
       label: "My Assigned Ports",
       icon: Anchor,
+      href: "/assigned-ports",
+      hasDropdown: false,
     },
     {
       key: "dashboard",
       label: "Dashboard",
       icon: BarChart3,
+      href: "/dashboard",
+      hasDropdown: false,
     },
     {
       key: "configuration",
       label: "Configuration",
       icon: Settings,
+      href: "/configuration",
+      hasDropdown: false,
     },
     {
       key: "suspicious-trips",
       label: "Suspicious Trips",
       icon: AlertTriangle,
+      href: "/suspicious-trips",
+      hasDropdown: false,
     },
     {
       key: "reports",
       label: "Reports",
       icon: FileText,
+      href: "#",
       hasDropdown: true,
       dropdownItems: [
-        { key: "analytics", label: "Analytics Reports", icon: TrendingUp },
-        { key: "compliance", label: "Compliance Reports", icon: FileText },
-        { key: "user-activity", label: "User Activity", icon: Users },
-        { key: "system-logs", label: "System Logs", icon: Database },
+        {
+          key: "trip-panel",
+          label: "Trip Panel",
+          icon: Route,
+          href: "/reports/trip-panel",
+        },
+        {
+          key: "all-alerts",
+          label: "All Alerts",
+          icon: AlertTriangle,
+          href: "/reports/all-alerts",
+        },
+        {
+          key: "alert-panel",
+          label: "Alert Panel",
+          icon: AlertTriangle,
+          href: "/reports/alert-panel",
+        },
+        {
+          key: "employees",
+          label: "Employees",
+          icon: Users,
+          href: "/reports/employees",
+        },
+        {
+          key: "assign-ports",
+          label: "Assign Ports",
+          icon: Anchor,
+          href: "/reports/assign-ports",
+        },
+        {
+          key: "focused-trips",
+          label: "Focused Trips",
+          icon: Route,
+          href: "/reports/focused-trips",
+        },
+        {
+          key: "completed-trips",
+          label: "Completed Trips",
+          icon: Database,
+          href: "/reports/completed-trips",
+        },
       ],
     },
   ];
@@ -85,12 +142,22 @@ const Navigation: React.FC<NavigationProps> = ({
     } else {
       onTabChange(item.key);
       setOpenDropdown(null);
+      router.push(item.href);
     }
   };
 
   const handleDropdownItemClick = (parentKey: string, itemKey: string) => {
-    onTabChange(`${parentKey}-${itemKey}`);
-    setOpenDropdown(null);
+    const parentItem = navigationItems.find((item) => item.key === parentKey);
+    const dropdownItem = parentItem?.dropdownItems?.find(
+      (item) => item.key === itemKey
+    );
+
+    if (dropdownItem) {
+      onTabChange(`${parentKey}-${itemKey}`);
+      onReportItemChange(itemKey);
+      setOpenDropdown(null);
+      router.push(dropdownItem.href);
+    }
   };
 
   return (
@@ -118,7 +185,7 @@ const Navigation: React.FC<NavigationProps> = ({
         onClick={() => setSidebarOpen(false)}
       >
         <nav
-          className={`fixed top-0 left-0 h-full w-64 bg-slate-800 text-white shadow-lg transform transition-transform duration-300 ${
+          className={`fixed top-0 left-0 h-full w-64 bg-[rgb(var(--nav-bg))] shadow-lg transform transition-transform duration-300 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
           onClick={(e) => e.stopPropagation()}
@@ -126,6 +193,8 @@ const Navigation: React.FC<NavigationProps> = ({
           <div className="p-4 flex flex-col gap-2">
             {navigationItems.map((item) => {
               const Icon = item.icon;
+              const isActive =
+                activeTab === item.key || activeTab.startsWith(`${item.key}-`);
               return (
                 <button
                   key={item.key}
@@ -133,7 +202,11 @@ const Navigation: React.FC<NavigationProps> = ({
                     handleTabClick(item);
                     setSidebarOpen(false);
                   }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all duration-200 min-w-fit text-slate-300 hover:text-white hover:bg-slate-600"
+                  className={`flex items-center gap-2 px-4 py-2 font-medium whitespace-nowrap transition-all duration-200 min-w-fit ${
+                    isActive
+                      ? "bg-[rgb(var(--nav-active))] text-[rgb(var(--nav-text-active))]"
+                      : "bg-[rgb(var(--nav-bg))] text-[rgb(var(--nav-text))] hover:bg-[rgb(var(--nav-hover))] hover:text-[rgb(var(--nav-text-active))]"
+                  }`}
                 >
                   <Icon className="w-4 h-4" />
                   <span>{item.label}</span>
@@ -145,64 +218,57 @@ const Navigation: React.FC<NavigationProps> = ({
       </div>
 
       {/* Main horizontal navigation (hidden on small screens) */}
-      <nav className="bg-slate-700 border-t border-slate-600 relative w-full hidden md:block">
-        <div className="px-2 py-2 w-full">
-          <div className="flex gap-2 overflow-x-auto w-full">
-            {navigationItems.map((item) => {
-              const Icon = item.icon;
-              const isActive =
-                activeTab === item.key || activeTab.startsWith(`${item.key}-`);
+      <nav className="bg-[rgb(var(--nav-bg))] relative w-full hidden md:block navigation-container">
+        <div className="px-4 py-0 w-full">
+          <div className="flex items-center justify-between w-full">
+            {/* Navigation Items */}
+            <div className="flex gap-0 navigation-container">
+              {navigationItems.map((item) => {
+                const Icon = item.icon;
+                const isActive =
+                  activeTab === item.key ||
+                  activeTab.startsWith(`${item.key}-`);
 
-              return (
-                <div key={item.key} className="relative">
-                  <button
+                // تحديد العنوان والأيقونة للتقارير بناءً على العنصر المختار
+                let displayLabel = item.label;
+                let displayIcon = Icon;
+
+                if (item.key === "reports" && selectedReportItem) {
+                  const selectedItem = item.dropdownItems?.find(
+                    (dropItem) => dropItem.key === selectedReportItem
+                  );
+                  if (selectedItem) {
+                    displayLabel = selectedItem.label;
+                    displayIcon = selectedItem.icon;
+                  }
+                }
+
+                return (
+                  <NavigationItem
+                    key={item.key}
+                    label={displayLabel}
+                    icon={displayIcon}
+                    isActive={isActive}
+                    hasDropdown={item.hasDropdown}
+                    dropdownItems={item.dropdownItems || []}
+                    isDropdownOpen={openDropdown === item.key}
                     onClick={() => handleTabClick(item)}
-                    className={`
-                      flex items-center space-x-2 px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all duration-200 min-w-fit
-                      ${
-                        isActive
-                          ? "bg-blue-600 text-white shadow-md"
-                          : "text-slate-300 hover:text-white hover:bg-slate-600"
-                      }
-                    `}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span>{item.label}</span>
-                    {item.hasDropdown && (
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-200 ${
-                          openDropdown === item.key ? "rotate-180" : ""
-                        }`}
-                      />
-                    )}
-                  </button>
+                    onDropdownItemClick={(itemKey) =>
+                      handleDropdownItemClick(item.key, itemKey)
+                    }
+                  />
+                );
+              })}
+            </div>
 
-                  {/* Dropdown Menu */}
-                  {item.hasDropdown && openDropdown === item.key && (
-                    <div className="absolute top-full left-0 mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                      {item.dropdownItems.map((dropdownItem) => {
-                        const DropdownIcon = dropdownItem.icon;
-                        return (
-                          <button
-                            key={dropdownItem.key}
-                            onClick={() =>
-                              handleDropdownItemClick(
-                                item.key,
-                                dropdownItem.key
-                              )
-                            }
-                            className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3"
-                          >
-                            <DropdownIcon className="w-4 h-4" />
-                            <span>{dropdownItem.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            {/* Logo in the right side */}
+            <div className="flex items-center h-full">
+              <img
+                src="/assets/Saudi-Customs-Logo-new.png"
+                alt="Saudi Customs Logo"
+                className="h-20 object-cover"
+              />
+            </div>
           </div>
         </div>
       </nav>
