@@ -76,12 +76,12 @@ const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <header className="bg-slate-800 text-white shadow-lg relative w-full">
-      <div className="px-4 py-3 w-full">
+    <header className="bg-[rgb(var(--header-primary))] text-white relative w-full">
+      <div className="px-4 py-0 w-full">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
           {/* Logo and Title */}
           <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full flex items-center justify-center shadow-md">
                 <div className="w-5 h-5 bg-white rounded-full opacity-90"></div>
                 <Image
@@ -100,7 +100,7 @@ const Header: React.FC<HeaderProps> = ({
                   Zakat, Tax, Customs Authority
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Right side controls */}
