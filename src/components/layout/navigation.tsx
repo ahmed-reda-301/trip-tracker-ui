@@ -70,8 +70,6 @@ interface NavigationItemProps {
   onClick: () => void;
   /** Click handler for dropdown items */
   onDropdownItemClick?: (itemKey: string) => void;
-  /** Whether RTL mode is active */
-  isRTL?: boolean;
 }
 
 /**
@@ -92,15 +90,13 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   isDropdownOpen = false,
   onClick,
   onDropdownItemClick,
-  isRTL = false,
 }) => {
   return (
     <div className="relative dropdown-container">
       <button
         onClick={onClick}
         className={`
-          flex items-center px-4 py-3 font-medium whitespace-nowrap transition-all duration-200 min-w-fit
-          ${isRTL ? "flex-row-reverse space-x-reverse space-x-2" : "space-x-2"}
+          flex items-center px-4 py-3 font-medium whitespace-nowrap transition-all duration-200 min-w-fit space-x-2
           ${
             isActive
               ? "bg-[rgb(5,148,211)] text-white"
@@ -132,13 +128,9 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
               <button
                 key={dropdownItem.key}
                 onClick={() => onDropdownItemClick?.(dropdownItem.key)}
-                className={`w-full px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors flex items-center text-sm whitespace-nowrap ${
-                  isRTL ? "text-right flex-row-reverse" : "text-left"
-                }`}
+                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors flex items-center text-sm whitespace-nowrap"
               >
-                <DropdownIcon
-                  className={`w-4 h-4 flex-shrink-0 ${isRTL ? "ml-3" : "mr-3"}`}
-                />
+                <DropdownIcon className="w-4 h-4 mr-3 flex-shrink-0" />
                 <span>{dropdownItem.label}</span>
               </button>
             );
@@ -209,7 +201,7 @@ const Navigation: React.FC<NavigationProps> = ({
   onSidebarChange = () => {},
 }) => {
   const router = useRouter();
-  const { language, setLanguage, t, isRTL } = useLanguage();
+  const { t, isRTL } = useLanguage();
 
   // State management
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -421,11 +413,7 @@ const Navigation: React.FC<NavigationProps> = ({
           {/* Mobile Sidebar Content */}
           <div className="flex flex-col h-full">
             {/* Sidebar Header with Close Button */}
-            <div
-              className={`flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50 ${
-                isRTL ? "flex-row-reverse" : ""
-              }`}
-            >
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
               <h2 className="text-lg font-semibold text-gray-800">
                 {t("common.appName")}
               </h2>
@@ -455,10 +443,10 @@ const Navigation: React.FC<NavigationProps> = ({
                   }`}
                 >
                   <span className="font-medium text-gray-800 text-sm">
-                    {headerProps.user?.name}
+                    {isRTL ? "أحمد الراشد" : headerProps.user?.name}
                   </span>
                   <span className="text-xs text-gray-500">
-                    {headerProps.user?.role}
+                    {isRTL ? "موظف جمارك" : headerProps.user?.role}
                   </span>
                 </div>
               </div>
@@ -506,15 +494,11 @@ const Navigation: React.FC<NavigationProps> = ({
                     // Reports section with expanded items
                     return (
                       <div key={item.key} className="space-y-1">
-                        <div
-                          className={`flex items-center gap-2 px-3 py-2 text-sm font-semibold text-gray-600 bg-gray-100 rounded-lg ${
-                            isRTL ? "flex-row-reverse text-right" : "text-left"
-                          }`}
-                        >
+                        <div className="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-gray-600 bg-gray-100 rounded-lg text-left">
                           <Icon className="w-4 h-4" />
                           <span>{item.label}</span>
                         </div>
-                        <div className={`space-y-1 ${isRTL ? "mr-4" : "ml-4"}`}>
+                        <div className="space-y-1 ml-4">
                           {item.dropdownItems?.map((dropdownItem) => {
                             const DropdownIcon = dropdownItem.icon;
                             const isDropdownActive =
@@ -529,14 +513,10 @@ const Navigation: React.FC<NavigationProps> = ({
                                   );
                                   setSidebarOpen(false);
                                 }}
-                                className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-all ${
+                                className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-all text-left ${
                                   isDropdownActive
                                     ? "bg-blue-100 text-blue-700 font-medium"
                                     : "text-gray-600 hover:bg-gray-100"
-                                } ${
-                                  isRTL
-                                    ? "flex-row-reverse text-right"
-                                    : "text-left"
                                 }`}
                               >
                                 <DropdownIcon className="w-4 h-4" />
@@ -556,12 +536,10 @@ const Navigation: React.FC<NavigationProps> = ({
                           handleTabClick(item);
                           setSidebarOpen(false);
                         }}
-                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-all ${
+                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-all text-left ${
                           isActive
                             ? "bg-blue-100 text-blue-700 font-medium"
                             : "text-gray-600 hover:bg-gray-100"
-                        } ${
-                          isRTL ? "flex-row-reverse text-right" : "text-left"
                         }`}
                       >
                         <Icon className="w-4 h-4" />
@@ -576,27 +554,15 @@ const Navigation: React.FC<NavigationProps> = ({
             {/* Footer Actions */}
             <div className="p-4 border-t border-gray-200 bg-gray-50">
               <div className="space-y-2">
-                <button
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all ${
-                    isRTL ? "flex-row-reverse text-right" : "text-left"
-                  }`}
-                >
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all text-left">
                   <UserCircle className="w-4 h-4" />
                   <span>{t("header.profile")}</span>
                 </button>
-                <button
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all ${
-                    isRTL ? "flex-row-reverse text-right" : "text-left"
-                  }`}
-                >
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all text-left">
                   <Settings className="w-4 h-4" />
                   <span>{t("header.settings")}</span>
                 </button>
-                <button
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-all ${
-                    isRTL ? "flex-row-reverse text-right" : "text-left"
-                  }`}
-                >
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-all text-left">
                   <LogOut className="w-4 h-4" />
                   <span>{t("header.signOut")}</span>
                 </button>
@@ -631,7 +597,6 @@ const Navigation: React.FC<NavigationProps> = ({
                     onDropdownItemClick={(itemKey) =>
                       handleDropdownItemClick(item.key, itemKey)
                     }
-                    isRTL={isRTL}
                   />
                 );
               })}

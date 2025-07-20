@@ -90,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({
     {
       id: 1,
       title: t("sampleNotifications.suspiciousTrip.title"),
-      time:  t("notifications.timeAgo.minutesAgo"),
+      time: t("notifications.timeAgo.minutesAgo"),
       type: t("notifications.types.warning"),
     },
     {
@@ -226,52 +226,69 @@ const Header: React.FC<HeaderProps> = ({
                   <User className="w-4 h-4 text-white" />
                 </div>
                 <div className="flex flex-col items-start">
-                  <span className="font-medium text-sm">{user.name}</span>
-                  <span className="text-xs text-gray-300">{user.role}</span>
+                  <span className="font-medium text-sm">
+                    {isRTL ? "أحمد الراشد" : user.name}
+                  </span>
+                  <span className="text-xs text-gray-300">
+                    {isRTL ? "موظف جمارك" : user.role}
+                  </span>
                 </div>
               </button>
 
               {/* Profile Dropdown */}
               {isProfileOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
-                  <div className="px-4 py-3 border-b border-gray-100">
-                    <p className="font-medium text-gray-800">{user.name}</p>
-                    <p className="text-sm text-gray-500">{user.email}</p>
-                    <p className="text-xs text-gray-400 mt-1">{user.role}</p>
+                <div
+                  className={`absolute mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 max-h-96 overflow-hidden ${
+                    isRTL ? "left-0" : "right-0"
+                  }`}
+                  style={{
+                    maxHeight: "calc(100vh - 200px)",
+                    overflowY: "hidden",
+                    overscrollBehavior: "contain",
+                  }}
+                >
+                  <div
+                    className={`px-4 py-3 border-b border-gray-100 ${
+                      isRTL ? "text-right" : "text-left"
+                    }`}
+                  >
+                    <p className="font-medium text-gray-800">
+                      {isRTL ? "أحمد الراشد" : user.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {isRTL ? "ahmed@customs.gov.sa" : user.email}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {isRTL ? "موظف جمارك" : user.role}
+                    </p>
                   </div>
 
                   <div className="py-1">
                     <button
-                      className={`w-full px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3 ${
-                        isRTL
-                          ? "text-right flex-row-reverse space-x-reverse"
-                          : "text-left"
+                      className={`w-full px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-3 ${
+                        isRTL ? "text-right flex-row-reverse" : "text-left"
                       }`}
                     >
-                      <UserCircle className="w-4 h-4" />
+                      <UserCircle className="w-4 h-4 flex-shrink-0" />
                       <span>{t("header.profile")}</span>
                     </button>
                     <button
-                      className={`w-full px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors flex items-center space-x-3 ${
-                        isRTL
-                          ? "text-right flex-row-reverse space-x-reverse"
-                          : "text-left"
+                      className={`w-full px-4 py-2 text-gray-700 hover:bg-gray-50 transition-colors flex items-center gap-3 ${
+                        isRTL ? "text-right flex-row-reverse" : "text-left"
                       }`}
                     >
-                      <Settings className="w-4 h-4" />
+                      <Settings className="w-4 h-4 flex-shrink-0" />
                       <span>{t("header.settings")}</span>
                     </button>
                   </div>
 
                   <div className="border-t border-gray-100 py-1">
                     <button
-                      className={`w-full px-4 py-2 text-red-600 hover:bg-red-50 transition-colors flex items-center space-x-3 ${
-                        isRTL
-                          ? "text-right flex-row-reverse space-x-reverse"
-                          : "text-left"
+                      className={`w-full px-4 py-2 text-red-600 hover:bg-red-50 transition-colors flex items-center gap-3 ${
+                        isRTL ? "text-right flex-row-reverse" : "text-left"
                       }`}
                     >
-                      <LogOut className="w-4 h-4" />
+                      <LogOut className="w-4 h-4 flex-shrink-0" />
                       <span>{t("header.signOut")}</span>
                     </button>
                   </div>
