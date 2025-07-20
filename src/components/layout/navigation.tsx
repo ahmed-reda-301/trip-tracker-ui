@@ -1,8 +1,19 @@
 "use client";
 
-// components/Navigation.jsx
+/**
+ * Navigation Component
+ *
+ * Main navigation component for the Trip Tracker application.
+ * Provides horizontal navigation for desktop and sidebar navigation for mobile.
+ * Supports dropdown menus for nested navigation items.
+ *
+ * @author Trip Tracker Team
+ * @version 1.0.0
+ */
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   ChevronDown,
   MapPin,
@@ -12,31 +23,57 @@ import {
   Settings,
   AlertTriangle,
   FileText,
-  TrendingUp,
   Users,
   Database,
   Menu,
   LucideIcon,
 } from "lucide-react";
-// NavigationItem interfaces and component
+
+/**
+ * Dropdown item interface for navigation sub-items
+ */
 interface DropdownItem {
+  /** Unique identifier for the dropdown item */
   key: string;
+  /** Display label for the dropdown item */
   label: string;
+  /** Lucide icon component for the dropdown item */
   icon: LucideIcon;
+  /** Navigation href/route for the dropdown item */
   href: string;
 }
 
+/**
+ * Props interface for NavigationItem component
+ */
 interface NavigationItemProps {
+  /** Display label for the navigation item */
   label: string;
+  /** Lucide icon component for the navigation item */
   icon: LucideIcon;
+  /** Whether this navigation item is currently active */
   isActive: boolean;
+  /** Whether this item has a dropdown menu */
   hasDropdown?: boolean;
+  /** Array of dropdown items if hasDropdown is true */
   dropdownItems?: DropdownItem[];
+  /** Whether the dropdown is currently open */
   isDropdownOpen?: boolean;
+  /** Click handler for the main navigation item */
   onClick: () => void;
+  /** Click handler for dropdown items */
   onDropdownItemClick?: (itemKey: string) => void;
 }
 
+/**
+ * NavigationItem Component
+ *
+ * Individual navigation item component that supports both regular navigation
+ * and dropdown functionality. Handles active states and click events.
+ *
+ * @param props - NavigationItemProps
+ * @returns JSX.Element
+ */
 const NavigationItem: React.FC<NavigationItemProps> = ({
   label,
   icon: Icon,
@@ -94,23 +131,50 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   );
 };
 
+/**
+ * Props interface for Navigation component
+ */
 interface NavigationProps {
+  /** Currently active tab/navigation item key */
   activeTab?: string;
+  /** Callback function when a tab/navigation item is changed */
   onTabChange?: (key: string) => void;
-  selectedReportItem?: string;
+  /** Callback function when a report item is changed (for dropdown items) */
   onReportItemChange?: (key: string) => void;
 }
 
+/**
+ * Navigation Component
+ *
+ * Main navigation component that provides both horizontal navigation for desktop
+ * and collapsible sidebar navigation for mobile devices. Supports nested dropdown
+ * menus for complex navigation structures like reports.
+ *
+ * Features:
+ * - Responsive design (horizontal on desktop, sidebar on mobile)
+ * - Dropdown support for nested navigation
+ * - Active state management
+ * - Router integration for navigation
+ * - Accessibility support
+ *
+ * @param props - NavigationProps
+ * @returns JSX.Element
+ */
 const Navigation: React.FC<NavigationProps> = ({
   activeTab = "",
   onTabChange = () => {},
-  selectedReportItem = "",
   onReportItemChange = () => {},
 }) => {
   const router = useRouter();
+
+  // State management
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  /**
+   * Navigation items configuration
+   * Defines all navigation items with their properties and dropdown items
+   */
   const navigationItems = [
     {
       key: "location-monitor",
@@ -207,10 +271,18 @@ const Navigation: React.FC<NavigationProps> = ({
     },
   ];
 
+  /**
+   * Toggles the dropdown menu for a navigation item
+   * @param key - The key of the navigation item
+   */
   const handleDropdownToggle = (key: string) => {
     setOpenDropdown(openDropdown === key ? null : key);
   };
 
+  /**
+   * Handles click events on main navigation items
+   * @param item - The navigation item that was clicked
+   */
   const handleTabClick = (item: (typeof navigationItems)[number]) => {
     if (item.hasDropdown) {
       handleDropdownToggle(item.key);
@@ -221,6 +293,11 @@ const Navigation: React.FC<NavigationProps> = ({
     }
   };
 
+  /**
+   * Handles click events on dropdown items
+   * @param parentKey - The key of the parent navigation item
+   * @param itemKey - The key of the dropdown item that was clicked
+   */
   const handleDropdownItemClick = (parentKey: string, itemKey: string) => {
     const parentItem = navigationItems.find((item) => item.key === parentKey);
     const dropdownItem = parentItem?.dropdownItems?.find(
@@ -242,19 +319,19 @@ const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <>
-      {/* Sidebar Button for small screens */}
+      {/* Mobile Menu Toggle Button */}
       {!sidebarOpen && (
         <button
-          className="md:hidden absolute top-20 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg"
-          style={{ position: "absolute" }}
+          className="md:hidden absolute top-20 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
           onClick={() => setSidebarOpen(true)}
-          aria-label="Open sidebar"
+          aria-label="Open navigation menu"
+          type="button"
         >
           <Menu className="w-6 h-6" />
         </button>
       )}
 
-      {/* Sidebar Drawer */}
+      {/* Sidebar Drawer - Overlay */}
       <div
         className={`fixed inset-0 z-40 transition-opacity duration-300 ${
           sidebarOpen
@@ -263,13 +340,23 @@ const Navigation: React.FC<NavigationProps> = ({
         }`}
         style={{ background: "transparent" }}
         onClick={() => setSidebarOpen(false)}
+        onKeyDown={(e) => {
+          if (e.key === "Escape") {
+            setSidebarOpen(false);
+          }
+        }}
+        role="button"
+        tabIndex={0}
+        aria-label="Close sidebar"
       >
+        {/* Sidebar Navigation */}
         <nav
           className={`fixed top-0 left-0 h-full w-64 bg-[rgb(var(--nav-bg))] shadow-lg transform transition-transform duration-300 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
-          onClick={(e) => e.stopPropagation()}
+          aria-label="Main navigation"
         >
+          {/* Mobile Navigation Items */}
           <div className="p-4 flex flex-col gap-2">
             {navigationItems.map((item) => {
               const Icon = item.icon;
@@ -297,11 +384,11 @@ const Navigation: React.FC<NavigationProps> = ({
         </nav>
       </div>
 
-      {/* Main horizontal navigation (hidden on small screens) */}
+      {/* Desktop Horizontal Navigation */}
       <nav className="bg-[rgb(var(--nav-bg))] relative w-full hidden md:block navigation-container">
         <div className="px-4 py-0 w-full">
           <div className="flex items-center justify-between w-full">
-            {/* Navigation Items */}
+            {/* Desktop Navigation Items */}
             <div className="flex gap-0 navigation-container">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
@@ -327,12 +414,15 @@ const Navigation: React.FC<NavigationProps> = ({
               })}
             </div>
 
-            {/* Logo in the right side */}
-            <div className="flex items-center h-full">
-              <img
+            {/* Saudi Customs Logo */}
+            <div className="flex items-center h-full group">
+              <Image
                 src="/assets/Saudi-Customs-Logo-new.png"
                 alt="Saudi Customs Logo"
-                className="h-20 object-cover"
+                width={320}
+                height={10}
+                className="object-contain  transition-all duration-500 ease-in-out transform group-hover:scale-110 group-hover:brightness-110 group-hover:drop-shadow-lg cursor-pointer"
+                priority
               />
             </div>
           </div>
@@ -343,3 +433,29 @@ const Navigation: React.FC<NavigationProps> = ({
 };
 
 export default Navigation;
+
+/**
+ * Navigation Component Usage:
+ *
+ * @example
+ * ```tsx
+ * <Navigation
+ *   activeTab="dashboard"
+ *   onTabChange={(key) => setActiveTab(key)}
+ *   onReportItemChange={(key) => setReportItem(key)}
+ * />
+ * ```
+ *
+ * @features
+ * - Responsive design (horizontal on desktop, sidebar on mobile)
+ * - Dropdown menus for nested navigation
+ * - Active state management
+ * - Router integration
+ * - Accessibility support
+ * - Custom styling with CSS variables
+ *
+ * @dependencies
+ * - next/navigation (useRouter)
+ * - lucide-react (icons)
+ * - React hooks (useState)
+ */
