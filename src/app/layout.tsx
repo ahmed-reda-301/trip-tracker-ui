@@ -1,19 +1,30 @@
 "use client";
 
-import { Roboto } from "next/font/google";
+import { Roboto, Cairo } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Navigation from "@/components/layout/navigation";
 import Breadcrumb from "@/components/layout/breadcrumb";
 import Footer from "@/components/layout/footer";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import FontProvider from "@/components/providers/FontProvider";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+// English font (Roboto)
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   preload: true,
+  variable: "--font-roboto",
+});
+
+// Arabic font (Cairo)
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  preload: true,
+  variable: "--font-cairo",
 });
 
 export default function RootLayout({
@@ -70,26 +81,28 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body className={`${roboto.variable} ${cairo.variable}`}>
         <LanguageProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header
-              onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
-              isSidebarOpen={sidebarOpen}
-            />
-            <Navigation
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-              onReportItemChange={setSelectedReportItem}
-              sidebarOpen={sidebarOpen}
-              onSidebarChange={setSidebarOpen}
-            />
-            <Breadcrumb onNavigate={handleNavigate} />
-            <div className="flex-1 bg-gray-50 p-8">
-              <div className="max-w-6xl mx-auto">{children}</div>
+          <FontProvider>
+            <div className="flex flex-col min-h-screen">
+              <Header
+                onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
+                isSidebarOpen={sidebarOpen}
+              />
+              <Navigation
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+                onReportItemChange={setSelectedReportItem}
+                sidebarOpen={sidebarOpen}
+                onSidebarChange={setSidebarOpen}
+              />
+              <Breadcrumb onNavigate={handleNavigate} />
+              <div className="flex-1 bg-gray-50 p-8">
+                <div className="max-w-6xl mx-auto">{children}</div>
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
+          </FontProvider>
         </LanguageProvider>
       </body>
     </html>
