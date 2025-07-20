@@ -132,6 +132,7 @@ export interface TranslationDictionary {
   footer: {
     poweredBy: string;
     companyName: string;
+    allRightsReserved: string;
   };
 
   // Sample notification messages
@@ -434,6 +435,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     footer: {
       poweredBy: "Powered by",
       companyName: "Laplacesoftware",
+      allRightsReserved: "All rights reserved © 2025",
     },
     sampleNotifications: {
       suspiciousTrip: {
@@ -754,6 +756,8 @@ export const translations: Record<Language, TranslationDictionary> = {
     footer: {
       poweredBy: "مدعوم من",
       companyName: "لابلاس سوفتوير",
+      allRightsReserved: "كل الحقوق محفوظة © 2025",
+
     },
     sampleNotifications: {
       suspiciousTrip: {

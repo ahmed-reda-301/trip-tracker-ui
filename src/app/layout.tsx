@@ -1,3 +1,20 @@
+/**
+ * Root Layout Component
+ *
+ * Main layout wrapper for the Trip Tracker application.
+ * Provides global providers, font management, and layout structure.
+ *
+ * Features:
+ * - Font providers for Arabic (Cairo) and English (Roboto)
+ * - Language context provider for multilingual support
+ * - Global layout structure with header, navigation, and footer
+ * - Responsive design with mobile sidebar support
+ * - State management for navigation and UI interactions
+ *
+ * @author Ahmed Reda
+ * @version 1.0.0
+ */
+
 "use client";
 
 import { Roboto, Cairo } from "next/font/google";

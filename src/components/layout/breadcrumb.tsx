@@ -1,5 +1,23 @@
+/**
+ * Breadcrumb Component
+ *
+ * Dynamic breadcrumb navigation that automatically generates navigation paths
+ * based on the current route. Supports multilingual content and RTL/LTR layouts.
+ *
+ * Features:
+ * - Automatic breadcrumb generation from URL paths
+ * - Multilingual support with translated labels
+ * - RTL/LTR layout support with appropriate chevron icons
+ * - Icon integration for different page types
+ * - Clickable navigation links
+ * - Responsive design
+ *
+ * @author Ahmed Reda
+ * @version 1.0.0
+ */
+
 "use client";
-// components/Breadcrumb.jsx
+
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -40,7 +58,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
     "trip-panel": { title: t("reports.tripPanel"), icon: Route },
     "all-alerts": { title: t("reports.allAlerts"), icon: AlertTriangle },
     "alert-panel": { title: t("reports.alertPanel"), icon: AlertTriangle },
-    "employees": { title: t("reports.employees"), icon: Users },
+    employees: { title: t("reports.employees"), icon: Users },
     "assign-ports": { title: t("reports.assignPorts"), icon: Anchor },
     "focused-trips": { title: t("reports.focusedTrips"), icon: Route },
     "completed-trips": { title: t("reports.completedTrips"), icon: Database },
