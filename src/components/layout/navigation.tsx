@@ -27,6 +27,11 @@ import {
   Database,
   Menu,
   LucideIcon,
+  User,
+  Globe,
+  Bell,
+  UserCircle,
+  LogOut,
 } from "lucide-react";
 
 /**
@@ -108,19 +113,22 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
         )}
       </button>
 
-      {/* Dropdown Menu */}
+      {/* Dropdown Menu - Responsive positioning */}
       {hasDropdown && isDropdownOpen && (
-        <div className="dropdown-menu bg-white shadow-xl border border-gray-200 py-1 rounded-sm">
+        <div
+          className="absolute top-full left-0 z-50 min-w-[200px] bg-white shadow-xl border border-gray-200 py-1 rounded-lg mt-1
+                        md:left-auto md:right-0
+                        max-h-64 overflow-y-auto"
+        >
           {dropdownItems.map((dropdownItem) => {
             const DropdownIcon = dropdownItem.icon;
             return (
               <button
                 key={dropdownItem.key}
                 onClick={() => onDropdownItemClick?.(dropdownItem.key)}
-                className="w-full px-3 py-1.5 text-left text-gray-700 hover:bg-[rgb(5,148,211)] hover:text-white transition-colors flex items-center text-sm whitespace-nowrap"
-                style={{ minWidth: "150px" }}
+                className="w-full px-4 py-2 text-left text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors flex items-center text-sm whitespace-nowrap"
               >
-                <DropdownIcon className="w-4 h-4 mr-2 flex-shrink-0" />
+                <DropdownIcon className="w-4 h-4 mr-3 flex-shrink-0" />
                 <span>{dropdownItem.label}</span>
               </button>
             );
@@ -141,6 +149,16 @@ interface NavigationProps {
   onTabChange?: (key: string) => void;
   /** Callback function when a report item is changed (for dropdown items) */
   onReportItemChange?: (key: string) => void;
+  /** Header component props for mobile integration */
+  headerProps?: {
+    user?: {
+      name?: string;
+      email?: string;
+      role?: string;
+    };
+    onLanguageChange?: (lang: string) => void;
+    currentLanguage?: string;
+  };
 }
 
 /**
@@ -164,6 +182,15 @@ const Navigation: React.FC<NavigationProps> = ({
   activeTab = "",
   onTabChange = () => {},
   onReportItemChange = () => {},
+  headerProps = {
+    user: {
+      name: "Ahmed Al-Rashid",
+      email: "ahmed@customs.gov.sa",
+      role: "Customs Officer",
+    },
+    currentLanguage: "EN",
+    onLanguageChange: () => {},
+  },
 }) => {
   const router = useRouter();
 
@@ -322,12 +349,12 @@ const Navigation: React.FC<NavigationProps> = ({
       {/* Mobile Menu Toggle Button */}
       {!sidebarOpen && (
         <button
-          className="md:hidden absolute top-20 left-4 z-50 bg-blue-600 text-white p-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
+          className="md:hidden fixed top-4 left-4 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
           onClick={() => setSidebarOpen(true)}
           aria-label="Open navigation menu"
           type="button"
         >
-          <Menu className="w-6 h-6" />
+          <Menu className="w-5 h-5" />
         </button>
       )}
 
@@ -351,35 +378,156 @@ const Navigation: React.FC<NavigationProps> = ({
       >
         {/* Sidebar Navigation */}
         <nav
-          className={`fixed top-0 left-0 h-full w-64 bg-[rgb(var(--nav-bg))] shadow-lg transform transition-transform duration-300 ${
+          className={`fixed top-0 left-0 h-full w-80 bg-white shadow-2xl transform transition-transform duration-300 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
           aria-label="Main navigation"
         >
-          {/* Mobile Navigation Items */}
-          <div className="p-4 flex flex-col gap-2">
-            {navigationItems.map((item) => {
-              const Icon = item.icon;
-              const isActive =
-                activeTab === item.key || activeTab.startsWith(`${item.key}-`);
-              return (
+          {/* Mobile Sidebar Content */}
+          <div className="flex flex-col h-full">
+            {/* Sidebar Header with Close Button */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+              <h2 className="text-lg font-semibold text-gray-800">
+                Trip Tracker
+              </h2>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+                aria-label="Close sidebar"
+              >
+                <Menu className="w-5 h-5 text-gray-600" />
+              </button>
+            </div>
+
+            {/* User Profile Section */}
+            <div className="p-4 border-b border-gray-200 bg-gray-50">
+              {/* User Profile */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
+                  <User className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-medium text-gray-800 text-sm">
+                    {headerProps.user?.name}
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    {headerProps.user?.role}
+                  </span>
+                </div>
+              </div>
+
+              {/* Language & Notifications */}
+              <div className="flex items-center justify-between">
                 <button
-                  key={item.key}
+                  className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
                   onClick={() => {
-                    handleTabClick(item);
-                    setSidebarOpen(false);
+                    const newLang =
+                      headerProps.currentLanguage === "EN" ? "AR" : "EN";
+                    headerProps.onLanguageChange?.(newLang);
                   }}
-                  className={`flex items-center gap-2 px-4 py-2 font-medium whitespace-nowrap transition-all duration-200 min-w-fit ${
-                    isActive
-                      ? "bg-[rgb(var(--nav-active))] text-[rgb(var(--nav-text-active))]"
-                      : "bg-[rgb(var(--nav-bg))] text-[rgb(var(--nav-text))] hover:bg-[rgb(var(--nav-hover))] hover:text-[rgb(var(--nav-text-active))]"
-                  }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <Globe className="w-4 h-4 text-gray-600" />
+                  <span className="text-sm font-medium text-gray-700">
+                    {headerProps.currentLanguage === "EN" ? "🇺🇸 EN" : "🇸🇦 AR"}
+                  </span>
                 </button>
-              );
-            })}
+
+                <button className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all relative">
+                  <Bell className="w-4 h-4 text-gray-600" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
+                    <span className="text-xs text-white font-bold">3</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* Navigation Items */}
+            <div className="flex-1 p-4 overflow-y-auto">
+              <div className="space-y-2">
+                {navigationItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive =
+                    activeTab === item.key ||
+                    activeTab.startsWith(`${item.key}-`);
+
+                  if (item.hasDropdown) {
+                    // Reports section with expanded items
+                    return (
+                      <div key={item.key} className="space-y-1">
+                        <div className="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-gray-600 bg-gray-100 rounded-lg">
+                          <Icon className="w-4 h-4" />
+                          <span>{item.label}</span>
+                        </div>
+                        <div className="ml-4 space-y-1">
+                          {item.dropdownItems?.map((dropdownItem) => {
+                            const DropdownIcon = dropdownItem.icon;
+                            const isDropdownActive =
+                              activeTab === `${item.key}-${dropdownItem.key}`;
+                            return (
+                              <button
+                                key={dropdownItem.key}
+                                onClick={() => {
+                                  handleDropdownItemClick(
+                                    item.key,
+                                    dropdownItem.key
+                                  );
+                                  setSidebarOpen(false);
+                                }}
+                                className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-all ${
+                                  isDropdownActive
+                                    ? "bg-blue-100 text-blue-700 font-medium"
+                                    : "text-gray-600 hover:bg-gray-100"
+                                }`}
+                              >
+                                <DropdownIcon className="w-4 h-4" />
+                                <span>{dropdownItem.label}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    // Regular navigation items
+                    return (
+                      <button
+                        key={item.key}
+                        onClick={() => {
+                          handleTabClick(item);
+                          setSidebarOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-all ${
+                          isActive
+                            ? "bg-blue-100 text-blue-700 font-medium"
+                            : "text-gray-600 hover:bg-gray-100"
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        <span>{item.label}</span>
+                      </button>
+                    );
+                  }
+                })}
+              </div>
+            </div>
+
+            {/* Footer Actions */}
+            <div className="p-4 border-t border-gray-200 bg-gray-50">
+              <div className="space-y-2">
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
+                  <UserCircle className="w-4 h-4" />
+                  <span>My Profile</span>
+                </button>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-all">
+                  <Settings className="w-4 h-4" />
+                  <span>Settings</span>
+                </button>
+                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-all">
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            </div>
           </div>
         </nav>
       </div>
@@ -447,15 +595,26 @@ export default Navigation;
  * ```
  *
  * @features
- * - Responsive design (horizontal on desktop, sidebar on mobile)
- * - Dropdown menus for nested navigation
- * - Active state management
- * - Router integration
- * - Accessibility support
- * - Custom styling with CSS variables
+ * - Responsive design (horizontal on desktop, comprehensive sidebar on mobile)
+ * - Dropdown menus with smart positioning (left on mobile, right on desktop)
+ * - Integrated header controls in mobile sidebar (user profile, language, notifications)
+ * - Expanded reports navigation in mobile sidebar
+ * - Active state management with visual feedback
+ * - Router integration with smooth transitions
+ * - Accessibility support with ARIA labels
+ * - Professional animations and hover effects
+ * - Custom styling with CSS variables and Tailwind
+ *
+ * @improvements
+ * - Enhanced mobile sidebar with header integration
+ * - Smart dropdown positioning for different screen sizes
+ * - Professional styling with gradients and shadows
+ * - Comprehensive user profile display
+ * - Direct language toggle functionality
+ * - Expanded navigation items display in mobile
  *
  * @dependencies
  * - next/navigation (useRouter)
  * - lucide-react (icons)
- * - React hooks (useState)
+ * - React hooks (useState, useEffect)
  */
