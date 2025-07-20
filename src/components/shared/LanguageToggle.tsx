@@ -58,7 +58,7 @@ const LanguageToggle: React.FC<LanguageToggleProps> = ({
     >
       <Globe className="w-4 h-4 text-gray-600" />
       <span className={`font-medium text-sm ${variant === "header" ? "text-white" : "text-gray-700"}`}>
-        {language === "en" ? "ع" : "🇺🇸 EN"}
+        {language === "en" ? "ع" : "EN"}
       </span>
     </button>
   );

@@ -49,14 +49,13 @@ const NotificationsPage: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([
     {
       id: 1,
-      title: "New suspicious trip detected",
-      message:
-        "A suspicious trip has been detected on Route 15 with unusual cargo patterns. Immediate attention required.",
-      time: "2 minutes ago",
+      title: t("sampleNotifications.suspiciousTrip.title"),
+      message: t("sampleNotifications.suspiciousTrip.message"),
+      time: t("notifications.timeAgo.minutesAgo"),
       type: "warning",
       isRead: false,
       priority: "high",
-      category: "Security",
+      category: t("notifications.categories.security"),
     },
     {
       id: 2,

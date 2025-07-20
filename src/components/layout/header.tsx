@@ -89,21 +89,21 @@ const Header: React.FC<HeaderProps> = ({
   const notifications = [
     {
       id: 1,
-      title: "New suspicious trip detected",
-      time: "2 min ago",
-      type: "warning",
+      title: t("sampleNotifications.suspiciousTrip.title"),
+      time:  t("notifications.timeAgo.minutesAgo"),
+      type: t("notifications.types.warning"),
     },
     {
       id: 2,
-      title: "System maintenance scheduled",
-      time: "1 hour ago",
-      type: "info",
+      title: t("sampleNotifications.systemMaintenance.title"),
+      time: t("notifications.timeAgo.hourAgo"),
+      type: t("notifications.types.info"),
     },
     {
       id: 3,
-      title: "Monthly report ready",
-      time: "3 hours ago",
-      type: "success",
+      title: t("sampleNotifications.monthlyReport.title"),
+      time: t("notifications.timeAgo.hoursAgo"),
+      type: t("notifications.types.success"),
     },
   ];
 
@@ -167,7 +167,7 @@ const Header: React.FC<HeaderProps> = ({
                 <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                   <div className="px-4 py-2 border-b border-gray-100">
                     <h3 className="font-semibold text-gray-800">
-                      Notifications
+                      {t("header.notifications")}
                     </h3>
                   </div>
                   <div className="max-h-64 overflow-y-auto">
