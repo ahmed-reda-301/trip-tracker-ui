@@ -90,7 +90,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   onDropdownItemClick,
 }) => {
   return (
-    <div className="relative">
+    <div className="relative dropdown-container">
       <button
         onClick={onClick}
         className={`
@@ -203,6 +203,24 @@ const Navigation: React.FC<NavigationProps> = ({
   // State management
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [internalSidebarOpen, setInternalSidebarOpen] = useState(false);
+
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".dropdown-container")) {
+        setOpenDropdown(null);
+      }
+    };
+
+    if (openDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [openDropdown]);
 
   // Use external sidebar state if provided, otherwise use internal state
   const sidebarOpen = externalSidebarOpen || internalSidebarOpen;
@@ -436,7 +454,13 @@ const Navigation: React.FC<NavigationProps> = ({
                   </span>
                 </button>
 
-                <button className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all relative">
+                <button
+                  onClick={() => {
+                    router.push("/notifications");
+                    setSidebarOpen(false);
+                  }}
+                  className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all relative"
+                >
                   <Bell className="w-4 h-4 text-gray-600" />
                   <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
                     <span className="text-xs text-white font-bold">3</span>
