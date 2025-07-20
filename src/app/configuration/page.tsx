@@ -2,14 +2,17 @@
 
 import React from "react";
 import { Settings } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import UnderConstruction from "@/components/common/UnderConstruction";
 
 export default function ConfigurationPage() {
+  const { t } = useLanguage();
+
   return (
     <UnderConstruction
-      title="Configuration"
+      title={t("pages.configuration.title")}
       icon={Settings}
-      description="System settings and general configuration"
+      description={t("pages.configuration.description")}
     />
   );
 }

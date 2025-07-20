@@ -163,36 +163,93 @@ export interface TranslationDictionary {
       description: string;
       noData: string;
       loading: string;
+      realTimeTracking: string;
+      vesselCount: string;
+      activeVessels: string;
+      lastUpdate: string;
+      refreshData: string;
+      viewDetails: string;
+      coordinates: string;
+      status: string;
+      speed: string;
+      destination: string;
     };
     dashboard: {
       title: string;
       description: string;
       welcomeMessage: string;
       statistics: string;
+      overview: string;
+      quickActions: string;
+      recentActivity: string;
+      systemHealth: string;
+      totalTrips: string;
+      completedTrips: string;
+      pendingTrips: string;
+      alerts: string;
+      performance: string;
+      efficiency: string;
     };
     focusedTrips: {
       title: string;
       description: string;
       totalTrips: string;
       activeTrips: string;
+      highPriority: string;
+      mediumPriority: string;
+      lowPriority: string;
+      tripDetails: string;
+      assignedOfficer: string;
+      estimatedArrival: string;
+      cargoType: string;
+      origin: string;
+      trackTrip: string;
+      updateStatus: string;
     };
     assignedPorts: {
       title: string;
       description: string;
       totalPorts: string;
       activePorts: string;
+      portName: string;
+      portCode: string;
+      capacity: string;
+      currentLoad: string;
+      availability: string;
+      managePort: string;
+      viewSchedule: string;
+      portOperations: string;
     };
     configuration: {
       title: string;
       description: string;
       settings: string;
       preferences: string;
+      systemSettings: string;
+      userPreferences: string;
+      notifications: string;
+      security: string;
+      backup: string;
+      maintenance: string;
+      updates: string;
+      support: string;
+      documentation: string;
+      about: string;
     };
     suspiciousTrips: {
       title: string;
       description: string;
       alertLevel: string;
       investigate: string;
+      riskLevel: string;
+      flaggedTrips: string;
+      investigationStatus: string;
+      assignInvestigator: string;
+      reviewEvidence: string;
+      generateReport: string;
+      escalate: string;
+      resolve: string;
+      archive: string;
     };
   };
 }
@@ -340,6 +397,16 @@ export const translations: Record<Language, TranslationDictionary> = {
           "Real-time tracking and monitoring of vessel locations and movements",
         noData: "No location data available",
         loading: "Loading location data...",
+        realTimeTracking: "Real-time Tracking",
+        vesselCount: "Vessel Count",
+        activeVessels: "Active Vessels",
+        lastUpdate: "Last Update",
+        refreshData: "Refresh Data",
+        viewDetails: "View Details",
+        coordinates: "Coordinates",
+        status: "Status",
+        speed: "Speed",
+        destination: "Destination",
       },
       dashboard: {
         title: "Dashboard",
@@ -347,6 +414,16 @@ export const translations: Record<Language, TranslationDictionary> = {
           "Overview of system statistics and key performance indicators",
         welcomeMessage: "Welcome to Trip Tracker Dashboard",
         statistics: "System Statistics",
+        overview: "Overview",
+        quickActions: "Quick Actions",
+        recentActivity: "Recent Activity",
+        systemHealth: "System Health",
+        totalTrips: "Total Trips",
+        completedTrips: "Completed Trips",
+        pendingTrips: "Pending Trips",
+        alerts: "Alerts",
+        performance: "Performance",
+        efficiency: "Efficiency",
       },
       focusedTrips: {
         title: "Focused Trips",
@@ -354,24 +431,61 @@ export const translations: Record<Language, TranslationDictionary> = {
           "Monitor and track high-priority trips requiring special attention",
         totalTrips: "Total Trips",
         activeTrips: "Active Trips",
+        highPriority: "High Priority",
+        mediumPriority: "Medium Priority",
+        lowPriority: "Low Priority",
+        tripDetails: "Trip Details",
+        assignedOfficer: "Assigned Officer",
+        estimatedArrival: "Estimated Arrival",
+        cargoType: "Cargo Type",
+        origin: "Origin",
+        trackTrip: "Track Trip",
+        updateStatus: "Update Status",
       },
       assignedPorts: {
         title: "Assigned Ports",
         description: "Manage and monitor ports assigned to your jurisdiction",
         totalPorts: "Total Ports",
         activePorts: "Active Ports",
+        portName: "Port Name",
+        portCode: "Port Code",
+        capacity: "Capacity",
+        currentLoad: "Current Load",
+        availability: "Availability",
+        managePort: "Manage Port",
+        viewSchedule: "View Schedule",
+        portOperations: "Port Operations",
       },
       configuration: {
         title: "Configuration",
         description: "System settings and configuration management",
         settings: "System Settings",
         preferences: "User Preferences",
+        systemSettings: "System Settings",
+        userPreferences: "User Preferences",
+        notifications: "Notifications",
+        security: "Security",
+        backup: "Backup",
+        maintenance: "Maintenance",
+        updates: "Updates",
+        support: "Support",
+        documentation: "Documentation",
+        about: "About",
       },
       suspiciousTrips: {
         title: "Suspicious Trips",
         description: "Monitor and investigate trips flagged as suspicious",
         alertLevel: "Alert Level",
         investigate: "Investigate",
+        riskLevel: "Risk Level",
+        flaggedTrips: "Flagged Trips",
+        investigationStatus: "Investigation Status",
+        assignInvestigator: "Assign Investigator",
+        reviewEvidence: "Review Evidence",
+        generateReport: "Generate Report",
+        escalate: "Escalate",
+        resolve: "Resolve",
+        archive: "Archive",
       },
     },
   },
@@ -516,12 +630,32 @@ export const translations: Record<Language, TranslationDictionary> = {
         description: "تتبع ومراقبة مواقع وحركات السفن في الوقت الفعلي",
         noData: "لا توجد بيانات موقع متاحة",
         loading: "جاري تحميل بيانات الموقع...",
+        realTimeTracking: "التتبع في الوقت الفعلي",
+        vesselCount: "عدد السفن",
+        activeVessels: "السفن النشطة",
+        lastUpdate: "آخر تحديث",
+        refreshData: "تحديث البيانات",
+        viewDetails: "عرض التفاصيل",
+        coordinates: "الإحداثيات",
+        status: "الحالة",
+        speed: "السرعة",
+        destination: "الوجهة",
       },
       dashboard: {
         title: "لوحة التحكم",
         description: "نظرة عامة على إحصائيات النظام ومؤشرات الأداء الرئيسية",
         welcomeMessage: "مرحباً بك في لوحة تحكم متتبع الرحلات",
         statistics: "إحصائيات النظام",
+        overview: "نظرة عامة",
+        quickActions: "إجراءات سريعة",
+        recentActivity: "النشاط الأخير",
+        systemHealth: "صحة النظام",
+        totalTrips: "إجمالي الرحلات",
+        completedTrips: "الرحلات المكتملة",
+        pendingTrips: "الرحلات المعلقة",
+        alerts: "التنبيهات",
+        performance: "الأداء",
+        efficiency: "الكفاءة",
       },
       focusedTrips: {
         title: "الرحلات المركزة",
@@ -529,24 +663,61 @@ export const translations: Record<Language, TranslationDictionary> = {
           "مراقبة وتتبع الرحلات عالية الأولوية التي تتطلب اهتماماً خاصاً",
         totalTrips: "إجمالي الرحلات",
         activeTrips: "الرحلات النشطة",
+        highPriority: "أولوية عالية",
+        mediumPriority: "أولوية متوسطة",
+        lowPriority: "أولوية منخفضة",
+        tripDetails: "تفاصيل الرحلة",
+        assignedOfficer: "الضابط المكلف",
+        estimatedArrival: "الوصول المتوقع",
+        cargoType: "نوع البضائع",
+        origin: "المنشأ",
+        trackTrip: "تتبع الرحلة",
+        updateStatus: "تحديث الحالة",
       },
       assignedPorts: {
         title: "الموانئ المخصصة",
         description: "إدارة ومراقبة الموانئ المخصصة لاختصاصك",
         totalPorts: "إجمالي الموانئ",
         activePorts: "الموانئ النشطة",
+        portName: "اسم الميناء",
+        portCode: "رمز الميناء",
+        capacity: "السعة",
+        currentLoad: "الحمولة الحالية",
+        availability: "التوفر",
+        managePort: "إدارة الميناء",
+        viewSchedule: "عرض الجدول",
+        portOperations: "عمليات الميناء",
       },
       configuration: {
         title: "الإعدادات",
         description: "إعدادات النظام وإدارة التكوين",
         settings: "إعدادات النظام",
         preferences: "تفضيلات المستخدم",
+        systemSettings: "إعدادات النظام",
+        userPreferences: "تفضيلات المستخدم",
+        notifications: "الإشعارات",
+        security: "الأمان",
+        backup: "النسخ الاحتياطي",
+        maintenance: "الصيانة",
+        updates: "التحديثات",
+        support: "الدعم",
+        documentation: "التوثيق",
+        about: "حول",
       },
       suspiciousTrips: {
         title: "الرحلات المشبوهة",
         description: "مراقبة والتحقيق في الرحلات المصنفة كمشبوهة",
         alertLevel: "مستوى التنبيه",
         investigate: "تحقيق",
+        riskLevel: "مستوى المخاطر",
+        flaggedTrips: "الرحلات المعلمة",
+        investigationStatus: "حالة التحقيق",
+        assignInvestigator: "تعيين محقق",
+        reviewEvidence: "مراجعة الأدلة",
+        generateReport: "إنشاء تقرير",
+        escalate: "تصعيد",
+        resolve: "حل",
+        archive: "أرشفة",
       },
     },
   },

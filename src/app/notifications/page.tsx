@@ -213,10 +213,17 @@ const NotificationsPage: React.FC = () => {
             {unreadCount > 0 && (
               <button
                 onClick={markAllAsRead}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                className={`px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1 sm:gap-2 text-sm sm:text-base ${
+                  isRTL ? "flex-row-reverse" : ""
+                }`}
               >
-                <Check className="w-4 h-4" />
-                {t("notifications.markAllAsRead")}
+                <Check className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">
+                  {t("notifications.markAllAsRead")}
+                </span>
+                <span className="sm:hidden">
+                  {t("notifications.markAllAsRead").split(" ")[1]}
+                </span>
               </button>
             )}
           </div>

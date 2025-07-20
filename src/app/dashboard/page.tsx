@@ -2,14 +2,17 @@
 
 import React from "react";
 import { BarChart3 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import UnderConstruction from "@/components/common/UnderConstruction";
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
+
   return (
     <UnderConstruction
-      title="Dashboard"
+      title={t("pages.dashboard.title")}
       icon={BarChart3}
-      description="Main dashboard and general statistics"
+      description={t("pages.dashboard.description")}
     />
   );
 }

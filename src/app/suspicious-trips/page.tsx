@@ -2,14 +2,17 @@
 
 import React from "react";
 import { AlertTriangle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import UnderConstruction from "@/components/common/UnderConstruction";
 
 export default function SuspiciousTripsPage() {
+  const { t } = useLanguage();
+
   return (
     <UnderConstruction
-      title="Suspicious Trips"
+      title={t("pages.suspiciousTrips.title")}
       icon={AlertTriangle}
-      description="Suspicious trips and security analysis of shipments"
+      description={t("pages.suspiciousTrips.description")}
     />
   );
 }

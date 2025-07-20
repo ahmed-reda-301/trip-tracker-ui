@@ -2,14 +2,17 @@
 
 import React from "react";
 import { MapPin } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import UnderConstruction from "@/components/common/UnderConstruction";
 
 export default function LocationMonitorPage() {
+  const { t } = useLanguage();
+
   return (
     <UnderConstruction
-      title="Location Monitor"
+      title={t("pages.locationMonitor.title")}
       icon={MapPin}
-      description="Location monitoring and geographical tracking of shipments and trips"
+      description={t("pages.locationMonitor.description")}
     />
   );
 }
