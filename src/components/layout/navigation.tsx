@@ -159,6 +159,10 @@ interface NavigationProps {
     onLanguageChange?: (lang: string) => void;
     currentLanguage?: string;
   };
+  /** External control for sidebar state */
+  sidebarOpen?: boolean;
+  /** Callback to set sidebar state */
+  onSidebarChange?: (open: boolean) => void;
 }
 
 /**
@@ -191,12 +195,24 @@ const Navigation: React.FC<NavigationProps> = ({
     currentLanguage: "EN",
     onLanguageChange: () => {},
   },
+  sidebarOpen: externalSidebarOpen = false,
+  onSidebarChange = () => {},
 }) => {
   const router = useRouter();
 
   // State management
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [internalSidebarOpen, setInternalSidebarOpen] = useState(false);
+
+  // Use external sidebar state if provided, otherwise use internal state
+  const sidebarOpen = externalSidebarOpen || internalSidebarOpen;
+  const setSidebarOpen = (open: boolean) => {
+    if (onSidebarChange) {
+      onSidebarChange(open);
+    } else {
+      setInternalSidebarOpen(open);
+    }
+  };
 
   /**
    * Navigation items configuration
@@ -346,18 +362,6 @@ const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <>
-      {/* Mobile Menu Toggle Button */}
-      {!sidebarOpen && (
-        <button
-          className="md:hidden fixed top-4 left-4 z-50 bg-gradient-to-r from-blue-600 to-blue-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
-          onClick={() => setSidebarOpen(true)}
-          aria-label="Open navigation menu"
-          type="button"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-      )}
-
       {/* Sidebar Drawer - Overlay */}
       <div
         className={`fixed inset-0 z-40 transition-opacity duration-300 ${

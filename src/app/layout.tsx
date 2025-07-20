@@ -23,6 +23,7 @@ export default function RootLayout({
   const pathname = usePathname();
   const [activeTab, setActiveTab] = useState<string>("location-monitor");
   const [selectedReportItem, setSelectedReportItem] = useState<string>("");
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
 
   // Update active tab based on current pathname
   useEffect(() => {
@@ -70,11 +71,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <div className="flex flex-col min-h-screen">
-          <Header />
+          <Header
+            onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
+            isSidebarOpen={sidebarOpen}
+          />
           <Navigation
             activeTab={activeTab}
             onTabChange={setActiveTab}
             onReportItemChange={setSelectedReportItem}
+            sidebarOpen={sidebarOpen}
+            onSidebarChange={setSidebarOpen}
           />
           <Breadcrumb onNavigate={handleNavigate} />
           <div className="flex-1 bg-gray-50 p-8">

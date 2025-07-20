@@ -11,7 +11,16 @@
  */
 
 import React, { useState } from "react";
-import { User, Globe, Bell, Settings, LogOut, UserCircle } from "lucide-react";
+import Image from "next/image";
+import {
+  User,
+  Globe,
+  Bell,
+  Settings,
+  LogOut,
+  UserCircle,
+  Menu,
+} from "lucide-react";
 
 interface HeaderProps {
   user?: {
@@ -21,6 +30,10 @@ interface HeaderProps {
   };
   onLanguageChange?: (lang: string) => void;
   currentLanguage?: string;
+  /** Callback to open mobile sidebar */
+  onSidebarToggle?: () => void;
+  /** Whether sidebar is currently open */
+  isSidebarOpen?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -31,6 +44,8 @@ const Header: React.FC<HeaderProps> = ({
   },
   onLanguageChange = () => {},
   currentLanguage = "EN",
+  onSidebarToggle = () => {},
+  isSidebarOpen = false,
 }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -97,9 +112,37 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <header className="bg-[rgb(var(--header-primary))] text-white relative w-full">
       <div className="px-4 py-0 w-full">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full">
+        {/* Mobile Header Layout */}
+        <div className="md:hidden flex items-center justify-between">
+          {/* Mobile Menu Button */}
+          <button
+            onClick={onSidebarToggle}
+            className="p-2 hover:bg-slate-700 rounded-lg transition-all duration-200 hover:scale-105"
+            aria-label="Open navigation menu"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+
+          {/* Mobile Logo */}
+          <div className="flex items-center">
+            <Image
+              src="/assets/Saudi-Customs-Logo-new.png"
+              alt="Saudi Customs Logo"
+              width={120}
+              height={40}
+              className="object-contain h-10"
+              priority
+            />
+          </div>
+
+          {/* Mobile Spacer */}
+          <div className="w-10"></div>
+        </div>
+
+        {/* Desktop Header Layout */}
+        <div className="hidden md:flex items-center justify-between gap-4 w-full">
           {/* Left side - Reserved for future content */}
-          <div className="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+          <div className="flex items-center gap-4 w-full md:w-auto">
             {/* Logo section can be added here if needed */}
           </div>
 
@@ -247,18 +290,20 @@ export default Header;
  * ```
  *
  * @features
- * - User profile with name and role display
+ * - Responsive design with different layouts for mobile and desktop
+ * - Mobile: Clean header with logo and sidebar toggle button
+ * - Desktop: Full header with user profile, language toggle, and notifications
  * - Direct language toggle (EN/AR) without dropdown
  * - Notifications with badge counter
- * - Responsive design
- * - Hover animations and effects
- * - Accessibility support
+ * - Professional hover animations and effects
+ * - Accessibility support with ARIA labels
+ * - Integration with mobile sidebar navigation
  *
  * @improvements
- * - Removed unused ChevronDown import
- * - Simplified language switcher to direct toggle
- * - Enhanced user display with name and role
- * - Added hover animations and tooltips
- * - Cleaned up commented code
- * - Improved notification color handling
+ * - Added responsive mobile/desktop layouts
+ * - Integrated sidebar toggle functionality
+ * - Clean mobile header with logo and menu button
+ * - Enhanced desktop header with full controls
+ * - Improved visual hierarchy and spacing
+ * - Professional styling with gradients and shadows
  */
