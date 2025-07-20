@@ -429,19 +429,11 @@ const Navigation: React.FC<NavigationProps> = ({
             {/* User Profile Section */}
             <div className="p-4 border-b border-gray-200 bg-gray-50">
               {/* User Profile */}
-              <div
-                className={`flex items-center gap-3 mb-4 ${
-                  isRTL ? "flex-row-reverse" : ""
-                }`}
-              >
+              <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
                   <User className="w-5 h-5 text-white" />
                 </div>
-                <div
-                  className={`flex flex-col ${
-                    isRTL ? "text-right" : "text-left"
-                  }`}
-                >
+                <div className="flex flex-col text-left">
                   <span className="font-medium text-gray-800 text-sm">
                     {isRTL ? "أحمد الراشد" : headerProps.user?.name}
                   </span>
@@ -452,11 +444,7 @@ const Navigation: React.FC<NavigationProps> = ({
               </div>
 
               {/* Language & Notifications */}
-              <div
-                className={`flex items-center justify-between ${
-                  isRTL ? "flex-row-reverse" : ""
-                }`}
-              >
+              <div className="flex items-center justify-between">
                 <LanguageToggle
                   variant="sidebar"
                   onLanguageChange={headerProps.onLanguageChange}
@@ -470,11 +458,7 @@ const Navigation: React.FC<NavigationProps> = ({
                   className="p-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all relative"
                 >
                   <Bell className="w-4 h-4 text-gray-600" />
-                  <span
-                    className={`absolute -top-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center ${
-                      isRTL ? "-left-1" : "-right-1"
-                    }`}
-                  >
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center">
                     <span className="text-xs text-white font-bold">3</span>
                   </span>
                 </button>
