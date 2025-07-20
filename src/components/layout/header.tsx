@@ -14,15 +14,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
-import {
-  User,
-  Globe,
-  Bell,
-  Settings,
-  LogOut,
-  UserCircle,
-  Menu,
-} from "lucide-react";
+import LanguageToggle from "@/components/shared/LanguageToggle";
+import { User, Bell, Settings, LogOut, UserCircle, Menu } from "lucide-react";
 
 interface HeaderProps {
   user?: {
@@ -217,18 +210,10 @@ const Header: React.FC<HeaderProps> = ({
             </div>
 
             {/* Language Switcher - Direct Toggle */}
-            <button
-              className={`flex items-center space-x-2 hover:bg-slate-700 px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105 ${
-                isRTL ? "flex-row-reverse space-x-reverse" : ""
-              }`}
-              onClick={toggleLanguage}
-              title={t("header.switchLanguage")}
-            >
-              <Globe className="w-5 h-5" />
-              <span className="font-medium text-sm">
-                {language === "en" ? "🇺🇸 EN" : "🇸🇦 AR"}
-              </span>
-            </button>
+            <LanguageToggle
+              variant="header"
+              onLanguageChange={onLanguageChange}
+            />
 
             {/* User Profile */}
             <div className="relative dropdown-profile">

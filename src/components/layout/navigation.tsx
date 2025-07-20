@@ -14,6 +14,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageToggle from "@/components/shared/LanguageToggle";
 import {
   ChevronDown,
   MapPin,
@@ -68,6 +70,8 @@ interface NavigationItemProps {
   onClick: () => void;
   /** Click handler for dropdown items */
   onDropdownItemClick?: (itemKey: string) => void;
+  /** Whether RTL mode is active */
+  isRTL?: boolean;
 }
 
 /**
@@ -88,13 +92,15 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   isDropdownOpen = false,
   onClick,
   onDropdownItemClick,
+  isRTL = false,
 }) => {
   return (
     <div className="relative dropdown-container">
       <button
         onClick={onClick}
         className={`
-          flex items-center space-x-2 px-4 py-3 font-medium whitespace-nowrap transition-all duration-200 min-w-fit
+          flex items-center px-4 py-3 font-medium whitespace-nowrap transition-all duration-200 min-w-fit
+          ${isRTL ? "flex-row-reverse space-x-reverse space-x-2" : "space-x-2"}
           ${
             isActive
               ? "bg-[rgb(5,148,211)] text-white"
@@ -199,6 +205,7 @@ const Navigation: React.FC<NavigationProps> = ({
   onSidebarChange = () => {},
 }) => {
   const router = useRouter();
+  const { language, setLanguage, t, isRTL } = useLanguage();
 
   // State management
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -239,92 +246,92 @@ const Navigation: React.FC<NavigationProps> = ({
   const navigationItems = [
     {
       key: "location-monitor",
-      label: "Location Monitor",
+      label: t("navigation.locationMonitor"),
       icon: MapPin,
       href: "/location-monitor",
       hasDropdown: false,
     },
     {
       key: "focused-trips",
-      label: "Focused Trips",
+      label: t("navigation.focusedTrips"),
       icon: Route,
       href: "/focused-trips",
       hasDropdown: false,
     },
     {
       key: "assigned-ports",
-      label: "My Assigned Ports",
+      label: t("navigation.assignedPorts"),
       icon: Anchor,
       href: "/assigned-ports",
       hasDropdown: false,
     },
     {
       key: "dashboard",
-      label: "Dashboard",
+      label: t("navigation.dashboard"),
       icon: BarChart3,
       href: "/dashboard",
       hasDropdown: false,
     },
     {
       key: "configuration",
-      label: "Configuration",
+      label: t("navigation.configuration"),
       icon: Settings,
       href: "/configuration",
       hasDropdown: false,
     },
     {
       key: "suspicious-trips",
-      label: "Suspicious Trips",
+      label: t("navigation.suspiciousTrips"),
       icon: AlertTriangle,
       href: "/suspicious-trips",
       hasDropdown: false,
     },
     {
       key: "reports",
-      label: "Reports",
+      label: t("navigation.reports"),
       icon: FileText,
       href: "#",
       hasDropdown: true,
       dropdownItems: [
         {
           key: "trip-panel",
-          label: "Trip Panel",
+          label: t("reports.tripPanel"),
           icon: Route,
           href: "/reports/trip-panel",
         },
         {
           key: "all-alerts",
-          label: "All Alerts",
+          label: t("reports.allAlerts"),
           icon: AlertTriangle,
           href: "/reports/all-alerts",
         },
         {
           key: "alert-panel",
-          label: "Alert Panel",
+          label: t("reports.alertPanel"),
           icon: AlertTriangle,
           href: "/reports/alert-panel",
         },
         {
           key: "employees",
-          label: "Employees",
+          label: t("reports.employees"),
           icon: Users,
           href: "/reports/employees",
         },
         {
           key: "assign-ports",
-          label: "Assign Ports",
+          label: t("reports.assignPorts"),
           icon: Anchor,
           href: "/reports/assign-ports",
         },
         {
           key: "focused-trips",
-          label: "Focused Trips",
+          label: t("reports.focusedTrips"),
           icon: Route,
           href: "/reports/focused-trips",
         },
         {
           key: "completed-trips",
-          label: "Completed Trips",
+          label: t("reports.completedTrips"),
           icon: Database,
           href: "/reports/completed-trips",
         },
@@ -440,19 +447,10 @@ const Navigation: React.FC<NavigationProps> = ({
 
               {/* Language & Notifications */}
               <div className="flex items-center justify-between">
-                <button
-                  className="flex items-center gap-2 px-3 py-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all"
-                  onClick={() => {
-                    const newLang =
-                      headerProps.currentLanguage === "EN" ? "AR" : "EN";
-                    headerProps.onLanguageChange?.(newLang);
-                  }}
-                >
-                  <Globe className="w-4 h-4 text-gray-600" />
-                  <span className="text-sm font-medium text-gray-700">
-                    {headerProps.currentLanguage === "EN" ? "🇺🇸 EN" : "🇸🇦 AR"}
-                  </span>
-                </button>
+                <LanguageToggle
+                  variant="sidebar"
+                  onLanguageChange={headerProps.onLanguageChange}
+                />
 
                 <button
                   onClick={() => {
@@ -585,6 +583,7 @@ const Navigation: React.FC<NavigationProps> = ({
                     onDropdownItemClick={(itemKey) =>
                       handleDropdownItemClick(item.key, itemKey)
                     }
+                    isRTL={isRTL}
                   />
                 );
               })}

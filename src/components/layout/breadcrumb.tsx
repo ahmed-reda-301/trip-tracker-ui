@@ -2,9 +2,11 @@
 // components/Breadcrumb.jsx
 import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   Home,
   ChevronRight,
+  ChevronLeft,
   LucideIcon,
   MapPin,
   FileText,
@@ -42,6 +44,7 @@ const reportItems: Record<string, { title: string; icon: LucideIcon }> = {
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
   const pathname = usePathname();
+  const { t, isRTL } = useLanguage();
   const [currentItems, setCurrentItems] = useState<BreadcrumbItem[]>([]);
 
   useEffect(() => {
@@ -209,9 +212,12 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items = [], onNavigate }) => {
                   {item.label}
                 </span>
               )}
-              {index < finalItems.length - 1 && (
-                <ChevronRight className="w-4 h-4 opacity-70 mx-2" />
-              )}
+              {index < finalItems.length - 1 &&
+                (isRTL ? (
+                  <ChevronLeft className="w-4 h-4 opacity-70 mx-2" />
+                ) : (
+                  <ChevronRight className="w-4 h-4 opacity-70 mx-2" />
+                ))}
             </React.Fragment>
           );
         })}
