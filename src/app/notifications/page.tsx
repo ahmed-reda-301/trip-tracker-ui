@@ -218,7 +218,7 @@ const NotificationsPage: React.FC = () => {
                 </h1>
                 <p className="text-gray-600 text-sm sm:text-base">
                   {unreadCount} {t("notifications.unreadCount")}
-                  {unreadCount !== 1 ? "s" : ""}
+                  {unreadCount !== 1 ? (isRTL ? "ة" : "s") : ""}
                 </p>
               </div>
             </div>
