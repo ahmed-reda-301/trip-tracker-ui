@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageToggle from "@/components/shared/LanguageToggle";
+import LogoutButton from "@/components/auth/LogoutButton";
 import {
   ChevronDown,
   MapPin,
@@ -30,10 +31,8 @@ import {
   Menu,
   LucideIcon,
   User,
-  Globe,
   Bell,
   UserCircle,
-  LogOut,
 } from "lucide-react";
 
 /**
@@ -546,10 +545,11 @@ const Navigation: React.FC<NavigationProps> = ({
                   <Settings className="w-4 h-4" />
                   <span>{t("header.settings")}</span>
                 </button>
-                <button className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-all text-left">
-                  <LogOut className="w-4 h-4" />
-                  <span>{t("header.signOut")}</span>
-                </button>
+                <LogoutButton
+                  variant="dropdown"
+                  forceShow={true}
+                  className="w-full justify-start px-3 py-2 text-sm rounded-lg transition-all text-left"
+                />
               </div>
             </div>
           </div>

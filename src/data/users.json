@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin123",
+      "name": "مدير النظام",
+      "nameEn": "System Administrator",
+      "role": "admin",
+      "department": "إدارة النظام",
+      "departmentEn": "System Administration",
+      "email": "admin@zatca.gov.sa",
+      "lastLogin": null,
+      "isActive": true
+    },
+    {
+      "id": "2", 
+      "username": "operator",
+      "password": "operator123",
+      "name": "مشغل النظام",
+      "nameEn": "System Operator",
+      "role": "operator",
+      "department": "العمليات",
+      "departmentEn": "Operations",
+      "email": "operator@zatca.gov.sa",
+      "lastLogin": null,
+      "isActive": true
+    },
+    {
+      "id": "3",
+      "username": "supervisor",
+      "password": "supervisor123", 
+      "name": "مشرف العمليات",
+      "nameEn": "Operations Supervisor",
+      "role": "supervisor",
+      "department": "الإشراف",
+      "departmentEn": "Supervision",
+      "email": "supervisor@zatca.gov.sa",
+      "lastLogin": null,
+      "isActive": true
+    }
+  ]
+}

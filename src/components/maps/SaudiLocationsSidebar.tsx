@@ -403,6 +403,82 @@ export default function SaudiLocationsSidebar({
                     : "Detailed list of all locations and vehicles"}
                 </p>
                 {/* Add detailed list here if needed */}
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {airports.slice(0, 5).map((airport) => (
+                    <div
+                      key={airport.id}
+                      className="p-2 bg-gray-50 rounded-lg text-xs"
+                    >
+                      <div className="font-medium text-gray-900">
+                        {isRTL ? airport.name : airport.nameEn}
+                      </div>
+                      <div className="text-gray-600">
+                        {airport.city} • {airport.type}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {seaports.slice(0, 5).map((seaport) => (
+                    <div
+                      key={seaport.id}
+                      className="p-2 bg-gray-50 rounded-lg text-xs"
+                    >
+                      <div className="font-medium text-gray-900">
+                        {isRTL ? seaport.name : seaport.nameEn}
+                      </div>
+                      <div className="text-gray-600">
+                        {seaport.city} • {seaport.type}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {policeStations.slice(0, 5).map((station) => (
+                    <div
+                      key={station.id}
+                      className="p-2 bg-gray-50 rounded-lg text-xs"
+                    >
+                      <div className="font-medium text-gray-900">
+                        {isRTL ? station.name : station.nameEn}
+                      </div>
+                      <div className="text-gray-600">
+                        {station.city} • {station.type}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {checkpoints.slice(0, 5).map((checkpoint) => (
+                    <div
+                      key={checkpoint.id}
+                      className="p-2 bg-gray-50 rounded-lg text-xs"
+                    >
+                      <div className="font-medium text-gray-900">
+                        {isRTL ? checkpoint.name : checkpoint.nameEn}
+                      </div>
+                      <div className="text-gray-600">
+                        {checkpoint.highway} • {checkpoint.type}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-2 max-h-40 overflow-y-auto">
+                  {vehicles.slice(0, 5).map((vehicle) => (
+                    <div
+                      key={vehicle.id}
+                      className="p-2 bg-gray-50 rounded-lg text-xs"
+                    >
+                      <div className="font-medium text-gray-900">
+                        {isRTL ? vehicle.name : vehicle.nameEn}
+                      </div>
+                      <div className="text-gray-600">
+                        {vehicle.type} • {vehicle.status}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
               </div>
             )}
           </div>

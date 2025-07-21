@@ -24,6 +24,7 @@ import Navigation from "@/components/layout/navigation";
 import Breadcrumb from "@/components/layout/breadcrumb";
 import Footer from "@/components/layout/footer";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import FontProvider from "@/components/providers/FontProvider";
 import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -96,40 +97,51 @@ export default function RootLayout({
     // Add more as needed
   };
 
+  // Check if current page should not show main layout
+  const isLoginPage = pathname === "/login";
+
   return (
     <html lang="en">
       <body className={`${roboto.variable} ${cairo.variable}`}>
         <LanguageProvider>
-          <FontProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header
-                onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
-                isSidebarOpen={sidebarOpen}
-              />
-              <Navigation
-                activeTab={activeTab}
-                onTabChange={setActiveTab}
-                onReportItemChange={setSelectedReportItem}
-                sidebarOpen={sidebarOpen}
-                onSidebarChange={setSidebarOpen}
-              />
-              <Breadcrumb onNavigate={handleNavigate} />
-              <div
-                className={`flex-1 ${
-                  pathname === "/location-monitor"
-                    ? "bg-gray-100"
-                    : "bg-gray-50 p-8"
-                }`}
-              >
-                {pathname === "/location-monitor" ? (
-                  children
-                ) : (
-                  <div className="max-w-6xl mx-auto">{children}</div>
-                )}
-              </div>
-              <Footer />
-            </div>
-          </FontProvider>
+          <AuthProvider>
+            <FontProvider>
+              {isLoginPage ? (
+                // Login page without main layout
+                children
+              ) : (
+                // Main application layout
+                <div className="flex flex-col min-h-screen">
+                  <Header
+                    onSidebarToggle={() => setSidebarOpen(!sidebarOpen)}
+                    isSidebarOpen={sidebarOpen}
+                  />
+                  <Navigation
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
+                    onReportItemChange={setSelectedReportItem}
+                    sidebarOpen={sidebarOpen}
+                    onSidebarChange={setSidebarOpen}
+                  />
+                  <Breadcrumb onNavigate={handleNavigate} />
+                  <div
+                    className={`flex-1 ${
+                      pathname === "/location-monitor"
+                        ? "bg-gray-100"
+                        : "bg-gray-50 p-8"
+                    }`}
+                  >
+                    {pathname === "/location-monitor" ? (
+                      children
+                    ) : (
+                      <div className="max-w-6xl mx-auto">{children}</div>
+                    )}
+                  </div>
+                  <Footer />
+                </div>
+              )}
+            </FontProvider>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

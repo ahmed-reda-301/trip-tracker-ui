@@ -14,8 +14,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import LanguageToggle from "@/components/shared/LanguageToggle";
-import { User, Bell, Settings, LogOut, UserCircle, Menu } from "lucide-react";
+import LogoutButton from "@/components/auth/LogoutButton";
+import { User, Bell, Settings, UserCircle, Menu } from "lucide-react";
 
 interface HeaderProps {
   user?: {
@@ -32,11 +34,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({
-  user = {
-    name: "Ahmed Al-Rashid",
-    email: "ahmed@customs.gov.sa",
-    role: "Customs Officer",
-  },
   onLanguageChange = () => {},
   currentLanguage = "EN",
   onSidebarToggle = () => {},
@@ -44,6 +41,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const router = useRouter();
   const { language, setLanguage, t, isRTL } = useLanguage();
+  const { user } = useAuth();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
@@ -227,10 +225,14 @@ const Header: React.FC<HeaderProps> = ({
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="font-medium text-sm">
-                    {isRTL ? "أحمد الراشد" : user.name}
+                    {user ? (isRTL ? user.name : user.nameEn) : "مستخدم"}
                   </span>
                   <span className="text-xs text-gray-300">
-                    {isRTL ? "موظف جمارك" : user.role}
+                    {user
+                      ? isRTL
+                        ? user.department
+                        : user.departmentEn
+                      : "قسم"}
                   </span>
                 </div>
               </button>
@@ -253,13 +255,17 @@ const Header: React.FC<HeaderProps> = ({
                     }`}
                   >
                     <p className="font-medium text-gray-800">
-                      {isRTL ? "أحمد الراشد" : user.name}
+                      {user ? (isRTL ? user.name : user.nameEn) : "مستخدم"}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {isRTL ? "ahmed@customs.gov.sa" : user.email}
+                      {user?.email || "email@zatca.gov.sa"}
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
-                      {isRTL ? "موظف جمارك" : user.role}
+                      {user
+                        ? isRTL
+                          ? user.department
+                          : user.departmentEn
+                        : "قسم"}
                     </p>
                   </div>
 
@@ -283,14 +289,7 @@ const Header: React.FC<HeaderProps> = ({
                   </div>
 
                   <div className="border-t border-gray-100 py-1">
-                    <button
-                      className={`w-full px-4 py-2 text-red-600 hover:bg-red-50 transition-colors flex items-center gap-3 ${
-                        isRTL ? "text-right" : "text-left"
-                      }`}
-                    >
-                      <LogOut className="w-4 h-4 flex-shrink-0" />
-                      <span>{t("header.signOut")}</span>
-                    </button>
+                    <LogoutButton variant="dropdown" forceShow={true} />
                   </div>
                 </div>
               )}
