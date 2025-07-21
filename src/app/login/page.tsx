@@ -3,15 +3,7 @@
 import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  Eye,
-  EyeOff,
-  User,
-  Lock,
-  AlertCircle,
-  CheckCircle,
-  Loader2,
-} from "lucide-react";
+import { Eye, EyeOff, User, Lock, AlertCircle, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import LanguageToggle from "@/components/shared/LanguageToggle";
@@ -29,7 +21,6 @@ export default function LoginPage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<string>("");
   const [fieldErrors, setFieldErrors] = useState<{
     username?: string;
     password?: string;
@@ -78,7 +69,6 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
 
     if (!validateForm()) {
       return;
@@ -93,11 +83,9 @@ export default function LoginPage() {
       });
 
       if (response.success) {
-        setSuccess(response.message);
-        // Redirect after successful login
-        setTimeout(() => {
-          router.replace("/location-monitor");
-        }, 1000);
+        // Redirect immediately after successful login
+        router.replace("/location-monitor");
+        return; // Exit early to prevent further processing
       } else {
         setError(response.message);
       }
@@ -204,13 +192,6 @@ export default function LoginPage() {
               </div>
             )}
 
-            {success && (
-              <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
-                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                <p className="text-green-700 text-sm">{success}</p>
-              </div>
-            )}
-
             {/* Login Form */}
             <form onSubmit={handleSubmit} className="space-y-3">
               {/* Username Field */}
@@ -305,18 +286,13 @@ export default function LoginPage() {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={isLoading || success !== ""}
+                disabled={isLoading}
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
               >
                 {isLoading ? (
                   <div className="flex items-center">
                     <Loader2 className="animate-spin h-4 w-4 mr-2" />
                     {isRTL ? "جاري تسجيل الدخول..." : "Signing in..."}
-                  </div>
-                ) : success ? (
-                  <div className="flex items-center">
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    {isRTL ? "تم بنجاح" : "Success"}
                   </div>
                 ) : isRTL ? (
                   "تسجيل الدخول"
