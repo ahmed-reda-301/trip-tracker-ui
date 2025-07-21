@@ -18,10 +18,9 @@ const Marker = dynamic(
   () => import("react-leaflet").then((mod) => mod.Marker),
   { ssr: false }
 );
-const Popup = dynamic(
-  () => import("react-leaflet").then((mod) => mod.Popup),
-  { ssr: false }
-);
+const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
+  ssr: false,
+});
 
 // Types
 export interface Port {
@@ -85,7 +84,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
     // Import Leaflet only on client side
     import("leaflet").then((leaflet) => {
       setL(leaflet.default);
-      
+
       // Fix for default markers
       delete (leaflet.default.Icon.Default.prototype as any)._getIconUrl;
       leaflet.default.Icon.Default.mergeOptions({
@@ -99,7 +98,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
   // Custom icons
   const createPortIcon = (type: string, status: string) => {
     if (!L) return null;
-    
+
     const color = status === "active" ? "#10b981" : "#ef4444";
     const iconHtml = `
       <div style="
@@ -121,7 +120,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
         "></div>
       </div>
     `;
-    
+
     return L.divIcon({
       html: iconHtml,
       className: "custom-port-icon",
@@ -132,18 +131,24 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
 
   const createVesselIcon = (type: string, status: string, heading: number) => {
     if (!L) return null;
-    
+
     const getTypeColor = (vesselType: string) => {
       switch (vesselType) {
-        case "cargo": return "#3b82f6";
-        case "tanker": return "#f59e0b";
-        case "container": return "#8b5cf6";
-        case "passenger": return "#06b6d4";
-        case "fishing": return "#10b981";
-        default: return "#6b7280";
+        case "cargo":
+          return "#3b82f6";
+        case "tanker":
+          return "#f59e0b";
+        case "container":
+          return "#8b5cf6";
+        case "passenger":
+          return "#06b6d4";
+        case "fishing":
+          return "#10b981";
+        default:
+          return "#6b7280";
       }
     };
-    
+
     const color = getTypeColor(type);
     const iconHtml = `
       <div style="
@@ -169,7 +174,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
         "></div>
       </div>
     `;
-    
+
     return L.divIcon({
       html: iconHtml,
       className: "custom-vessel-icon",
@@ -178,15 +183,15 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
     });
   };
 
-  if (!isClient) {
+  if (!isClient || !L) {
     return (
-      <div 
+      <div
         className="flex items-center justify-center bg-gray-100 rounded-lg"
         style={{ height }}
       >
         <div className="flex items-center gap-2 text-gray-600">
           <Loader2 className="w-6 h-6 animate-spin" />
-          <span>Loading map...</span>
+          <span>{isRTL ? "جاري تحميل الخريطة..." : "Loading map..."}</span>
         </div>
       </div>
     );
@@ -204,59 +209,86 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        
+
         {/* Port Markers */}
-        {showPorts && ports.map((port) => (
-          <Marker
-            key={`port-${port.id}`}
-            position={port.coordinates}
-            icon={createPortIcon(port.type, port.status)}
-            eventHandlers={{
-              click: () => onPortClick?.(port),
-            }}
-          >
-            <Popup>
-              <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
-                <h3 className="font-bold text-lg mb-2">
-                  {isRTL ? port.name : port.nameEn}
-                </h3>
-                <div className="space-y-1 text-sm">
-                  <p><strong>Type:</strong> {port.type}</p>
-                  <p><strong>Status:</strong> {port.status}</p>
-                  <p><strong>Vessels:</strong> {port.vessels}/{port.capacity}</p>
-                  <p><strong>Country:</strong> {isRTL ? port.countryAr : port.country}</p>
+        {showPorts &&
+          ports.map((port) => (
+            <Marker
+              key={`port-${port.id}`}
+              position={port.coordinates}
+              icon={createPortIcon(port.type, port.status)}
+              eventHandlers={{
+                click: () => onPortClick?.(port),
+              }}
+            >
+              <Popup>
+                <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
+                  <h3 className="font-bold text-lg mb-2">
+                    {isRTL ? port.name : port.nameEn}
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>Type:</strong> {port.type}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {port.status}
+                    </p>
+                    <p>
+                      <strong>Vessels:</strong> {port.vessels}/{port.capacity}
+                    </p>
+                    <p>
+                      <strong>Country:</strong>{" "}
+                      {isRTL ? port.countryAr : port.country}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-        
+              </Popup>
+            </Marker>
+          ))}
+
         {/* Vessel Markers */}
-        {showVessels && vessels.map((vessel) => (
-          <Marker
-            key={`vessel-${vessel.id}`}
-            position={vessel.coordinates}
-            icon={createVesselIcon(vessel.type, vessel.status, vessel.heading)}
-            eventHandlers={{
-              click: () => onVesselClick?.(vessel),
-            }}
-          >
-            <Popup>
-              <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
-                <h3 className="font-bold text-lg mb-2">
-                  {isRTL ? vessel.name : vessel.nameEn}
-                </h3>
-                <div className="space-y-1 text-sm">
-                  <p><strong>Type:</strong> {vessel.type}</p>
-                  <p><strong>Status:</strong> {vessel.status}</p>
-                  <p><strong>Speed:</strong> {vessel.speed} knots</p>
-                  <p><strong>Destination:</strong> {isRTL ? vessel.destination : vessel.destinationEn}</p>
-                  <p><strong>Flag:</strong> {isRTL ? vessel.flagAr : vessel.flag}</p>
+        {showVessels &&
+          vessels.map((vessel) => (
+            <Marker
+              key={`vessel-${vessel.id}`}
+              position={vessel.coordinates}
+              icon={createVesselIcon(
+                vessel.type,
+                vessel.status,
+                vessel.heading
+              )}
+              eventHandlers={{
+                click: () => onVesselClick?.(vessel),
+              }}
+            >
+              <Popup>
+                <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
+                  <h3 className="font-bold text-lg mb-2">
+                    {isRTL ? vessel.name : vessel.nameEn}
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>Type:</strong> {vessel.type}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {vessel.status}
+                    </p>
+                    <p>
+                      <strong>Speed:</strong> {vessel.speed} knots
+                    </p>
+                    <p>
+                      <strong>Destination:</strong>{" "}
+                      {isRTL ? vessel.destination : vessel.destinationEn}
+                    </p>
+                    <p>
+                      <strong>Flag:</strong>{" "}
+                      {isRTL ? vessel.flagAr : vessel.flag}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
+              </Popup>
+            </Marker>
+          ))}
       </MapContainer>
     </div>
   );

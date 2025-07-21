@@ -12,7 +12,19 @@
     "destinationEn": "Dubai Port",
     "flag": "Saudi Arabia",
     "flagAr": "المملكة العربية السعودية",
-    "lastUpdate": "2024-01-21T10:30:00Z"
+    "lastUpdate": "2024-01-21T10:30:00Z",
+    "imo": "9123456",
+    "mmsi": "403123456",
+    "callSign": "HZ1234",
+    "length": "180m",
+    "beam": "28m",
+    "draft": "12m",
+    "grossTonnage": "25000",
+    "cargoType": "General Cargo",
+    "cargoTypeAr": "بضائع عامة",
+    "eta": "2024-01-22T08:00:00Z",
+    "route": ["SAJED", "AEDXB"],
+    "priority": "normal"
   },
   {
     "id": 2,

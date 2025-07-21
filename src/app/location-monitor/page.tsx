@@ -3,16 +3,16 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InteractiveMap, { Port, Vessel } from "@/components/maps/InteractiveMap";
-import MapStats from "@/components/maps/MapStats";
-import MapControls from "@/components/maps/MapControls";
-import { Clock, AlertCircle } from "lucide-react";
+import MapSidebar from "@/components/maps/MapSidebar";
+import MapFloatingButton from "@/components/maps/MapFloatingButton";
+import { AlertCircle } from "lucide-react";
 
 // Import data
 import portsData from "@/data/ports.json";
 import vesselsData from "@/data/vessels.json";
 
 export default function LocationMonitorPage() {
-  const { t, isRTL } = useLanguage();
+  const { isRTL } = useLanguage();
 
   // State
   const [ports, setPorts] = useState<Port[]>([]);
@@ -23,7 +23,8 @@ export default function LocationMonitorPage() {
   const [showVessels, setShowVessels] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Load data on component mount
   useEffect(() => {
@@ -68,7 +69,7 @@ export default function LocationMonitorPage() {
     setIsLoading(true);
     // Simulate API call
     setTimeout(() => {
-      setLastUpdate(new Date());
+      // Refresh data logic here
       setIsLoading(false);
     }, 1000);
   };
@@ -86,71 +87,73 @@ export default function LocationMonitorPage() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className={`${isRTL ? "text-right" : "text-left"}`}>
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-          {t("pages.locationMonitor.title")}
-        </h1>
-        <p className="text-gray-600 mb-4">
-          {t("pages.locationMonitor.description")}
-        </p>
-
-        {/* Last Update */}
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Clock className="w-4 h-4" />
-          <span>
-            {t("pages.locationMonitor.lastUpdate")}:{" "}
-            {lastUpdate.toLocaleString(isRTL ? "ar-SA" : "en-US")}
-          </span>
+    <div className="relative w-full h-full flex flex-col overflow-hidden">
+      {/* Map Container - Takes available space only */}
+      <div className="relative flex-1 bg-gray-100 overflow-hidden">
+        {/* Map */}
+        <div
+          className="absolute inset-0"
+          onClick={() => {
+            // Close sidebar when clicking on map
+            if (sidebarOpen) {
+              setSidebarOpen(false);
+            }
+          }}
+        >
+          <InteractiveMap
+            ports={filteredPorts}
+            vessels={filteredVessels}
+            center={[24.7136, 46.6753]} // Saudi Arabia center
+            zoom={6}
+            height="calc(100vh)"
+            showPorts={showPorts}
+            showVessels={showVessels}
+            onPortClick={handlePortClick}
+            onVesselClick={handleVesselClick}
+          />
         </div>
-      </div>
 
-      {/* Statistics */}
-      <MapStats ports={filteredPorts} vessels={filteredVessels} />
+        {/* Floating Button - Over map only */}
+        <MapFloatingButton
+          isOpen={sidebarOpen}
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          hasUpdates={false}
+        />
 
-      {/* Map Controls */}
-      <MapControls
-        showPorts={showPorts}
-        showVessels={showVessels}
-        onTogglePorts={() => setShowPorts(!showPorts)}
-        onToggleVessels={() => setShowVessels(!showVessels)}
-        onRefresh={handleRefresh}
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        isLoading={isLoading}
-      />
-
-      {/* Interactive Map */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <InteractiveMap
+        {/* Sidebar - Over map only */}
+        <MapSidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
           ports={filteredPorts}
           vessels={filteredVessels}
-          center={[24.7136, 46.6753]} // Saudi Arabia center
-          zoom={6}
-          height="600px"
           showPorts={showPorts}
           showVessels={showVessels}
-          onPortClick={handlePortClick}
-          onVesselClick={handleVesselClick}
+          onTogglePorts={() => setShowPorts(!showPorts)}
+          onToggleVessels={() => setShowVessels(!showVessels)}
+          onRefresh={handleRefresh}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          isLoading={isLoading}
         />
-      </div>
 
-      {/* Status Information */}
-      {filteredPorts.length === 0 &&
-        filteredVessels.length === 0 &&
-        searchTerm && (
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="w-5 h-5 text-yellow-600" />
-              <p className="text-yellow-800">
-                {isRTL
-                  ? `لم يتم العثور على نتائج للبحث: "${searchTerm}"`
-                  : `No results found for: "${searchTerm}"`}
-              </p>
+        {/* No Results Overlay - Over map only */}
+        {filteredPorts.length === 0 &&
+          filteredVessels.length === 0 &&
+          searchTerm && (
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 shadow-lg">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-yellow-600" />
+                  <p className="text-yellow-800">
+                    {isRTL
+                      ? `لم يتم العثور على نتائج للبحث: "${searchTerm}"`
+                      : `No results found for: "${searchTerm}"`}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+      </div>
     </div>
   );
 }

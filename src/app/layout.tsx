@@ -114,8 +114,18 @@ export default function RootLayout({
                 onSidebarChange={setSidebarOpen}
               />
               <Breadcrumb onNavigate={handleNavigate} />
-              <div className="flex-1 bg-gray-50 p-8">
-                <div className="max-w-6xl mx-auto">{children}</div>
+              <div
+                className={`flex-1 ${
+                  pathname === "/location-monitor"
+                    ? "bg-gray-100"
+                    : "bg-gray-50 p-8"
+                }`}
+              >
+                {pathname === "/location-monitor" ? (
+                  children
+                ) : (
+                  <div className="max-w-6xl mx-auto">{children}</div>
+                )}
               </div>
               <Footer />
             </div>

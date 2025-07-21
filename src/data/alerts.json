@@ -1,0 +1,198 @@
+[
+  {
+    "id": 1,
+    "type": "security",
+    "severity": "high",
+    "title": "تنبيه أمني عالي الأولوية",
+    "titleEn": "High Priority Security Alert",
+    "message": "تم رصد نشاط مشبوه في المنطقة البحرية قرب ميناء جدة",
+    "messageEn": "Suspicious activity detected in maritime area near Jeddah Port",
+    "timestamp": "2024-01-21T09:15:00Z",
+    "location": "ميناء جدة الإسلامي",
+    "locationEn": "Jeddah Islamic Port",
+    "coordinates": [21.4858, 39.1925],
+    "status": "active",
+    "assignedTo": "فريق الأمن البحري",
+    "assignedToEn": "Maritime Security Team",
+    "relatedVessels": [1, 3],
+    "actions": [
+      {
+        "action": "تم إرسال دورية أمنية",
+        "actionEn": "Security patrol dispatched",
+        "timestamp": "2024-01-21T09:20:00Z"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "weather",
+    "severity": "medium",
+    "title": "تحذير من الأحوال الجوية",
+    "titleEn": "Weather Warning",
+    "message": "رياح قوية متوقعة في الخليج العربي خلال الـ 24 ساعة القادمة",
+    "messageEn": "Strong winds expected in Arabian Gulf within next 24 hours",
+    "timestamp": "2024-01-21T06:30:00Z",
+    "location": "الخليج العربي",
+    "locationEn": "Arabian Gulf",
+    "coordinates": [26.0, 50.0],
+    "status": "active",
+    "assignedTo": "مركز الأرصاد الجوية",
+    "assignedToEn": "Weather Center",
+    "relatedVessels": [2, 4, 6],
+    "actions": [
+      {
+        "action": "تم إرسال تحذير لجميع السفن",
+        "actionEn": "Warning sent to all vessels",
+        "timestamp": "2024-01-21T06:35:00Z"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "type": "customs",
+    "severity": "medium",
+    "title": "فحص جمركي مطلوب",
+    "titleEn": "Customs Inspection Required",
+    "message": "السفن الأمل الكويتي تتطلب فحص جمركي إضافي قبل الدخول للميناء",
+    "messageEn": "Vessel Kuwaiti Hope requires additional customs inspection before port entry",
+    "timestamp": "2024-01-21T08:45:00Z",
+    "location": "ميناء الدمام",
+    "locationEn": "Dammam Port",
+    "coordinates": [26.4207, 50.1063],
+    "status": "pending",
+    "assignedTo": "إدارة الجمارك",
+    "assignedToEn": "Customs Department",
+    "relatedVessels": [4],
+    "actions": [
+      {
+        "action": "تم تحديد موعد الفحص",
+        "actionEn": "Inspection scheduled",
+        "timestamp": "2024-01-21T09:00:00Z"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "type": "technical",
+    "severity": "low",
+    "title": "صيانة دورية للنظام",
+    "titleEn": "Routine System Maintenance",
+    "message": "صيانة دورية مجدولة لنظام تتبع السفن يوم الجمعة من 2:00 إلى 4:00 صباحاً",
+    "messageEn": "Scheduled routine maintenance for vessel tracking system Friday 2:00-4:00 AM",
+    "timestamp": "2024-01-21T10:00:00Z",
+    "location": "مركز التحكم الرئيسي",
+    "locationEn": "Main Control Center",
+    "coordinates": [24.7136, 46.6753],
+    "status": "scheduled",
+    "assignedTo": "فريق الدعم التقني",
+    "assignedToEn": "Technical Support Team",
+    "relatedVessels": [],
+    "actions": []
+  },
+  {
+    "id": 5,
+    "type": "delay",
+    "severity": "high",
+    "title": "تأخير في الوصول",
+    "titleEn": "Arrival Delay",
+    "message": "السفينة الأمل الكويتي متأخرة 6 ساعات عن الموعد المحدد بسبب الطقس",
+    "messageEn": "Vessel Kuwaiti Hope delayed 6 hours from scheduled arrival due to weather",
+    "timestamp": "2024-01-21T07:30:00Z",
+    "location": "في البحر - متجهة لميناء الدمام",
+    "locationEn": "At Sea - Heading to Dammam Port",
+    "coordinates": [27.5, 49.8],
+    "status": "active",
+    "assignedTo": "مراقب الحركة البحرية",
+    "assignedToEn": "Maritime Traffic Controller",
+    "relatedVessels": [4],
+    "actions": [
+      {
+        "action": "تم إعادة جدولة وقت الوصول",
+        "actionEn": "Arrival time rescheduled",
+        "timestamp": "2024-01-21T07:35:00Z"
+      },
+      {
+        "action": "تم إشعار العملاء المتأثرين",
+        "actionEn": "Affected customers notified",
+        "timestamp": "2024-01-21T07:40:00Z"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "type": "port",
+    "severity": "medium",
+    "title": "ازدحام في الميناء",
+    "titleEn": "Port Congestion",
+    "message": "ازدحام متوسط في ميناء دبي - أوقات انتظار متوقعة 3-4 ساعات",
+    "messageEn": "Moderate congestion at Dubai Port - Expected waiting time 3-4 hours",
+    "timestamp": "2024-01-21T11:00:00Z",
+    "location": "ميناء دبي",
+    "locationEn": "Dubai Port",
+    "coordinates": [25.2697, 55.3094],
+    "status": "active",
+    "assignedTo": "إدارة الميناء",
+    "assignedToEn": "Port Authority",
+    "relatedVessels": [1, 8],
+    "actions": [
+      {
+        "action": "تم فتح رصيف إضافي",
+        "actionEn": "Additional berth opened",
+        "timestamp": "2024-01-21T11:15:00Z"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "type": "environmental",
+    "severity": "low",
+    "title": "مراقبة بيئية",
+    "titleEn": "Environmental Monitoring",
+    "message": "مستويات التلوث ضمن الحدود الطبيعية في جميع الموانئ",
+    "messageEn": "Pollution levels within normal limits at all ports",
+    "timestamp": "2024-01-21T05:00:00Z",
+    "location": "جميع الموانئ",
+    "locationEn": "All Ports",
+    "coordinates": [25.0, 50.0],
+    "status": "resolved",
+    "assignedTo": "قسم البيئة البحرية",
+    "assignedToEn": "Marine Environment Department",
+    "relatedVessels": [],
+    "actions": [
+      {
+        "action": "تم إجراء الفحص اليومي",
+        "actionEn": "Daily inspection completed",
+        "timestamp": "2024-01-21T05:30:00Z"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "type": "communication",
+    "severity": "medium",
+    "title": "انقطاع في الاتصالات",
+    "titleEn": "Communication Disruption",
+    "message": "انقطاع مؤقت في الاتصالات مع السفينة نجمة الخليج - تم استعادة الاتصال",
+    "messageEn": "Temporary communication loss with vessel Gulf Star - Contact restored",
+    "timestamp": "2024-01-21T04:20:00Z",
+    "location": "في البحر",
+    "locationEn": "At Sea",
+    "coordinates": [26.3, 50.2],
+    "status": "resolved",
+    "assignedTo": "مركز الاتصالات البحرية",
+    "assignedToEn": "Maritime Communications Center",
+    "relatedVessels": [2],
+    "actions": [
+      {
+        "action": "تم فحص أنظمة الاتصال",
+        "actionEn": "Communication systems checked",
+        "timestamp": "2024-01-21T04:25:00Z"
+      },
+      {
+        "action": "تم استعادة الاتصال بالكامل",
+        "actionEn": "Full communication restored",
+        "timestamp": "2024-01-21T04:30:00Z"
+      }
+    ]
+  }
+]

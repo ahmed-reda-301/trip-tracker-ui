@@ -9,7 +9,14 @@
     "vessels": 12,
     "capacity": 150,
     "country": "Saudi Arabia",
-    "countryAr": "المملكة العربية السعودية"
+    "countryAr": "المملكة العربية السعودية",
+    "code": "SAJED",
+    "authority": "Saudi Ports Authority",
+    "authorityAr": "هيئة الموانئ السعودية",
+    "operationalHours": "24/7",
+    "services": ["Container", "General Cargo", "Bulk", "RoRo"],
+    "depth": "16m",
+    "area": "12.5 km²"
   },
   {
     "id": 2,
@@ -123,7 +130,7 @@
     "id": 11,
     "name": "ميناء الدوحة",
     "nameEn": "Doha Port",
-    "coordinates": [25.2854, 51.5310],
+    "coordinates": [25.2854, 51.531],
     "type": "commercial",
     "status": "active",
     "vessels": 11,
@@ -135,7 +142,7 @@
     "id": 12,
     "name": "ميناء المنامة",
     "nameEn": "Manama Port",
-    "coordinates": [26.2285, 50.5860],
+    "coordinates": [26.2285, 50.586],
     "type": "commercial",
     "status": "active",
     "vessels": 5,

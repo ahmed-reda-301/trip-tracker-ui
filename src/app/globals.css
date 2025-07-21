@@ -176,3 +176,16 @@
   overflow-x: visible !important;
   overflow-y: visible !important;
 }
+
+/* Prevent horizontal scroll globally */
+html,
+body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* Ensure map containers don't cause horizontal scroll */
+.leaflet-container {
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
