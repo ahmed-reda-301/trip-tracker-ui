@@ -11,7 +11,6 @@ import InteractiveMap, {
 } from "@/components/maps/InteractiveMap";
 import MapFloatingButton from "@/components/maps/MapFloatingButton";
 import SaudiLocationsSidebar from "@/components/maps/SaudiLocationsSidebar";
-import ProtectedPage from "@/components/auth/ProtectedRoute";
 
 // Import Saudi data
 import saudiLocations from "@/data/saudi-locations.json";
@@ -152,82 +151,80 @@ export default function LocationMonitorPage() {
   };
 
   return (
-    <ProtectedPage>
-      <div className="relative w-full h-full flex flex-col overflow-hidden">
-        {/* Map Container - Takes available space only */}
+    <div className="relative w-full h-full flex flex-col overflow-hidden">
+      {/* Map Container - Takes available space only */}
+      <div
+        className="relative w-full bg-gray-100 overflow-hidden"
+        style={{ height: "calc(100vh - 180px)", minHeight: "500px" }}
+      >
+        {/* Map */}
         <div
-          className="relative w-full bg-gray-100 overflow-hidden"
-          style={{ height: "calc(100vh - 180px)", minHeight: "500px" }}
+          className="absolute inset-0"
+          onClick={() => {
+            // Close sidebar when clicking on map
+            if (sidebarOpen) {
+              setSidebarOpen(false);
+            }
+          }}
         >
-          {/* Map */}
-          <div
-            className="absolute inset-0"
-            onClick={() => {
-              // Close sidebar when clicking on map
-              if (sidebarOpen) {
-                setSidebarOpen(false);
-              }
-            }}
-          >
-            <InteractiveMap
-              // Saudi locations
-              airports={airports}
-              seaports={seaports}
-              policeStations={policeStations}
-              checkpoints={checkpoints}
-              vehicles={vehicles}
-              // Map settings
-              center={[24.7136, 46.6753]} // Saudi Arabia center
-              zoom={6}
-              height="785px"
-              // Display toggles
-              showAirports={showAirports}
-              showSeaports={showSeaports}
-              showPoliceStations={showPoliceStations}
-              showCheckpoints={showCheckpoints}
-              showVehicles={showVehicles}
-              // Event handlers
-              onAirportClick={handleAirportClick}
-              onSeaportClick={handleSeaportClick}
-              onPoliceStationClick={handlePoliceStationClick}
-              onCheckpointClick={handleCheckpointClick}
-              onVehicleClick={handleVehicleClick}
-            />
-          </div>
-
-          {/* Floating Button - Over map only */}
-          <MapFloatingButton
-            isOpen={sidebarOpen}
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            hasUpdates={false}
-          />
-
-          {/* Sidebar - Over map only */}
-          <SaudiLocationsSidebar
-            isOpen={sidebarOpen}
-            onClose={() => setSidebarOpen(false)}
+          <InteractiveMap
+            // Saudi locations
             airports={airports}
             seaports={seaports}
             policeStations={policeStations}
             checkpoints={checkpoints}
             vehicles={vehicles}
+            // Map settings
+            center={[24.7136, 46.6753]} // Saudi Arabia center
+            zoom={6}
+            height="785px"
+            // Display toggles
             showAirports={showAirports}
             showSeaports={showSeaports}
             showPoliceStations={showPoliceStations}
             showCheckpoints={showCheckpoints}
             showVehicles={showVehicles}
-            onToggleAirports={handleToggleAirports}
-            onToggleSeaports={handleToggleSeaports}
-            onTogglePoliceStations={handleTogglePoliceStations}
-            onToggleCheckpoints={handleToggleCheckpoints}
-            onToggleVehicles={handleToggleVehicles}
-            onRefresh={handleRefresh}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            isLoading={isLoading}
+            // Event handlers
+            onAirportClick={handleAirportClick}
+            onSeaportClick={handleSeaportClick}
+            onPoliceStationClick={handlePoliceStationClick}
+            onCheckpointClick={handleCheckpointClick}
+            onVehicleClick={handleVehicleClick}
           />
         </div>
+
+        {/* Floating Button - Over map only */}
+        <MapFloatingButton
+          isOpen={sidebarOpen}
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          hasUpdates={false}
+        />
+
+        {/* Sidebar - Over map only */}
+        <SaudiLocationsSidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          airports={airports}
+          seaports={seaports}
+          policeStations={policeStations}
+          checkpoints={checkpoints}
+          vehicles={vehicles}
+          showAirports={showAirports}
+          showSeaports={showSeaports}
+          showPoliceStations={showPoliceStations}
+          showCheckpoints={showCheckpoints}
+          showVehicles={showVehicles}
+          onToggleAirports={handleToggleAirports}
+          onToggleSeaports={handleToggleSeaports}
+          onTogglePoliceStations={handleTogglePoliceStations}
+          onToggleCheckpoints={handleToggleCheckpoints}
+          onToggleVehicles={handleToggleVehicles}
+          onRefresh={handleRefresh}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          isLoading={isLoading}
+        />
       </div>
-    </ProtectedPage>
+    </div>
   );
 }

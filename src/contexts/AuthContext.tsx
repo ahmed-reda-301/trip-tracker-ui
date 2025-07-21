@@ -63,6 +63,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       try {
         const response = await authService.login(credentials);
         if (response.success && response.user) {
+          // Update user state immediately
           setUser(response.user);
         }
         return response;

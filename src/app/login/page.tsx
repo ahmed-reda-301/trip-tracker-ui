@@ -83,9 +83,8 @@ export default function LoginPage() {
       });
 
       if (response.success) {
-        // Redirect immediately after successful login
+        // Redirect to location monitor page
         router.replace("/location-monitor");
-        return; // Exit early to prevent further processing
       } else {
         setError(response.message);
       }
