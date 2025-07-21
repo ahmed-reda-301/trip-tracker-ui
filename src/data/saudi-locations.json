@@ -1,0 +1,354 @@
+{
+  "airports": [
+    {
+      "id": "RUH",
+      "name": "مطار الملك خالد الدولي",
+      "nameEn": "King Khalid International Airport",
+      "coordinates": [24.9576, 46.6988],
+      "city": "الرياض",
+      "cityEn": "Riyadh",
+      "type": "international",
+      "status": "active",
+      "iata": "RUH",
+      "icao": "OERK"
+    },
+    {
+      "id": "JED",
+      "name": "مطار الملك عبدالعزيز الدولي",
+      "nameEn": "King Abdulaziz International Airport",
+      "coordinates": [21.6796, 39.1565],
+      "city": "جدة",
+      "cityEn": "Jeddah",
+      "type": "international",
+      "status": "active",
+      "iata": "JED",
+      "icao": "OEJN"
+    },
+    {
+      "id": "DMM",
+      "name": "مطار الملك فهد الدولي",
+      "nameEn": "King Fahd International Airport",
+      "coordinates": [26.4712, 49.7979],
+      "city": "الدمام",
+      "cityEn": "Dammam",
+      "type": "international",
+      "status": "active",
+      "iata": "DMM",
+      "icao": "OEDF"
+    },
+    {
+      "id": "MED",
+      "name": "مطار الأمير محمد بن عبدالعزيز",
+      "nameEn": "Prince Mohammad Bin Abdulaziz Airport",
+      "coordinates": [24.5534, 39.7051],
+      "city": "المدينة المنورة",
+      "cityEn": "Medina",
+      "type": "domestic",
+      "status": "active",
+      "iata": "MED",
+      "icao": "OEMA"
+    },
+    {
+      "id": "AHB",
+      "name": "مطار الأمير عبدالمحسن بن عبدالعزيز",
+      "nameEn": "Prince Abdul Mohsin Bin Abdulaziz Airport",
+      "coordinates": [18.2404, 42.6566],
+      "city": "أبها",
+      "cityEn": "Abha",
+      "type": "domestic",
+      "status": "active",
+      "iata": "AHB",
+      "icao": "OEAB"
+    },
+    {
+      "id": "TUU",
+      "name": "مطار تبوك الإقليمي",
+      "nameEn": "Tabuk Regional Airport",
+      "coordinates": [28.3654, 36.6189],
+      "city": "تبوك",
+      "cityEn": "Tabuk",
+      "type": "domestic",
+      "status": "active",
+      "iata": "TUU",
+      "icao": "OETB"
+    },
+    {
+      "id": "HAS",
+      "name": "مطار الأمير عبدالمجيد بن عبدالعزيز",
+      "nameEn": "Prince Abdul Majeed bin Abdulaziz Airport",
+      "coordinates": [25.3173, 40.1441],
+      "city": "الحائل",
+      "cityEn": "Hail",
+      "type": "domestic",
+      "status": "active",
+      "iata": "HAS",
+      "icao": "OEHL"
+    },
+    {
+      "id": "ELQ",
+      "name": "مطار الأمير نايف بن عبدالعزيز الإقليمي",
+      "nameEn": "Prince Naif bin Abdulaziz Regional Airport",
+      "coordinates": [26.3031, 43.7744],
+      "city": "القصيم",
+      "cityEn": "Qassim",
+      "type": "domestic",
+      "status": "active",
+      "iata": "ELQ",
+      "icao": "OEGS"
+    },
+    {
+      "id": "GIZ",
+      "name": "مطار الأمير عبدالله بن عبدالعزيز الإقليمي",
+      "nameEn": "Prince Abdullah bin Abdulaziz Regional Airport",
+      "coordinates": [16.9011, 42.5858],
+      "city": "جازان",
+      "cityEn": "Jazan",
+      "type": "domestic",
+      "status": "active",
+      "iata": "GIZ",
+      "icao": "OEGN"
+    },
+    {
+      "id": "URY",
+      "name": "مطار الأمير عبدالمجيد بن عبدالعزيز",
+      "nameEn": "Prince Abdul Majeed bin Abdulaziz Airport",
+      "coordinates": [20.4637, 41.6924],
+      "city": "العلا",
+      "cityEn": "AlUla",
+      "type": "domestic",
+      "status": "active",
+      "iata": "URY",
+      "icao": "OEAO"
+    }
+  ],
+  "seaports": [
+    {
+      "id": "JEDDAH",
+      "name": "ميناء جدة الإسلامي",
+      "nameEn": "Jeddah Islamic Port",
+      "coordinates": [21.4858, 39.1925],
+      "city": "جدة",
+      "cityEn": "Jeddah",
+      "type": "commercial",
+      "status": "active",
+      "capacity": 15000,
+      "vessels": 45
+    },
+    {
+      "id": "DAMMAM",
+      "name": "ميناء الملك عبدالعزيز",
+      "nameEn": "King Abdulaziz Port",
+      "coordinates": [26.3927, 50.1059],
+      "city": "الدمام",
+      "cityEn": "Dammam",
+      "type": "commercial",
+      "status": "active",
+      "capacity": 12000,
+      "vessels": 38
+    },
+    {
+      "id": "YANBU",
+      "name": "ميناء ينبع التجاري",
+      "nameEn": "Yanbu Commercial Port",
+      "coordinates": [24.0889, 38.0618],
+      "city": "ينبع",
+      "cityEn": "Yanbu",
+      "type": "commercial",
+      "status": "active",
+      "capacity": 8000,
+      "vessels": 22
+    },
+    {
+      "id": "JIZAN",
+      "name": "ميناء جازان",
+      "nameEn": "Jazan Port",
+      "coordinates": [16.8892, 42.5511],
+      "city": "جازان",
+      "cityEn": "Jazan",
+      "type": "commercial",
+      "status": "active",
+      "capacity": 6000,
+      "vessels": 18
+    },
+    {
+      "id": "RABIGH",
+      "name": "ميناء رابغ",
+      "nameEn": "Rabigh Port",
+      "coordinates": [22.7964, 39.0738],
+      "city": "رابغ",
+      "cityEn": "Rabigh",
+      "type": "industrial",
+      "status": "active",
+      "capacity": 4000,
+      "vessels": 12
+    },
+    {
+      "id": "JUBAIL",
+      "name": "ميناء الجبيل التجاري",
+      "nameEn": "Jubail Commercial Port",
+      "coordinates": [27.0174, 49.6252],
+      "city": "الجبيل",
+      "cityEn": "Jubail",
+      "type": "industrial",
+      "status": "active",
+      "capacity": 10000,
+      "vessels": 28
+    },
+    {
+      "id": "DHIBA",
+      "name": "ميناء ضباء",
+      "nameEn": "Dhiba Port",
+      "coordinates": [27.35, 35.7],
+      "city": "ضباء",
+      "cityEn": "Dhiba",
+      "type": "commercial",
+      "status": "active",
+      "capacity": 3000,
+      "vessels": 8
+    }
+  ],
+  "police_stations": [
+    {
+      "id": "PS_RUH_01",
+      "name": "مركز شرطة الملز",
+      "nameEn": "Al-Malaz Police Station",
+      "coordinates": [24.6408, 46.7728],
+      "city": "الرياض",
+      "cityEn": "Riyadh",
+      "type": "main",
+      "status": "active"
+    },
+    {
+      "id": "PS_JED_01",
+      "name": "مركز شرطة البلد",
+      "nameEn": "Al-Balad Police Station",
+      "coordinates": [21.4858, 39.1925],
+      "city": "جدة",
+      "cityEn": "Jeddah",
+      "type": "main",
+      "status": "active"
+    },
+    {
+      "id": "PS_DMM_01",
+      "name": "مركز شرطة الدمام",
+      "nameEn": "Dammam Police Station",
+      "coordinates": [26.4207, 50.0888],
+      "city": "الدمام",
+      "cityEn": "Dammam",
+      "type": "main",
+      "status": "active"
+    },
+    {
+      "id": "PS_MED_01",
+      "name": "مركز شرطة المدينة المنورة",
+      "nameEn": "Medina Police Station",
+      "coordinates": [24.4681, 39.6142],
+      "city": "المدينة المنورة",
+      "cityEn": "Medina",
+      "type": "main",
+      "status": "active"
+    },
+    {
+      "id": "PS_AHB_01",
+      "name": "مركز شرطة أبها",
+      "nameEn": "Abha Police Station",
+      "coordinates": [18.2164, 42.5048],
+      "city": "أبها",
+      "cityEn": "Abha",
+      "type": "main",
+      "status": "active"
+    },
+    {
+      "id": "PS_TBK_01",
+      "name": "مركز شرطة تبوك",
+      "nameEn": "Tabuk Police Station",
+      "coordinates": [28.3998, 36.57],
+      "city": "تبوك",
+      "cityEn": "Tabuk",
+      "type": "main",
+      "status": "active"
+    },
+    {
+      "id": "PS_JZN_01",
+      "name": "مركز شرطة جازان",
+      "nameEn": "Jazan Police Station",
+      "coordinates": [16.8892, 42.5511],
+      "city": "جازان",
+      "cityEn": "Jazan",
+      "type": "main",
+      "status": "active"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "CP_RUH_JED_01",
+      "name": "نقطة تفتيش طريق الرياض - جدة",
+      "nameEn": "Riyadh-Jeddah Highway Checkpoint",
+      "coordinates": [23.5859, 44.209],
+      "highway": "طريق الرياض - جدة السريع",
+      "highwayEn": "Riyadh-Jeddah Highway",
+      "type": "highway",
+      "status": "active"
+    },
+    {
+      "id": "CP_RUH_DMM_01",
+      "name": "نقطة تفتيش طريق الرياض - الدمام",
+      "nameEn": "Riyadh-Dammam Highway Checkpoint",
+      "coordinates": [25.2048, 47.9747],
+      "highway": "طريق الرياض - الدمام السريع",
+      "highwayEn": "Riyadh-Dammam Highway",
+      "type": "highway",
+      "status": "active"
+    },
+    {
+      "id": "CP_JED_MED_01",
+      "name": "نقطة تفتيش طريق جدة - المدينة",
+      "nameEn": "Jeddah-Medina Highway Checkpoint",
+      "coordinates": [22.7964, 39.0738],
+      "highway": "طريق جدة - المدينة السريع",
+      "highwayEn": "Jeddah-Medina Highway",
+      "type": "highway",
+      "status": "active"
+    },
+    {
+      "id": "CP_RUH_AHB_01",
+      "name": "نقطة تفتيش طريق الرياض - أبها",
+      "nameEn": "Riyadh-Abha Highway Checkpoint",
+      "coordinates": [21.5, 44.5],
+      "highway": "طريق الرياض - أبها السريع",
+      "highwayEn": "Riyadh-Abha Highway",
+      "type": "highway",
+      "status": "active"
+    },
+    {
+      "id": "CP_DMM_JBL_01",
+      "name": "نقطة تفتيش طريق الدمام - الجبيل",
+      "nameEn": "Dammam-Jubail Highway Checkpoint",
+      "coordinates": [26.7, 49.9],
+      "highway": "طريق الدمام - الجبيل السريع",
+      "highwayEn": "Dammam-Jubail Highway",
+      "type": "highway",
+      "status": "active"
+    },
+    {
+      "id": "CP_TBK_JOF_01",
+      "name": "نقطة تفتيش طريق تبوك - الجوف",
+      "nameEn": "Tabuk-Jouf Highway Checkpoint",
+      "coordinates": [29.0, 37.5],
+      "highway": "طريق تبوك - الجوف السريع",
+      "highwayEn": "Tabuk-Jouf Highway",
+      "type": "highway",
+      "status": "active"
+    },
+    {
+      "id": "CP_JZN_AHB_01",
+      "name": "نقطة تفتيش طريق جازان - أبها",
+      "nameEn": "Jazan-Abha Highway Checkpoint",
+      "coordinates": [17.5, 42.6],
+      "highway": "طريق جازان - أبها السريع",
+      "highwayEn": "Jazan-Abha Highway",
+      "type": "highway",
+      "status": "active"
+    }
+  ]
+}

@@ -2,67 +2,196 @@
 
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import InteractiveMap, { Port, Vessel } from "@/components/maps/InteractiveMap";
+import InteractiveMap, {
+  Port,
+  Vessel,
+  Airport,
+  Seaport,
+  PoliceStation,
+  Checkpoint,
+  Vehicle,
+} from "@/components/maps/InteractiveMap";
 import MapSidebar from "@/components/maps/MapSidebar";
 import MapFloatingButton from "@/components/maps/MapFloatingButton";
 import { AlertCircle } from "lucide-react";
 
-// Import data
-import portsData from "@/data/ports.json";
-import vesselsData from "@/data/vessels.json";
+// Import Saudi data
+import saudiLocations from "@/data/saudi-locations.json";
 
 export default function LocationMonitorPage() {
   const { isRTL } = useLanguage();
 
-  // State
-  const [ports, setPorts] = useState<Port[]>([]);
-  const [vessels, setVessels] = useState<Vessel[]>([]);
-  const [filteredPorts, setFilteredPorts] = useState<Port[]>([]);
-  const [filteredVessels, setFilteredVessels] = useState<Vessel[]>([]);
-  const [showPorts, setShowPorts] = useState(true);
-  const [showVessels, setShowVessels] = useState(true);
+  // State for Saudi locations
+  const [airports, setAirports] = useState<Airport[]>([]);
+  const [seaports, setSeaports] = useState<Seaport[]>([]);
+  const [policeStations, setPoliceStations] = useState<PoliceStation[]>([]);
+  const [checkpoints, setCheckpoints] = useState<Checkpoint[]>([]);
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+
+  // Filtered data
+  const [filteredAirports, setFilteredAirports] = useState<Airport[]>([]);
+  const [filteredSeaports, setFilteredSeaports] = useState<Seaport[]>([]);
+  const [filteredPoliceStations, setFilteredPoliceStations] = useState<
+    PoliceStation[]
+  >([]);
+  const [filteredCheckpoints, setFilteredCheckpoints] = useState<Checkpoint[]>(
+    []
+  );
+  const [filteredVehicles, setFilteredVehicles] = useState<Vehicle[]>([]);
+
+  // Display toggles
+  const [showAirports, setShowAirports] = useState(true);
+  const [showSeaports, setShowSeaports] = useState(true);
+  const [showPoliceStations, setShowPoliceStations] = useState(true);
+  const [showCheckpoints, setShowCheckpoints] = useState(true);
+  const [showVehicles, setShowVehicles] = useState(true);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Load data on component mount
+  // Load Saudi data on component mount
   useEffect(() => {
-    setPorts(portsData as Port[]);
-    setVessels(vesselsData as Vessel[]);
+    setAirports(saudiLocations.airports as Airport[]);
+    setSeaports(saudiLocations.seaports as Seaport[]);
+    setPoliceStations(saudiLocations.police_stations as PoliceStation[]);
+    setCheckpoints(saudiLocations.checkpoints as Checkpoint[]);
+
+    // Sample vehicles data
+    const sampleVehicles = [
+      {
+        id: "VEH_001",
+        name: "شاحنة نقل البضائع - الرياض إلى جدة",
+        nameEn: "Cargo Truck - Riyadh to Jeddah",
+        coordinates: [24.2, 45.5],
+        type: "cargo",
+        status: "moving",
+        speed: 85,
+        heading: 270,
+        destination: "ميناء جدة الإسلامي",
+        destinationEn: "Jeddah Islamic Port",
+        origin: "مطار الملك خالد الدولي",
+        originEn: "King Khalid International Airport",
+        plateNumber: "أ ب ج 1234",
+        driver: "أحمد محمد",
+        driverEn: "Ahmed Mohammed",
+        cargo: "مواد غذائية",
+        cargoEn: "Food Products",
+      },
+      {
+        id: "VEH_002",
+        name: "شاحنة صهريج - الدمام إلى الرياض",
+        nameEn: "Tanker Truck - Dammam to Riyadh",
+        coordinates: [26.2, 49.5],
+        type: "tanker",
+        status: "moving",
+        speed: 90,
+        heading: 225,
+        destination: "مطار الملك خالد الدولي",
+        destinationEn: "King Khalid International Airport",
+        origin: "ميناء الملك عبدالعزيز",
+        originEn: "King Abdulaziz Port",
+        plateNumber: "د هـ و 5678",
+        driver: "سالم علي",
+        driverEn: "Salem Ali",
+        cargo: "وقود",
+        cargoEn: "Fuel",
+      },
+      {
+        id: "VEH_003",
+        name: "سيارة شرطة - الرياض",
+        nameEn: "Police Car - Riyadh",
+        coordinates: [24.7136, 46.6753],
+        type: "police",
+        status: "patrol",
+        speed: 50,
+        heading: 135,
+        destination: "نقطة تفتيش طريق الرياض - جدة",
+        destinationEn: "Riyadh-Jeddah Highway Checkpoint",
+        origin: "مركز شرطة الملز",
+        originEn: "Al-Malaz Police Station",
+        plateNumber: "ق ر ش 3344",
+        officer: "النقيب أحمد",
+        officerEn: "Captain Ahmed",
+      },
+    ];
+
+    setVehicles(sampleVehicles as Vehicle[]);
   }, []);
 
   // Filter data based on search term
   useEffect(() => {
     if (!searchTerm) {
-      setFilteredPorts(ports);
-      setFilteredVessels(vessels);
+      setFilteredAirports(airports);
+      setFilteredSeaports(seaports);
+      setFilteredPoliceStations(policeStations);
+      setFilteredCheckpoints(checkpoints);
+      setFilteredVehicles(vehicles);
       return;
     }
 
     const searchLower = searchTerm.toLowerCase();
 
-    const filteredPortsResult = ports.filter(
-      (port) =>
-        port.name.toLowerCase().includes(searchLower) ||
-        port.nameEn.toLowerCase().includes(searchLower) ||
-        port.country.toLowerCase().includes(searchLower) ||
-        port.countryAr.includes(searchTerm)
+    // Filter airports
+    const filteredAirportsResult = airports.filter(
+      (airport) =>
+        airport.name.toLowerCase().includes(searchLower) ||
+        airport.nameEn.toLowerCase().includes(searchLower) ||
+        airport.city.toLowerCase().includes(searchLower) ||
+        airport.cityEn.toLowerCase().includes(searchLower) ||
+        airport.iata.toLowerCase().includes(searchLower) ||
+        airport.icao.toLowerCase().includes(searchLower)
     );
 
-    const filteredVesselsResult = vessels.filter(
-      (vessel) =>
-        vessel.name.toLowerCase().includes(searchLower) ||
-        vessel.nameEn.toLowerCase().includes(searchLower) ||
-        vessel.destination.toLowerCase().includes(searchLower) ||
-        vessel.destinationEn.toLowerCase().includes(searchLower) ||
-        vessel.flag.toLowerCase().includes(searchLower) ||
-        vessel.flagAr.includes(searchTerm)
+    // Filter seaports
+    const filteredSeaportsResult = seaports.filter(
+      (seaport) =>
+        seaport.name.toLowerCase().includes(searchLower) ||
+        seaport.nameEn.toLowerCase().includes(searchLower) ||
+        seaport.city.toLowerCase().includes(searchLower) ||
+        seaport.cityEn.toLowerCase().includes(searchLower)
     );
 
-    setFilteredPorts(filteredPortsResult);
-    setFilteredVessels(filteredVesselsResult);
-  }, [searchTerm, ports, vessels]);
+    // Filter police stations
+    const filteredPoliceStationsResult = policeStations.filter(
+      (station) =>
+        station.name.toLowerCase().includes(searchLower) ||
+        station.nameEn.toLowerCase().includes(searchLower) ||
+        station.city.toLowerCase().includes(searchLower) ||
+        station.cityEn.toLowerCase().includes(searchLower)
+    );
+
+    // Filter checkpoints
+    const filteredCheckpointsResult = checkpoints.filter(
+      (checkpoint) =>
+        checkpoint.name.toLowerCase().includes(searchLower) ||
+        checkpoint.nameEn.toLowerCase().includes(searchLower) ||
+        checkpoint.highway.toLowerCase().includes(searchLower) ||
+        checkpoint.highwayEn.toLowerCase().includes(searchLower)
+    );
+
+    // Filter vehicles
+    const filteredVehiclesResult = vehicles.filter(
+      (vehicle) =>
+        vehicle.name.toLowerCase().includes(searchLower) ||
+        vehicle.nameEn.toLowerCase().includes(searchLower) ||
+        vehicle.destination.toLowerCase().includes(searchLower) ||
+        vehicle.destinationEn.toLowerCase().includes(searchLower) ||
+        vehicle.origin.toLowerCase().includes(searchLower) ||
+        vehicle.originEn.toLowerCase().includes(searchLower) ||
+        vehicle.plateNumber.toLowerCase().includes(searchLower) ||
+        (vehicle.driver &&
+          vehicle.driver.toLowerCase().includes(searchLower)) ||
+        (vehicle.driverEn &&
+          vehicle.driverEn.toLowerCase().includes(searchLower))
+    );
+
+    setFilteredAirports(filteredAirportsResult);
+    setFilteredSeaports(filteredSeaportsResult);
+    setFilteredPoliceStations(filteredPoliceStationsResult);
+    setFilteredCheckpoints(filteredCheckpointsResult);
+    setFilteredVehicles(filteredVehiclesResult);
+  }, [searchTerm, airports, seaports, policeStations, checkpoints, vehicles]);
 
   // Handle refresh
   const handleRefresh = () => {
@@ -74,15 +203,29 @@ export default function LocationMonitorPage() {
     }, 1000);
   };
 
-  // Handle port click
-  const handlePortClick = (port: Port) => {
-    console.log("Port clicked:", port);
+  // Event handlers for Saudi locations
+  const handleAirportClick = (airport: Airport) => {
+    console.log("Airport clicked:", airport);
     // You can add modal or sidebar logic here
   };
 
-  // Handle vessel click
-  const handleVesselClick = (vessel: Vessel) => {
-    console.log("Vessel clicked:", vessel);
+  const handleSeaportClick = (seaport: Seaport) => {
+    console.log("Seaport clicked:", seaport);
+    // You can add modal or sidebar logic here
+  };
+
+  const handlePoliceStationClick = (station: PoliceStation) => {
+    console.log("Police station clicked:", station);
+    // You can add modal or sidebar logic here
+  };
+
+  const handleCheckpointClick = (checkpoint: Checkpoint) => {
+    console.log("Checkpoint clicked:", checkpoint);
+    // You can add modal or sidebar logic here
+  };
+
+  const handleVehicleClick = (vehicle: Vehicle) => {
+    console.log("Vehicle clicked:", vehicle);
     // You can add modal or sidebar logic here
   };
 
@@ -101,15 +244,28 @@ export default function LocationMonitorPage() {
           }}
         >
           <InteractiveMap
-            ports={filteredPorts}
-            vessels={filteredVessels}
+            // Saudi locations
+            airports={filteredAirports}
+            seaports={filteredSeaports}
+            policeStations={filteredPoliceStations}
+            checkpoints={filteredCheckpoints}
+            vehicles={filteredVehicles}
+            // Map settings
             center={[24.7136, 46.6753]} // Saudi Arabia center
             zoom={6}
-            height="calc(100vh)"
-            showPorts={showPorts}
-            showVessels={showVessels}
-            onPortClick={handlePortClick}
-            onVesselClick={handleVesselClick}
+            height="100%"
+            // Display toggles
+            showAirports={showAirports}
+            showSeaports={showSeaports}
+            showPoliceStations={showPoliceStations}
+            showCheckpoints={showCheckpoints}
+            showVehicles={showVehicles}
+            // Event handlers
+            onAirportClick={handleAirportClick}
+            onSeaportClick={handleSeaportClick}
+            onPoliceStationClick={handlePoliceStationClick}
+            onCheckpointClick={handleCheckpointClick}
+            onVehicleClick={handleVehicleClick}
           />
         </div>
 
@@ -120,25 +276,23 @@ export default function LocationMonitorPage() {
           hasUpdates={false}
         />
 
-        {/* Sidebar - Over map only */}
-        <MapSidebar
+        {/* Sidebar - Over map only - TODO: Update for Saudi data */}
+        {/* <MapSidebar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
-          ports={filteredPorts}
-          vessels={filteredVessels}
-          showPorts={showPorts}
-          showVessels={showVessels}
-          onTogglePorts={() => setShowPorts(!showPorts)}
-          onToggleVessels={() => setShowVessels(!showVessels)}
+          // TODO: Update props for Saudi locations
           onRefresh={handleRefresh}
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           isLoading={isLoading}
-        />
+        /> */}
 
         {/* No Results Overlay - Over map only */}
-        {filteredPorts.length === 0 &&
-          filteredVessels.length === 0 &&
+        {filteredAirports.length === 0 &&
+          filteredSeaports.length === 0 &&
+          filteredPoliceStations.length === 0 &&
+          filteredCheckpoints.length === 0 &&
+          filteredVehicles.length === 0 &&
           searchTerm && (
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 shadow-lg">

@@ -5,6 +5,10 @@ import dynamic from "next/dynamic";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Loader2 } from "lucide-react";
 
+// Import Saudi data
+import saudiLocations from "@/data/saudi-locations.json";
+import saudiVehicles from "@/data/saudi-vehicles.json";
+
 // Dynamic import for Leaflet components to avoid SSR issues
 const MapContainer = dynamic(
   () => import("react-leaflet").then((mod) => mod.MapContainer),
@@ -22,22 +26,57 @@ const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
   ssr: false,
 });
 
-// Types
-export interface Port {
-  id: number;
+// Types for Saudi locations and vehicles
+export interface Airport {
+  id: string;
   name: string;
   nameEn: string;
   coordinates: [number, number];
-  type: string;
+  city: string;
+  cityEn: string;
+  type: "international" | "domestic";
   status: string;
-  vessels: number;
-  capacity: number;
-  country: string;
-  countryAr: string;
+  iata: string;
+  icao: string;
 }
 
-export interface Vessel {
-  id: number;
+export interface Seaport {
+  id: string;
+  name: string;
+  nameEn: string;
+  coordinates: [number, number];
+  city: string;
+  cityEn: string;
+  type: string;
+  status: string;
+  capacity: number;
+  vessels: number;
+}
+
+export interface PoliceStation {
+  id: string;
+  name: string;
+  nameEn: string;
+  coordinates: [number, number];
+  city: string;
+  cityEn: string;
+  type: string;
+  status: string;
+}
+
+export interface Checkpoint {
+  id: string;
+  name: string;
+  nameEn: string;
+  coordinates: [number, number];
+  highway: string;
+  highwayEn: string;
+  type: string;
+  status: string;
+}
+
+export interface Vehicle {
+  id: string;
   name: string;
   nameEn: string;
   coordinates: [number, number];
@@ -47,33 +86,93 @@ export interface Vessel {
   heading: number;
   destination: string;
   destinationEn: string;
+  origin: string;
+  originEn: string;
+  plateNumber: string;
+  driver?: string;
+  driverEn?: string;
+  officer?: string;
+  officerEn?: string;
+  cargo?: string;
+  cargoEn?: string;
+  passengers?: number;
+  priority?: string;
+}
+
+// Legacy types for backward compatibility
+export interface Port extends Seaport {
+  country: string;
+  countryAr: string;
+}
+
+export interface Vessel extends Vehicle {
   flag: string;
   flagAr: string;
   lastUpdate: string;
 }
 
 interface InteractiveMapProps {
+  // Legacy props for backward compatibility
   ports?: Port[];
   vessels?: Vessel[];
+  // New Saudi-specific props
+  airports?: Airport[];
+  seaports?: Seaport[];
+  policeStations?: PoliceStation[];
+  checkpoints?: Checkpoint[];
+  vehicles?: Vehicle[];
+  // Common props
   center?: [number, number];
   zoom?: number;
   height?: string;
+  // Display toggles
   showPorts?: boolean;
   showVessels?: boolean;
+  showAirports?: boolean;
+  showSeaports?: boolean;
+  showPoliceStations?: boolean;
+  showCheckpoints?: boolean;
+  showVehicles?: boolean;
+  // Event handlers
   onPortClick?: (port: Port) => void;
   onVesselClick?: (vessel: Vessel) => void;
+  onAirportClick?: (airport: Airport) => void;
+  onSeaportClick?: (seaport: Seaport) => void;
+  onPoliceStationClick?: (station: PoliceStation) => void;
+  onCheckpointClick?: (checkpoint: Checkpoint) => void;
+  onVehicleClick?: (vehicle: Vehicle) => void;
 }
 
 const InteractiveMap: React.FC<InteractiveMapProps> = ({
+  // Legacy props
   ports = [],
   vessels = [],
+  // New Saudi props
+  airports = [],
+  seaports = [],
+  policeStations = [],
+  checkpoints = [],
+  vehicles = [],
+  // Common props
   center = [24.7136, 46.6753], // Riyadh coordinates as default
   zoom = 6,
   height = "600px",
+  // Display toggles
   showPorts = true,
   showVessels = true,
+  showAirports = true,
+  showSeaports = true,
+  showPoliceStations = true,
+  showCheckpoints = true,
+  showVehicles = true,
+  // Event handlers
   onPortClick,
   onVesselClick,
+  onAirportClick,
+  onSeaportClick,
+  onPoliceStationClick,
+  onCheckpointClick,
+  onVehicleClick,
 }) => {
   const { isRTL } = useLanguage();
   const [isClient, setIsClient] = useState(false);
@@ -183,6 +282,195 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
     });
   };
 
+  // Saudi-specific icons
+  const createAirportIcon = (
+    type: "international" | "domestic",
+    status: string
+  ) => {
+    if (!L) return null;
+
+    const color = status === "active" ? "#3b82f6" : "#ef4444";
+    const size = type === "international" ? 28 : 24;
+    const iconHtml = `
+      <div style="
+        background-color: ${color};
+        width: ${size}px;
+        height: ${size}px;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: ${type === "international" ? "14px" : "12px"};
+        color: white;
+        font-weight: bold;
+      ">✈️</div>
+    `;
+
+    return L.divIcon({
+      html: iconHtml,
+      className: "custom-airport-icon",
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+    });
+  };
+
+  const createSeaportIcon = (type: string, status: string) => {
+    if (!L) return null;
+
+    const color = status === "active" ? "#10b981" : "#ef4444";
+    const iconHtml = `
+      <div style="
+        background-color: ${color};
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: white;
+        font-weight: bold;
+      ">⚓</div>
+    `;
+
+    return L.divIcon({
+      html: iconHtml,
+      className: "custom-seaport-icon",
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+    });
+  };
+
+  const createPoliceIcon = (type: string, status: string) => {
+    if (!L) return null;
+
+    const color = status === "active" ? "#1e40af" : "#ef4444";
+    const iconHtml = `
+      <div style="
+        background-color: ${color};
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        color: white;
+        font-weight: bold;
+      ">🚔</div>
+    `;
+
+    return L.divIcon({
+      html: iconHtml,
+      className: "custom-police-icon",
+      iconSize: [22, 22],
+      iconAnchor: [11, 11],
+    });
+  };
+
+  const createCheckpointIcon = (type: string, status: string) => {
+    if (!L) return null;
+
+    const color = status === "active" ? "#f59e0b" : "#ef4444";
+    const iconHtml = `
+      <div style="
+        background-color: ${color};
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 3px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        color: white;
+        font-weight: bold;
+      ">🛑</div>
+    `;
+
+    return L.divIcon({
+      html: iconHtml,
+      className: "custom-checkpoint-icon",
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+    });
+  };
+
+  const createVehicleIcon = (type: string, status: string, heading: number) => {
+    if (!L) return null;
+
+    const getVehicleIcon = (vehicleType: string) => {
+      switch (vehicleType) {
+        case "cargo":
+        case "tanker":
+        case "container":
+          return "🚛";
+        case "delivery":
+          return "🚐";
+        case "bus":
+          return "🚌";
+        case "emergency":
+          return "🚑";
+        case "police":
+          return "🚔";
+        default:
+          return "🚗";
+      }
+    };
+
+    const getVehicleColor = (vehicleType: string, vehicleStatus: string) => {
+      if (vehicleStatus === "emergency") return "#dc2626";
+      switch (vehicleType) {
+        case "cargo":
+        case "tanker":
+        case "container":
+          return "#059669";
+        case "delivery":
+          return "#3b82f6";
+        case "bus":
+          return "#7c3aed";
+        case "emergency":
+          return "#dc2626";
+        case "police":
+          return "#1e40af";
+        default:
+          return "#6b7280";
+      }
+    };
+
+    const color = getVehicleColor(type, status);
+    const icon = getVehicleIcon(type);
+    const iconHtml = `
+      <div style="
+        background-color: ${color};
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        transform: rotate(${heading}deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      ">${icon}</div>
+    `;
+
+    return L.divIcon({
+      html: iconHtml,
+      className: "custom-vehicle-icon",
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+    });
+  };
+
   if (!isClient || !L) {
     return (
       <div
@@ -284,6 +572,209 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
                       <strong>Flag:</strong>{" "}
                       {isRTL ? vessel.flagAr : vessel.flag}
                     </p>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+
+        {/* Airport Markers */}
+        {showAirports &&
+          airports.map((airport) => (
+            <Marker
+              key={`airport-${airport.id}`}
+              position={airport.coordinates}
+              icon={createAirportIcon(airport.type, airport.status)}
+              eventHandlers={{
+                click: () => onAirportClick?.(airport),
+              }}
+            >
+              <Popup>
+                <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
+                  <h3 className="font-bold text-lg mb-2">
+                    {isRTL ? airport.name : airport.nameEn}
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>City:</strong>{" "}
+                      {isRTL ? airport.city : airport.cityEn}
+                    </p>
+                    <p>
+                      <strong>Type:</strong> {airport.type}
+                    </p>
+                    <p>
+                      <strong>IATA:</strong> {airport.iata}
+                    </p>
+                    <p>
+                      <strong>ICAO:</strong> {airport.icao}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {airport.status}
+                    </p>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+
+        {/* Seaport Markers */}
+        {showSeaports &&
+          seaports.map((seaport) => (
+            <Marker
+              key={`seaport-${seaport.id}`}
+              position={seaport.coordinates}
+              icon={createSeaportIcon(seaport.type, seaport.status)}
+              eventHandlers={{
+                click: () => onSeaportClick?.(seaport),
+              }}
+            >
+              <Popup>
+                <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
+                  <h3 className="font-bold text-lg mb-2">
+                    {isRTL ? seaport.name : seaport.nameEn}
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>City:</strong>{" "}
+                      {isRTL ? seaport.city : seaport.cityEn}
+                    </p>
+                    <p>
+                      <strong>Type:</strong> {seaport.type}
+                    </p>
+                    <p>
+                      <strong>Capacity:</strong> {seaport.capacity}
+                    </p>
+                    <p>
+                      <strong>Vessels:</strong> {seaport.vessels}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {seaport.status}
+                    </p>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+
+        {/* Police Station Markers */}
+        {showPoliceStations &&
+          policeStations.map((station) => (
+            <Marker
+              key={`police-${station.id}`}
+              position={station.coordinates}
+              icon={createPoliceIcon(station.type, station.status)}
+              eventHandlers={{
+                click: () => onPoliceStationClick?.(station),
+              }}
+            >
+              <Popup>
+                <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
+                  <h3 className="font-bold text-lg mb-2">
+                    {isRTL ? station.name : station.nameEn}
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>City:</strong>{" "}
+                      {isRTL ? station.city : station.cityEn}
+                    </p>
+                    <p>
+                      <strong>Type:</strong> {station.type}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {station.status}
+                    </p>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+
+        {/* Checkpoint Markers */}
+        {showCheckpoints &&
+          checkpoints.map((checkpoint) => (
+            <Marker
+              key={`checkpoint-${checkpoint.id}`}
+              position={checkpoint.coordinates}
+              icon={createCheckpointIcon(checkpoint.type, checkpoint.status)}
+              eventHandlers={{
+                click: () => onCheckpointClick?.(checkpoint),
+              }}
+            >
+              <Popup>
+                <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
+                  <h3 className="font-bold text-lg mb-2">
+                    {isRTL ? checkpoint.name : checkpoint.nameEn}
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>Highway:</strong>{" "}
+                      {isRTL ? checkpoint.highway : checkpoint.highwayEn}
+                    </p>
+                    <p>
+                      <strong>Type:</strong> {checkpoint.type}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {checkpoint.status}
+                    </p>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+
+        {/* Vehicle Markers */}
+        {showVehicles &&
+          vehicles.map((vehicle) => (
+            <Marker
+              key={`vehicle-${vehicle.id}`}
+              position={vehicle.coordinates}
+              icon={createVehicleIcon(
+                vehicle.type,
+                vehicle.status,
+                vehicle.heading
+              )}
+              eventHandlers={{
+                click: () => onVehicleClick?.(vehicle),
+              }}
+            >
+              <Popup>
+                <div className={`p-2 ${isRTL ? "text-right" : "text-left"}`}>
+                  <h3 className="font-bold text-lg mb-2">
+                    {isRTL ? vehicle.name : vehicle.nameEn}
+                  </h3>
+                  <div className="space-y-1 text-sm">
+                    <p>
+                      <strong>Type:</strong> {vehicle.type}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {vehicle.status}
+                    </p>
+                    <p>
+                      <strong>Speed:</strong> {vehicle.speed} km/h
+                    </p>
+                    <p>
+                      <strong>Plate:</strong> {vehicle.plateNumber}
+                    </p>
+                    <p>
+                      <strong>Origin:</strong>{" "}
+                      {isRTL ? vehicle.origin : vehicle.originEn}
+                    </p>
+                    <p>
+                      <strong>Destination:</strong>{" "}
+                      {isRTL ? vehicle.destination : vehicle.destinationEn}
+                    </p>
+                    {vehicle.driver && (
+                      <p>
+                        <strong>Driver:</strong>{" "}
+                        {isRTL ? vehicle.driver : vehicle.driverEn}
+                      </p>
+                    )}
+                    {vehicle.cargo && (
+                      <p>
+                        <strong>Cargo:</strong>{" "}
+                        {isRTL ? vehicle.cargo : vehicle.cargoEn}
+                      </p>
+                    )}
                   </div>
                 </div>
               </Popup>
