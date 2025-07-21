@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useClientTime } from "@/hooks/useClientTime";
 import {
   X,
   Search,
@@ -51,6 +52,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({
   const [activeTab, setActiveTab] = useState<"stats" | "controls" | "list">(
     "stats"
   );
+  const { time: currentTime } = useClientTime(isRTL ? "ar-SA" : "en-US", 1000);
 
   // Calculate statistics
   const activePorts = ports.filter((port) => port.status === "active").length;
@@ -182,7 +184,7 @@ const MapSidebar: React.FC<MapSidebarProps> = ({
                 <Clock className="w-4 h-4" />
                 <span>
                   {isRTL ? "آخر تحديث: " : "Last updated: "}
-                  {new Date().toLocaleString(isRTL ? "ar-SA" : "en-US")}
+                  {currentTime || "Loading..."}
                 </span>
               </div>
 

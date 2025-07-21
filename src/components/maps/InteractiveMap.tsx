@@ -471,7 +471,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
     });
   };
 
-  if (!isClient || !L) {
+  if (!isClient) {
     return (
       <div
         className="flex items-center justify-center bg-gray-100 rounded-lg"
@@ -480,6 +480,19 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
         <div className="flex items-center gap-2 text-gray-600">
           <Loader2 className="w-6 h-6 animate-spin" />
           <span>{isRTL ? "جاري تحميل الخريطة..." : "Loading map..."}</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!L) {
+    return (
+      <div
+        className="flex items-center justify-center bg-red-100 rounded-lg border border-red-300"
+        style={{ height }}
+      >
+        <div className="flex items-center gap-2 text-red-600">
+          <span>خطأ في تحميل الخريطة - Error loading map</span>
         </div>
       </div>
     );

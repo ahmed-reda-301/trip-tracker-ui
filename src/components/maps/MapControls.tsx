@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useClientTime } from "@/hooks/useClientTime";
 import { RefreshCw, Filter, Eye, EyeOff, Search } from "lucide-react";
 
 interface MapControlsProps {
@@ -26,6 +27,7 @@ const MapControls: React.FC<MapControlsProps> = ({
   isLoading = false,
 }) => {
   const { isRTL } = useLanguage();
+  const { time: currentTime } = useClientTime(isRTL ? "ar-SA" : "en-US", 60000);
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
@@ -126,9 +128,7 @@ const MapControls: React.FC<MapControlsProps> = ({
       >
         <p className="text-xs text-gray-500">
           {isRTL ? "آخر تحديث: " : "Last updated: "}
-          <span className="font-medium">
-            {new Date().toLocaleString(isRTL ? "ar-SA" : "en-US")}
-          </span>
+          <span className="font-medium">{currentTime || "Loading..."}</span>
         </p>
       </div>
     </div>

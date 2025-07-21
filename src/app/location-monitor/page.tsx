@@ -3,17 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import InteractiveMap, {
-  Port,
-  Vessel,
   Airport,
   Seaport,
   PoliceStation,
   Checkpoint,
   Vehicle,
 } from "@/components/maps/InteractiveMap";
-import MapSidebar from "@/components/maps/MapSidebar";
 import MapFloatingButton from "@/components/maps/MapFloatingButton";
-import { AlertCircle } from "lucide-react";
+import MapSidebar from "@/components/maps/MapSidebar";
 
 // Import Saudi data
 import saudiLocations from "@/data/saudi-locations.json";
@@ -28,26 +25,12 @@ export default function LocationMonitorPage() {
   const [checkpoints, setCheckpoints] = useState<Checkpoint[]>([]);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
-  // Filtered data
-  const [filteredAirports, setFilteredAirports] = useState<Airport[]>([]);
-  const [filteredSeaports, setFilteredSeaports] = useState<Seaport[]>([]);
-  const [filteredPoliceStations, setFilteredPoliceStations] = useState<
-    PoliceStation[]
-  >([]);
-  const [filteredCheckpoints, setFilteredCheckpoints] = useState<Checkpoint[]>(
-    []
-  );
-  const [filteredVehicles, setFilteredVehicles] = useState<Vehicle[]>([]);
-
   // Display toggles
-  const [showAirports, setShowAirports] = useState(true);
-  const [showSeaports, setShowSeaports] = useState(true);
-  const [showPoliceStations, setShowPoliceStations] = useState(true);
-  const [showCheckpoints, setShowCheckpoints] = useState(true);
-  const [showVehicles, setShowVehicles] = useState(true);
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const showAirports = true;
+  const showSeaports = true;
+  const showPoliceStations = true;
+  const showCheckpoints = true;
+  const showVehicles = true;
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Load Saudi data on component mount
@@ -119,90 +102,6 @@ export default function LocationMonitorPage() {
     setVehicles(sampleVehicles as Vehicle[]);
   }, []);
 
-  // Filter data based on search term
-  useEffect(() => {
-    if (!searchTerm) {
-      setFilteredAirports(airports);
-      setFilteredSeaports(seaports);
-      setFilteredPoliceStations(policeStations);
-      setFilteredCheckpoints(checkpoints);
-      setFilteredVehicles(vehicles);
-      return;
-    }
-
-    const searchLower = searchTerm.toLowerCase();
-
-    // Filter airports
-    const filteredAirportsResult = airports.filter(
-      (airport) =>
-        airport.name.toLowerCase().includes(searchLower) ||
-        airport.nameEn.toLowerCase().includes(searchLower) ||
-        airport.city.toLowerCase().includes(searchLower) ||
-        airport.cityEn.toLowerCase().includes(searchLower) ||
-        airport.iata.toLowerCase().includes(searchLower) ||
-        airport.icao.toLowerCase().includes(searchLower)
-    );
-
-    // Filter seaports
-    const filteredSeaportsResult = seaports.filter(
-      (seaport) =>
-        seaport.name.toLowerCase().includes(searchLower) ||
-        seaport.nameEn.toLowerCase().includes(searchLower) ||
-        seaport.city.toLowerCase().includes(searchLower) ||
-        seaport.cityEn.toLowerCase().includes(searchLower)
-    );
-
-    // Filter police stations
-    const filteredPoliceStationsResult = policeStations.filter(
-      (station) =>
-        station.name.toLowerCase().includes(searchLower) ||
-        station.nameEn.toLowerCase().includes(searchLower) ||
-        station.city.toLowerCase().includes(searchLower) ||
-        station.cityEn.toLowerCase().includes(searchLower)
-    );
-
-    // Filter checkpoints
-    const filteredCheckpointsResult = checkpoints.filter(
-      (checkpoint) =>
-        checkpoint.name.toLowerCase().includes(searchLower) ||
-        checkpoint.nameEn.toLowerCase().includes(searchLower) ||
-        checkpoint.highway.toLowerCase().includes(searchLower) ||
-        checkpoint.highwayEn.toLowerCase().includes(searchLower)
-    );
-
-    // Filter vehicles
-    const filteredVehiclesResult = vehicles.filter(
-      (vehicle) =>
-        vehicle.name.toLowerCase().includes(searchLower) ||
-        vehicle.nameEn.toLowerCase().includes(searchLower) ||
-        vehicle.destination.toLowerCase().includes(searchLower) ||
-        vehicle.destinationEn.toLowerCase().includes(searchLower) ||
-        vehicle.origin.toLowerCase().includes(searchLower) ||
-        vehicle.originEn.toLowerCase().includes(searchLower) ||
-        vehicle.plateNumber.toLowerCase().includes(searchLower) ||
-        (vehicle.driver &&
-          vehicle.driver.toLowerCase().includes(searchLower)) ||
-        (vehicle.driverEn &&
-          vehicle.driverEn.toLowerCase().includes(searchLower))
-    );
-
-    setFilteredAirports(filteredAirportsResult);
-    setFilteredSeaports(filteredSeaportsResult);
-    setFilteredPoliceStations(filteredPoliceStationsResult);
-    setFilteredCheckpoints(filteredCheckpointsResult);
-    setFilteredVehicles(filteredVehiclesResult);
-  }, [searchTerm, airports, seaports, policeStations, checkpoints, vehicles]);
-
-  // Handle refresh
-  const handleRefresh = () => {
-    setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      // Refresh data logic here
-      setIsLoading(false);
-    }, 1000);
-  };
-
   // Event handlers for Saudi locations
   const handleAirportClick = (airport: Airport) => {
     console.log("Airport clicked:", airport);
@@ -232,7 +131,10 @@ export default function LocationMonitorPage() {
   return (
     <div className="relative w-full h-full flex flex-col overflow-hidden">
       {/* Map Container - Takes available space only */}
-      <div className="relative flex-1 bg-gray-100 overflow-hidden">
+      <div
+        className="relative w-full bg-gray-100 overflow-hidden"
+        style={{ height: "calc(100vh - 180px)", minHeight: "500px" }}
+      >
         {/* Map */}
         <div
           className="absolute inset-0"
@@ -245,15 +147,15 @@ export default function LocationMonitorPage() {
         >
           <InteractiveMap
             // Saudi locations
-            airports={filteredAirports}
-            seaports={filteredSeaports}
-            policeStations={filteredPoliceStations}
-            checkpoints={filteredCheckpoints}
-            vehicles={filteredVehicles}
+            airports={airports}
+            seaports={seaports}
+            policeStations={policeStations}
+            checkpoints={checkpoints}
+            vehicles={vehicles}
             // Map settings
             center={[24.7136, 46.6753]} // Saudi Arabia center
             zoom={6}
-            height="100%"
+            height="1000px"
             // Display toggles
             showAirports={showAirports}
             showSeaports={showSeaports}
@@ -276,37 +178,21 @@ export default function LocationMonitorPage() {
           hasUpdates={false}
         />
 
-        {/* Sidebar - Over map only - TODO: Update for Saudi data */}
-        {/* <MapSidebar
+        {/* Sidebar - Over map only */}
+        <MapSidebar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
-          // TODO: Update props for Saudi locations
-          onRefresh={handleRefresh}
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          isLoading={isLoading}
-        /> */}
-
-        {/* No Results Overlay - Over map only */}
-        {filteredAirports.length === 0 &&
-          filteredSeaports.length === 0 &&
-          filteredPoliceStations.length === 0 &&
-          filteredCheckpoints.length === 0 &&
-          filteredVehicles.length === 0 &&
-          searchTerm && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <AlertCircle className="w-5 h-5 text-yellow-600" />
-                  <p className="text-yellow-800">
-                    {isRTL
-                      ? `لم يتم العثور على نتائج للبحث: "${searchTerm}"`
-                      : `No results found for: "${searchTerm}"`}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+          ports={[]}
+          vessels={[]}
+          showPorts={false}
+          showVessels={false}
+          onTogglePorts={() => {}}
+          onToggleVessels={() => {}}
+          onRefresh={() => {}}
+          searchTerm=""
+          onSearchChange={() => {}}
+          isLoading={false}
+        />
       </div>
     </div>
   );
