@@ -10,7 +10,7 @@ import InteractiveMap, {
   Vehicle,
 } from "@/components/maps/InteractiveMap";
 import MapFloatingButton from "@/components/maps/MapFloatingButton";
-import MapSidebar from "@/components/maps/MapSidebar";
+import SaudiLocationsSidebar from "@/components/maps/SaudiLocationsSidebar";
 
 // Import Saudi data
 import saudiLocations from "@/data/saudi-locations.json";
@@ -26,11 +26,15 @@ export default function LocationMonitorPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
 
   // Display toggles
-  const showAirports = true;
-  const showSeaports = true;
-  const showPoliceStations = true;
-  const showCheckpoints = true;
-  const showVehicles = true;
+  const [showAirports, setShowAirports] = useState(true);
+  const [showSeaports, setShowSeaports] = useState(true);
+  const [showPoliceStations, setShowPoliceStations] = useState(true);
+  const [showCheckpoints, setShowCheckpoints] = useState(true);
+  const [showVehicles, setShowVehicles] = useState(true);
+
+  // Search and loading states
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Load Saudi data on component mount
@@ -102,6 +106,24 @@ export default function LocationMonitorPage() {
     setVehicles(sampleVehicles as Vehicle[]);
   }, []);
 
+  // Handle refresh
+  const handleRefresh = () => {
+    setIsLoading(true);
+    // Simulate API call
+    setTimeout(() => {
+      // Refresh data logic here
+      setIsLoading(false);
+    }, 1000);
+  };
+
+  // Toggle functions for display controls
+  const handleToggleAirports = () => setShowAirports(!showAirports);
+  const handleToggleSeaports = () => setShowSeaports(!showSeaports);
+  const handleTogglePoliceStations = () =>
+    setShowPoliceStations(!showPoliceStations);
+  const handleToggleCheckpoints = () => setShowCheckpoints(!showCheckpoints);
+  const handleToggleVehicles = () => setShowVehicles(!showVehicles);
+
   // Event handlers for Saudi locations
   const handleAirportClick = (airport: Airport) => {
     console.log("Airport clicked:", airport);
@@ -155,7 +177,7 @@ export default function LocationMonitorPage() {
             // Map settings
             center={[24.7136, 46.6753]} // Saudi Arabia center
             zoom={6}
-            height="1000px"
+            height="785px"
             // Display toggles
             showAirports={showAirports}
             showSeaports={showSeaports}
@@ -179,19 +201,28 @@ export default function LocationMonitorPage() {
         />
 
         {/* Sidebar - Over map only */}
-        <MapSidebar
+        <SaudiLocationsSidebar
           isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
-          ports={[]}
-          vessels={[]}
-          showPorts={false}
-          showVessels={false}
-          onTogglePorts={() => {}}
-          onToggleVessels={() => {}}
-          onRefresh={() => {}}
-          searchTerm=""
-          onSearchChange={() => {}}
-          isLoading={false}
+          airports={airports}
+          seaports={seaports}
+          policeStations={policeStations}
+          checkpoints={checkpoints}
+          vehicles={vehicles}
+          showAirports={showAirports}
+          showSeaports={showSeaports}
+          showPoliceStations={showPoliceStations}
+          showCheckpoints={showCheckpoints}
+          showVehicles={showVehicles}
+          onToggleAirports={handleToggleAirports}
+          onToggleSeaports={handleToggleSeaports}
+          onTogglePoliceStations={handleTogglePoliceStations}
+          onToggleCheckpoints={handleToggleCheckpoints}
+          onToggleVehicles={handleToggleVehicles}
+          onRefresh={handleRefresh}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          isLoading={isLoading}
         />
       </div>
     </div>
