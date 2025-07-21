@@ -96,7 +96,7 @@ export default function LoginPage() {
         setSuccess(response.message);
         // Redirect after successful login
         setTimeout(() => {
-          router.replace("/dashboard");
+          router.replace("/location-monitor");
         }, 1000);
       } else {
         setError(response.message);
