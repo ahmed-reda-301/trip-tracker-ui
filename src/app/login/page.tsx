@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -18,7 +18,7 @@ import LanguageToggle from "@/components/shared/LanguageToggle";
 
 export default function LoginPage() {
   const { isRTL } = useLanguage();
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -35,12 +35,7 @@ export default function LoginPage() {
     password?: string;
   }>({});
 
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/dashboard");
-    }
-  }, [isAuthenticated, router]);
+  // No automatic redirect - let user manually navigate
 
   const validateForm = () => {
     const errors: { username?: string; password?: string } = {};
@@ -99,10 +94,10 @@ export default function LoginPage() {
 
       if (response.success) {
         setSuccess(response.message);
-        // Redirect after success message
+        // Redirect after successful login
         setTimeout(() => {
-          router.push("/dashboard");
-        }, 1500);
+          router.replace("/dashboard");
+        }, 1000);
       } else {
         setError(response.message);
       }

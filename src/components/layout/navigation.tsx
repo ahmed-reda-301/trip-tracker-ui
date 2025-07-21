@@ -15,6 +15,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import LanguageToggle from "@/components/shared/LanguageToggle";
 import LogoutButton from "@/components/auth/LogoutButton";
 import {
@@ -201,6 +202,7 @@ const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const router = useRouter();
   const { t, isRTL } = useLanguage();
+  const { user } = useAuth();
 
   // State management
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -432,12 +434,28 @@ const Navigation: React.FC<NavigationProps> = ({
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
                   <User className="w-5 h-5 text-white" />
                 </div>
-                <div className="flex flex-col text-left">
+                <div
+                  className={`flex flex-col ${
+                    isRTL ? "text-right" : "text-left"
+                  }`}
+                >
                   <span className="font-medium text-gray-800 text-sm">
-                    {isRTL ? "أحمد الراشد" : headerProps.user?.name}
+                    {user
+                      ? isRTL
+                        ? user.name
+                        : user.nameEn
+                      : isRTL
+                      ? "مستخدم"
+                      : "User"}
                   </span>
                   <span className="text-xs text-gray-500">
-                    {isRTL ? "موظف جمارك" : headerProps.user?.role}
+                    {user
+                      ? isRTL
+                        ? user.department
+                        : user.departmentEn
+                      : isRTL
+                      ? "قسم"
+                      : "Department"}
                   </span>
                 </div>
               </div>

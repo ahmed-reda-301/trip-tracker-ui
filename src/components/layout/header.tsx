@@ -225,14 +225,20 @@ const Header: React.FC<HeaderProps> = ({
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="font-medium text-sm">
-                    {user ? (isRTL ? user.name : user.nameEn) : "مستخدم"}
+                    {(() => {
+                      if (user) {
+                        return isRTL ? user.name : user.nameEn;
+                      }
+                      return isRTL ? "مستخدم" : "User";
+                    })()}
                   </span>
                   <span className="text-xs text-gray-300">
-                    {user
-                      ? isRTL
-                        ? user.department
-                        : user.departmentEn
-                      : "قسم"}
+                    {(() => {
+                      if (user) {
+                        return isRTL ? user.department : user.departmentEn;
+                      }
+                      return isRTL ? "قسم" : "Department";
+                    })()}
                   </span>
                 </div>
               </button>
@@ -255,17 +261,23 @@ const Header: React.FC<HeaderProps> = ({
                     }`}
                   >
                     <p className="font-medium text-gray-800">
-                      {user ? (isRTL ? user.name : user.nameEn) : "مستخدم"}
+                      {(() => {
+                        if (user) {
+                          return isRTL ? user.name : user.nameEn;
+                        }
+                        return isRTL ? "مستخدم" : "User";
+                      })()}
                     </p>
                     <p className="text-sm text-gray-500">
                       {user?.email || "email@zatca.gov.sa"}
                     </p>
                     <p className="text-xs text-gray-400 mt-1">
-                      {user
-                        ? isRTL
-                          ? user.department
-                          : user.departmentEn
-                        : "قسم"}
+                      {(() => {
+                        if (user) {
+                          return isRTL ? user.department : user.departmentEn;
+                        }
+                        return isRTL ? "قسم" : "Department";
+                      })()}
                     </p>
                   </div>
 
