@@ -4,8 +4,6 @@
  * Comprehensive translation system supporting English and Arabic
  * with RTL support and cultural adaptations.
  *
- * @author Trip Tracker Team
- * @version 1.0.0
  */
 
 export type Language = "en" | "ar";
@@ -126,6 +124,39 @@ export interface TranslationDictionary {
     reset: string;
     appName: string;
     closeSidebar: string;
+    share: string;
+    actionsLabel: string;
+    confirmAction: string;
+    location: string;
+    vehicle: string;
+    assignedTo: string;
+    id: string;
+    responseTime: string;
+    minutes: string;
+    export: {
+      defaultFilename: string;
+      exportToExcel: string;
+      exporting: string;
+      exportSuccess: string;
+      exportError: string;
+    };
+    priority: {
+      high: string;
+      medium: string;
+      low: string;
+    };
+    status: {
+      active: string;
+      resolved: string;
+      pending: string;
+      acknowledged: string;
+    };
+    actions: {
+      resolve: string;
+      acknowledge: string;
+      export: string;
+      refresh: string;
+    };
   };
 
   // Footer
@@ -278,6 +309,7 @@ export interface TranslationDictionary {
       infoAlerts: string;
       resolvedAlerts: string;
       alertType: string;
+      alertTitle: string;
       alertTime: string;
       resolveAlert: string;
     };
@@ -322,6 +354,13 @@ export interface TranslationDictionary {
       exportData: string;
       viewReport: string;
     };
+  };
+
+  // Alerts
+  alerts: {
+    confirmResolve: string;
+    confirmDelete: string;
+    confirmAcknowledge: string;
   };
 }
 
@@ -431,6 +470,47 @@ export const translations: Record<Language, TranslationDictionary> = {
       reset: "Reset",
       appName: "Trip Tracker",
       closeSidebar: "Close sidebar",
+      share: "Share",
+      actionsLabel: "Actions",
+      confirmAction: "Are you sure you want to perform this action?",
+      location: "Location",
+      vehicle: "Vehicle",
+      assignedTo: "Assigned To",
+      id: "ID",
+      responseTime: "Response Time",
+      minutes: "min",
+      export: {
+        defaultFilename: "data_export",
+        exportToExcel: "Export to Excel",
+        exporting: "Exporting...",
+        exportSuccess: "Export completed successfully",
+        exportError: "Export failed",
+      },
+      priority: {
+        high: "High",
+        medium: "Medium",
+        low: "Low",
+      },
+      status: {
+        active: "Active",
+        resolved: "Resolved",
+        pending: "Pending",
+        acknowledged: "Acknowledged",
+      },
+      actions: {
+        resolve: "Resolve",
+        acknowledge: "Acknowledge",
+        export: "Export",
+        refresh: "Refresh",
+      },
+      table: {
+        noDataFound: "No data found",
+        showing: "Showing",
+        to: "to",
+        of: "of",
+        results: "results",
+        page: "Page",
+      },
     },
     footer: {
       poweredBy: "Powered by",
@@ -585,6 +665,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         infoAlerts: "Info Alerts",
         resolvedAlerts: "Resolved Alerts",
         alertType: "Alert Type",
+        alertTitle: "Alert Title",
         alertTime: "Alert Time",
         resolveAlert: "Resolve Alert",
       },
@@ -645,6 +726,13 @@ export const translations: Record<Language, TranslationDictionary> = {
         trackTrip: "Track Trip",
         updateStatus: "Update Status",
       },
+    },
+
+    alerts: {
+      confirmResolve: "Are you sure you want to resolve this alert?",
+      confirmDelete:
+        "Are you sure you want to delete this alert? This action cannot be undone.",
+      confirmAcknowledge: "Are you sure you want to acknowledge this alert?",
     },
   },
   ar: {
@@ -752,12 +840,52 @@ export const translations: Record<Language, TranslationDictionary> = {
       reset: "إعادة تعيين",
       appName: "متتبع الرحلات",
       closeSidebar: "إغلاق الشريط الجانبي",
+      share: "مشاركة",
+      actionsLabel: "الإجراءات",
+      confirmAction: "هل أنت متأكد من أنك تريد تنفيذ هذا الإجراء؟",
+      location: "الموقع",
+      vehicle: "المركبة",
+      assignedTo: "مُكلف إلى",
+      id: "الرقم",
+      responseTime: "وقت الاستجابة",
+      minutes: "دقيقة",
+      export: {
+        defaultFilename: "تصدير_البيانات",
+        exportToExcel: "تصدير إلى Excel",
+        exporting: "جاري التصدير...",
+        exportSuccess: "تم التصدير بنجاح",
+        exportError: "فشل في التصدير",
+      },
+      priority: {
+        high: "عالية",
+        medium: "متوسطة",
+        low: "منخفضة",
+      },
+      status: {
+        active: "نشط",
+        resolved: "محلول",
+        pending: "معلق",
+        acknowledged: "مؤكد",
+      },
+      actions: {
+        resolve: "حل",
+        acknowledge: "تأكيد",
+        export: "تصدير",
+        refresh: "تحديث",
+      },
+      table: {
+        noDataFound: "لم يتم العثور على بيانات",
+        showing: "عرض",
+        to: "إلى",
+        of: "من",
+        results: "نتائج",
+        page: "صفحة",
+      },
     },
     footer: {
       poweredBy: "مدعوم من",
       companyName: "لابلاس سوفتوير",
       allRightsReserved: "كل الحقوق محفوظة © 2025",
-
     },
     sampleNotifications: {
       suspiciousTrip: {
@@ -905,6 +1033,7 @@ export const translations: Record<Language, TranslationDictionary> = {
         infoAlerts: "التنبيهات الإعلامية",
         resolvedAlerts: "التنبيهات المحلولة",
         alertType: "نوع التنبيه",
+        alertTitle: "عنوان التنبيه",
         alertTime: "وقت التنبيه",
         resolveAlert: "حل التنبيه",
       },
@@ -964,8 +1093,14 @@ export const translations: Record<Language, TranslationDictionary> = {
         origin: "المنشأ",
         trackTrip: "تتبع الرحلة",
         updateStatus: "تحديث الحالة",
-      }
+      },
+    },
 
+    alerts: {
+      confirmResolve: "هل أنت متأكد من أنك تريد حل هذا التنبيه؟",
+      confirmDelete:
+        "هل أنت متأكد من أنك تريد حذف هذا التنبيه؟ لا يمكن التراجع عن هذا الإجراء.",
+      confirmAcknowledge: "هل أنت متأكد من أنك تريد تأكيد هذا التنبيه؟",
     },
   },
 };

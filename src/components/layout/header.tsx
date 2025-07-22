@@ -6,8 +6,6 @@
  * Main header component for the Trip Tracker application.
  * Provides user profile, notifications, and language switching functionality.
  *
- * @author Trip Tracker Team
- * @version 2.0.0
  */
 
 import React, { useState } from "react";

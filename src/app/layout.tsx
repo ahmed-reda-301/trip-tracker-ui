@@ -10,9 +10,6 @@
  * - Global layout structure with header, navigation, and footer
  * - Responsive design with mobile sidebar support
  * - State management for navigation and UI interactions
- *
- * @author Ahmed Reda
- * @version 1.0.0
  */
 
 "use client";

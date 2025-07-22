@@ -6,8 +6,6 @@
  * Shared component for language switching functionality.
  * Used in both header (desktop) and sidebar (mobile) layouts.
  * 
- * @author Trip Tracker Team
- * @version 1.0.0
  */
 
 import React from "react";

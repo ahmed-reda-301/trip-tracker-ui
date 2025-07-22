@@ -28,8 +28,8 @@
     "customsStatus": "cleared",
     "alerts": [],
     "route": [
-      {"port": "SAJED", "eta": "2024-01-20T14:30:00Z", "status": "completed"},
-      {"port": "AEDXB", "eta": "2024-01-22T08:00:00Z", "status": "pending"}
+      { "port": "SAJED", "eta": "2024-01-20T14:30:00Z", "status": "completed" },
+      { "port": "AEDXB", "eta": "2024-01-22T08:00:00Z", "status": "pending" }
     ]
   },
   {
@@ -68,8 +68,12 @@
       }
     ],
     "route": [
-      {"port": "SADMM", "eta": "2024-01-21T06:00:00Z", "status": "in_progress"},
-      {"port": "KWKWI", "eta": "2024-01-23T12:00:00Z", "status": "pending"}
+      {
+        "port": "SADMM",
+        "eta": "2024-01-21T06:00:00Z",
+        "status": "in_progress"
+      },
+      { "port": "KWKWI", "eta": "2024-01-23T12:00:00Z", "status": "pending" }
     ]
   },
   {
@@ -101,8 +105,8 @@
     "customsStatus": "cleared",
     "alerts": [],
     "route": [
-      {"port": "SAYNB", "eta": "2024-01-18T10:00:00Z", "status": "completed"},
-      {"port": "SAJED", "eta": "2024-01-19T16:00:00Z", "status": "completed"}
+      { "port": "SAYNB", "eta": "2024-01-18T10:00:00Z", "status": "completed" },
+      { "port": "SAJED", "eta": "2024-01-19T16:00:00Z", "status": "completed" }
     ]
   },
   {
@@ -147,8 +151,8 @@
       }
     ],
     "route": [
-      {"port": "KWKWI", "eta": "2024-01-19T08:00:00Z", "status": "completed"},
-      {"port": "SADMM", "eta": "2024-01-21T14:00:00Z", "status": "delayed"}
+      { "port": "KWKWI", "eta": "2024-01-19T08:00:00Z", "status": "completed" },
+      { "port": "SADMM", "eta": "2024-01-21T14:00:00Z", "status": "delayed" }
     ]
   },
   {
@@ -180,8 +184,129 @@
     "customsStatus": "pending",
     "alerts": [],
     "route": [
-      {"port": "QADOH", "eta": "2024-01-22T09:00:00Z", "status": "scheduled"},
-      {"port": "BHBAH", "eta": "2024-01-22T15:00:00Z", "status": "scheduled"}
+      { "port": "QADOH", "eta": "2024-01-22T09:00:00Z", "status": "scheduled" },
+      { "port": "BHBAH", "eta": "2024-01-22T15:00:00Z", "status": "scheduled" }
+    ]
+  },
+  {
+    "id": 6,
+    "tripNumber": "TR-2024-006",
+    "vesselId": 6,
+    "vesselName": "نسيم الشرق",
+    "vesselNameEn": "Eastern Breeze",
+    "origin": "ميناء أبوظبي",
+    "originEn": "Abu Dhabi Port",
+    "destination": "ميناء جدة الإسلامي",
+    "destinationEn": "Jeddah Islamic Port",
+    "status": "in_transit",
+    "priority": "high",
+    "cargoType": "مواد كيميائية",
+    "cargoTypeEn": "Chemicals",
+    "cargoWeight": "1500 طن",
+    "cargoWeightEn": "1500 tons",
+    "departureDate": "2024-01-21T12:00:00Z",
+    "estimatedArrival": "2024-01-23T18:00:00Z",
+    "actualArrival": null,
+    "progress": 75,
+    "distance": "1100 كم",
+    "distanceEn": "1100 km",
+    "remainingDistance": "275 كم",
+    "remainingDistanceEn": "275 km",
+    "assignedOfficer": "نورا سالم الحربي",
+    "assignedOfficerEn": "Nora Salem Al-Harbi",
+    "customsStatus": "cleared",
+    "alerts": [
+      {
+        "type": "security",
+        "message": "تحذير أمني - مواد خطرة",
+        "messageEn": "Security warning - hazardous materials",
+        "severity": "high"
+      }
+    ],
+    "route": [
+      { "port": "AEAUH", "eta": "2024-01-21T12:00:00Z", "status": "completed" },
+      {
+        "port": "SAJED",
+        "eta": "2024-01-23T18:00:00Z",
+        "status": "in_progress"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "tripNumber": "TR-2024-007",
+    "vesselId": 7,
+    "vesselName": "صقر البحر",
+    "vesselNameEn": "Sea Falcon",
+    "origin": "ميناء الدمام",
+    "originEn": "Dammam Port",
+    "destination": "ميناء مسقط",
+    "destinationEn": "Muscat Port",
+    "status": "loading",
+    "priority": "medium",
+    "cargoType": "معدات صناعية",
+    "cargoTypeEn": "Industrial Equipment",
+    "cargoWeight": "2800 طن",
+    "cargoWeightEn": "2800 tons",
+    "departureDate": "2024-01-22T14:00:00Z",
+    "estimatedArrival": "2024-01-24T10:00:00Z",
+    "actualArrival": null,
+    "progress": 5,
+    "distance": "850 كم",
+    "distanceEn": "850 km",
+    "remainingDistance": "807 كم",
+    "remainingDistanceEn": "807 km",
+    "assignedOfficer": "عبدالرحمن محمد العتيبي",
+    "assignedOfficerEn": "Abdulrahman Mohammed Al-Otaibi",
+    "customsStatus": "inspection_required",
+    "alerts": [
+      {
+        "type": "customs",
+        "message": "مطلوب فحص جمركي شامل",
+        "messageEn": "Comprehensive customs inspection required",
+        "severity": "medium"
+      }
+    ],
+    "route": [
+      {
+        "port": "SADMM",
+        "eta": "2024-01-22T14:00:00Z",
+        "status": "in_progress"
+      },
+      { "port": "OMMUS", "eta": "2024-01-24T10:00:00Z", "status": "pending" }
+    ]
+  },
+  {
+    "id": 8,
+    "tripNumber": "TR-2024-008",
+    "vesselId": 8,
+    "vesselName": "درة الخليج",
+    "vesselNameEn": "Gulf Pearl",
+    "origin": "ميناء الكويت",
+    "originEn": "Kuwait Port",
+    "destination": "ميناء ينبع التجاري",
+    "destinationEn": "Yanbu Commercial Port",
+    "status": "completed",
+    "priority": "low",
+    "cargoType": "مواد غذائية",
+    "cargoTypeEn": "Food Products",
+    "cargoWeight": "1200 طن",
+    "cargoWeightEn": "1200 tons",
+    "departureDate": "2024-01-19T16:00:00Z",
+    "estimatedArrival": "2024-01-21T12:00:00Z",
+    "actualArrival": "2024-01-21T11:30:00Z",
+    "progress": 100,
+    "distance": "750 كم",
+    "distanceEn": "750 km",
+    "remainingDistance": "0 كم",
+    "remainingDistanceEn": "0 km",
+    "assignedOfficer": "ريم عبدالله الشمري",
+    "assignedOfficerEn": "Reem Abdullah Al-Shamri",
+    "customsStatus": "cleared",
+    "alerts": [],
+    "route": [
+      { "port": "KWKWI", "eta": "2024-01-19T16:00:00Z", "status": "completed" },
+      { "port": "SAYNB", "eta": "2024-01-21T12:00:00Z", "status": "completed" }
     ]
   }
 ]

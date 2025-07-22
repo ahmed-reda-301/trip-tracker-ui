@@ -12,8 +12,6 @@
  * - Clickable navigation links
  * - Responsive design
  *
- * @author Ahmed Reda
- * @version 1.0.0
  */
 
 "use client";

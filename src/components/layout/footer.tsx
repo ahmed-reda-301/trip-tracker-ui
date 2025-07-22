@@ -10,8 +10,6 @@
  * - Multilingual support (Arabic/English)
  * - Company branding and copyright notice
  *
- * @author Ahmed Reda
- * @version 1.0.0
  */
 
 import React from "react";

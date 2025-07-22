@@ -6,8 +6,6 @@
  * Provides language state management and translation utilities
  * with RTL support and persistent storage.
  * 
- * @author Trip Tracker Team
- * @version 1.0.0
  */
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';

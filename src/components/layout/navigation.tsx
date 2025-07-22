@@ -7,8 +7,6 @@
  * Provides horizontal navigation for desktop and sidebar navigation for mobile.
  * Supports dropdown menus for nested navigation items.
  *
- * @author Trip Tracker Team
- * @version 1.0.0
  */
 
 import React, { useState } from "react";
