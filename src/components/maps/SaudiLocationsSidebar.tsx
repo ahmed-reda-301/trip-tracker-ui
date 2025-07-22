@@ -1,3 +1,44 @@
+/**
+ * SaudiLocationsSidebar Component
+ *
+ * A comprehensive sidebar interface specifically designed for monitoring Saudi Arabian
+ * locations and vehicles. Features tabbed navigation, real-time statistics, layer controls,
+ * and detailed location listings with full multilingual support.
+ *
+ * Features:
+ * - Tabbed Interface: Statistics, Controls, and List tabs for organized content
+ * - Real-time Statistics: Live statistics cards with color-coded categories
+ * - Layer Controls: Toggle visibility of different location types
+ * - Search Functionality: Search across all locations and vehicles
+ * - Multilingual Support: Automatic Arabic/English content switching
+ * - RTL Support: Proper right-to-left layout support
+ * - Responsive Design: Mobile-friendly with backdrop overlay
+ * - Live Time Display: Real-time clock with locale-specific formatting
+ * - Animated Transitions: Smooth slide-in/out animations
+ *
+ * @example
+ * ```tsx
+ * <SaudiLocationsSidebar
+ *   isOpen={sidebarOpen}
+ *   onClose={() => setSidebarOpen(false)}
+ *   airports={saudiLocations.airports}
+ *   vehicles={saudiVehicles}
+ *   showAirports={showAirports}
+ *   showVehicles={showVehicles}
+ *   onToggleAirports={() => setShowAirports(!showAirports)}
+ *   onToggleVehicles={() => setShowVehicles(!showVehicles)}
+ *   onRefresh={handleRefresh}
+ *   searchTerm={searchTerm}
+ *   onSearchChange={setSearchTerm}
+ *   isLoading={isLoading}
+ * />
+ * ```
+ *
+ * @author Trip Tracker Team
+ * @version 1.0.0
+ * @since 2024
+ */
+
 "use client";
 
 import React, { useState } from "react";
@@ -478,7 +519,6 @@ export default function SaudiLocationsSidebar({
                     </div>
                   ))}
                 </div>
-
               </div>
             )}
           </div>

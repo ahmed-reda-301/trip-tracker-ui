@@ -1,3 +1,38 @@
+/**
+ * MapStats Component
+ *
+ * A comprehensive statistics display component for maritime operations, showing key metrics
+ * about ports and vessels in an attractive card-based layout. Automatically calculates
+ * utilization rates, active counts, and other important operational statistics.
+ *
+ * Features:
+ * - Automatic Calculations: Real-time statistics computation from data
+ * - Responsive Grid Layout: Adapts from 1 to 4 columns based on screen size
+ * - Color-coded Cards: Each statistic type has its own color theme
+ * - Multilingual Support: Automatic Arabic/English text switching
+ * - RTL Support: Proper right-to-left layout support
+ * - Interactive Cards: Hover effects and visual feedback
+ * - Icon Integration: Meaningful icons for each statistic type
+ *
+ * Statistics Calculated:
+ * - Total Ports: Count and active ports
+ * - Total Vessels: Count and active vessels
+ * - Total Capacity: Sum of all port capacities and current usage
+ * - Utilization Rate: Percentage of capacity being used
+ *
+ * @example
+ * ```tsx
+ * <MapStats
+ *   ports={portsData}
+ *   vessels={vesselsData}
+ * />
+ * ```
+ *
+ * @author Trip Tracker Team
+ * @version 1.0.0
+ * @since 2024
+ */
+
 "use client";
 
 import React from "react";

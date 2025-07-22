@@ -1,3 +1,38 @@
+/**
+ * MapFloatingButton Component
+ *
+ * An elegant floating action button for toggling map sidebars. Features intelligent arrow
+ * direction, RTL support, notification indicators, tooltips, and smooth animations.
+ * The button adapts its position and appearance based on sidebar state and language direction.
+ *
+ * Features:
+ * - Intelligent Arrow Direction: Arrow points in the correct direction based on sidebar state and RTL
+ * - RTL Support: Proper positioning and arrow direction for right-to-left languages
+ * - Notification Indicator: Animated red dot for updates when sidebar is closed
+ * - Tooltip: Contextual tooltip showing current action
+ * - Smooth Animations: Scale, position, and color transitions
+ * - Responsive Positioning: Adapts to sidebar open/closed state
+ * - Accessibility: Proper ARIA labels and keyboard support
+ *
+ * Arrow Direction Logic:
+ * - When sidebar is closed: Arrow points inward (toward sidebar position)
+ * - When sidebar is open: Arrow points outward (away from sidebar)
+ * - RTL aware: Direction flips appropriately for Arabic layout
+ *
+ * @example
+ * ```tsx
+ * <MapFloatingButton
+ *   isOpen={sidebarOpen}
+ *   onClick={() => setSidebarOpen(!sidebarOpen)}
+ *   hasUpdates={hasNewData}
+ * />
+ * ```
+ *
+ * @author Trip Tracker Team
+ * @version 1.0.0
+ * @since 2024
+ */
+
 "use client";
 
 import React from "react";

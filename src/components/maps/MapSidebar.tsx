@@ -1,3 +1,41 @@
+/**
+ * MapSidebar Component
+ *
+ * A comprehensive sidebar interface for maritime operations, featuring integrated statistics,
+ * detailed port and vessel listings, and interactive controls. Combines the MapStats component
+ * with scrollable lists and search functionality.
+ *
+ * Features:
+ * - Integrated Statistics: Built-in MapStats component for key metrics
+ * - Detailed Listings: Scrollable lists of ports and vessels with full details
+ * - Search Functionality: Real-time search across ports and vessels
+ * - Multilingual Support: Automatic Arabic/English content switching
+ * - RTL Support: Proper right-to-left layout support
+ * - Responsive Design: Mobile-friendly with backdrop overlay
+ * - Interactive Elements: Clickable items with hover effects
+ * - Status Indicators: Color-coded status badges for ports and vessels
+ * - Smooth Animations: Slide-in/out transitions
+ * - Tabbed Interface: Statistics, Controls, and List tabs
+ *
+ * @example
+ * ```tsx
+ * <MapSidebar
+ *   isOpen={sidebarOpen}
+ *   onClose={() => setSidebarOpen(false)}
+ *   ports={portsData}
+ *   vessels={vesselsData}
+ *   searchTerm={searchTerm}
+ *   onSearchChange={setSearchTerm}
+ *   onPortClick={handlePortClick}
+ *   onVesselClick={handleVesselClick}
+ * />
+ * ```
+ *
+ * @author Trip Tracker Team
+ * @version 1.0.0
+ * @since 2024
+ */
+
 "use client";
 
 import React, { useState } from "react";

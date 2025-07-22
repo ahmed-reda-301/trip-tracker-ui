@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-The Trip Tracker UI is a modern, responsive web application built with Next.js 15, React 18, and TypeScript. It provides a comprehensive interface for tracking and monitoring trips with support for multiple languages (Arabic/English) and RTL/LTR layouts.
+The Trip Tracker UI is a modern, responsive web application built with Next.js 15, React 19, and TypeScript. It provides a comprehensive interface for tracking and monitoring trips with support for multiple languages (Arabic/English) and RTL/LTR layouts.
 
 ## Architecture Overview
 

@@ -1,3 +1,37 @@
+/**
+ * InteractiveMap Component
+ *
+ * A comprehensive interactive map component built with React Leaflet for real-time tracking
+ * and monitoring of maritime and Saudi Arabian locations. Supports multiple data types,
+ * custom markers, multilingual content, and real-time visualization.
+ *
+ * Features:
+ * - Multi-layer Support: Airports, seaports, police stations, checkpoints, vehicles, ports, vessels
+ * - Custom Markers: Unique icons for each data type with status-based styling
+ * - Multilingual Popups: Automatic Arabic/English content switching
+ * - RTL Support: Proper right-to-left layout support
+ * - SSR Safe: Dynamic imports to prevent server-side rendering issues
+ * - Real-time Updates: Support for live data updates
+ * - Event Handling: Click handlers for all marker types
+ * - Responsive Design: Works on all screen sizes
+ *
+ * @example
+ * ```tsx
+ * <InteractiveMap
+ *   center={[24.7136, 46.6753]} // Riyadh coordinates
+ *   zoom={6}
+ *   height="100vh"
+ *   airports={saudiLocations.airports}
+ *   vehicles={saudiVehicles}
+ *   showAirports={true}
+ *   showVehicles={true}
+ *   onAirportClick={(airport) => console.log('Airport clicked:', airport.name)}
+ *   onVehicleClick={(vehicle) => console.log('Vehicle clicked:', vehicle.plateNumber)}
+ * />
+ * ```
+ *
+ */
+
 "use client";
 
 import React, { useEffect, useState } from "react";

@@ -1,3 +1,44 @@
+/**
+ * MapControls Component
+ *
+ * A comprehensive control bar for maritime map operations. Features search functionality,
+ * layer toggles, refresh capabilities, and real-time status updates in a clean, responsive
+ * layout with full multilingual and RTL support.
+ *
+ * Features:
+ * - Search Functionality: Real-time search input with icon and proper RTL support
+ * - Layer Toggle Controls: Individual visibility controls for ports and vessels
+ * - Refresh Button: Data refresh with loading animation
+ * - Filter Button: Additional filtering capabilities (placeholder for future features)
+ * - Real-time Clock: Live timestamp display with locale-specific formatting
+ * - Responsive Layout: Adapts from vertical to horizontal layout on larger screens
+ * - Multilingual Support: Automatic Arabic/English text switching
+ * - RTL Support: Proper right-to-left layout support
+ *
+ * Layout Structure:
+ * - Top Section: Search input and control buttons
+ * - Bottom Section: Last updated timestamp with real-time clock
+ * - Responsive: Vertical on mobile, horizontal on desktop
+ *
+ * @example
+ * ```tsx
+ * <MapControls
+ *   showPorts={showPorts}
+ *   showVessels={showVessels}
+ *   onTogglePorts={() => setShowPorts(!showPorts)}
+ *   onToggleVessels={() => setShowVessels(!showVessels)}
+ *   onRefresh={handleRefresh}
+ *   searchTerm={searchTerm}
+ *   onSearchChange={setSearchTerm}
+ *   isLoading={isLoading}
+ * />
+ * ```
+ *
+ * @author Trip Tracker Team
+ * @version 1.0.0
+ * @since 2024
+ */
+
 "use client";
 
 import React from "react";
