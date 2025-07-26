@@ -2,7 +2,7 @@
 
 ## Overview
 
-The InteractiveMap component is the core mapping component of the Trip Tracker application. It provides a comprehensive interactive map built with React Leaflet, supporting multiple data types, custom markers, multilingual content, and real-time visualization.
+The InteractiveMap component is the core mapping component of the Trip Tracker application. It provides a comprehensive interactive map built with Google Maps, supporting multiple data types, custom markers, multilingual content, and real-time visualization.
 
 ## File Location
 

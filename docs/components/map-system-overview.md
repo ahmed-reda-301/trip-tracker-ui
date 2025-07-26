@@ -537,8 +537,8 @@ const performanceMonitor = {
 
 ```
 InteractiveMap
-├── react-leaflet
-├── leaflet
+├── @googlemaps/react-wrapper
+├── @types/google.maps
 ├── @/contexts/LanguageContext
 └── lucide-react
 

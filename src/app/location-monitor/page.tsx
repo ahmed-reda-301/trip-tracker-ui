@@ -177,7 +177,7 @@ export default function LocationMonitorPage() {
             // Map settings
             center={[24.7136, 46.6753]} // Saudi Arabia center
             zoom={6}
-            height="785px"
+            height="100%"
             // Display toggles
             showAirports={showAirports}
             showSeaports={showSeaports}

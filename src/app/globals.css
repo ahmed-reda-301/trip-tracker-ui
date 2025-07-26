@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "leaflet/dist/leaflet.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -189,7 +188,7 @@ body {
 }
 
 /* Ensure map containers don't cause horizontal scroll */
-.leaflet-container {
+.map-container {
   max-width: 100% !important;
   overflow: hidden !important;
 }
