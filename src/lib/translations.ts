@@ -375,6 +375,8 @@ export const translations: Record<Language, TranslationDictionary> = {
       suspiciousTrips: "Suspicious Trips",
       reports: "Reports",
       notifications: "Notifications",
+      ff:"dd"
+
     },
     reports: {
       tripPanel: "Trip Panel",

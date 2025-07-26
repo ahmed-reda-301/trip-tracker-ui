@@ -22,6 +22,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
  */
 const Footer: React.FC = () => {
   const { t } = useLanguage();
+  
 
   return (
     <footer className="bg-gradient-to-r from-[#0895D3] to-[#60B460] text-white text-center py-1 shadow-lg">
